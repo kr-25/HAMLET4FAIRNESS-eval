@@ -155,8 +155,3 @@ cython_debug/
 .vscode
 vscode/
 
-# Specific
-.results
-results/
-.temp
-temp/

@@ -1,0 +1,400 @@
+Sensitive groups ready!
+Theory ready!
+Theory:
+step(normalization) :- true.
+step(features) :- true.
+step(mitigation) :- true.
+step(rebalancing) :- true.
+step(classification) :- true.
+operator(normalization, power_transformer) :- true.
+operator(normalization, robust_scaler) :- true.
+operator(normalization, standard) :- true.
+operator(normalization, minmax) :- true.
+operator(features, select_k_best) :- true.
+operator(features, pca) :- true.
+operator(mitigation, corr_remover) :- true.
+operator(mitigation, lfr) :- true.
+operator(rebalancing, near_miss) :- true.
+operator(rebalancing, smote) :- true.
+operator(classification, knn) :- true.
+operator(classification, nn) :- true.
+operator(classification, rf) :- true.
+hyperparameter(robust_scaler, with_centering, choice) :- true.
+hyperparameter(robust_scaler, with_scaling, choice) :- true.
+hyperparameter(standard, with_mean, choice) :- true.
+hyperparameter(standard, with_std, choice) :- true.
+hyperparameter(select_k_best, k, randint) :- true.
+hyperparameter(pca, n_components, randint) :- true.
+hyperparameter(corr_remover, alpha, choice) :- true.
+hyperparameter(lfr, n_prototypes, choice) :- true.
+hyperparameter(lfr, reconstruct_weight, choice) :- true.
+hyperparameter(lfr, fairness_weight, choice) :- true.
+hyperparameter(near_miss, n_neighbors, randint) :- true.
+hyperparameter(smote, k_neighbors, randint) :- true.
+hyperparameter(knn, n_neighbors, randint) :- true.
+hyperparameter(knn, weights, choice) :- true.
+hyperparameter(knn, metric, choice) :- true.
+hyperparameter(nn, n_hidden_layers, choice) :- true.
+hyperparameter(nn, n_neurons, choice) :- true.
+hyperparameter(nn, activation, choice) :- true.
+hyperparameter(nn, solver, choice) :- true.
+hyperparameter(nn, alpha, choice) :- true.
+hyperparameter(nn, learning_rate, choice) :- true.
+hyperparameter(rf, n_estimators, choice) :- true.
+hyperparameter(rf, max_depth, randint) :- true.
+hyperparameter(rf, max_features, randint) :- true.
+hyperparameter(rf, min_samples_split, randint) :- true.
+hyperparameter(rf, max_leaf_nodes, randint) :- true.
+hyperparameter(rf, bootstrap, choice) :- true.
+hyperparameter(rf, criterion, choice) :- true.
+domain(robust_scaler, with_centering, [true, false]) :- true.
+domain(robust_scaler, with_scaling, [true, false]) :- true.
+domain(standard, with_mean, [true, false]) :- true.
+domain(standard, with_std, [true, false]) :- true.
+domain(select_k_best, k, [1, 10]) :- true.
+domain(pca, n_components, [1, 8]) :- true.
+domain(corr_remover, alpha, [0.25, 0.5, 0.75, 1.0]) :- true.
+domain(lfr, n_prototypes, [10, 50, 100, 200]) :- true.
+domain(lfr, reconstruct_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(lfr, fairness_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(near_miss, n_neighbors, [1, 4]) :- true.
+domain(smote, k_neighbors, [5, 8]) :- true.
+domain(knn, n_neighbors, [3, 20]) :- true.
+domain(knn, weights, [uniform, distance]) :- true.
+domain(knn, metric, [minkowski, euclidean, manhattan]) :- true.
+domain(nn, n_hidden_layers, [1, 5, 10, 20]) :- true.
+domain(nn, n_neurons, [5, 10, 25, 50]) :- true.
+domain(nn, activation, [logistic, tanh, relu]) :- true.
+domain(nn, solver, [lbfgs, sgd, adam]) :- true.
+domain(nn, alpha, [0.0001, 0.001, 0.01, 0.00001]) :- true.
+domain(nn, learning_rate, [constant, invscaling, adaptive]) :- true.
+domain(rf, n_estimators, [10, 25, 50, 75, 100]) :- true.
+domain(rf, max_depth, [1, 5]) :- true.
+domain(rf, max_features, [1, 4]) :- true.
+domain(rf, min_samples_split, [2, 6]) :- true.
+domain(rf, max_leaf_nodes, [2, 6]) :- true.
+domain(rf, bootstrap, [true, false]) :- true.
+domain(rf, criterion, [gini, entropy]) :- true.
+dataset(compass) :- true.
+metric(balanced_accuracy) :- true.
+fairness_metric(demographic_parity_ratio) :- true.
+sensitive_feature(sex, [0, 1]) :- true.
+sensitive_feature(race, [0, 1, 2, 3, 4, 5]) :- true.
+pipeline([Step_1_0], ZZ_0) :- (step(Step_1_0), '\\='(Step_1_0, classification), operator(classification, ZZ_0)).
+pipeline([Step_1_1, Step_2_0], ZZ_1) :- (step(Step_1_1), step(Step_2_0), '\\='(Step_1_1, classification), '\\='(Step_2_0, classification), '\\='(Step_1_1, Step_2_0), operator(classification, ZZ_1)).
+pipeline([Step_1_2, Step_2_1, Step_3_0], ZZ_2) :- (step(Step_1_2), step(Step_2_1), step(Step_3_0), '\\='(Step_1_2, classification), '\\='(Step_2_1, classification), '\\='(Step_3_0, classification), '\\='(Step_1_2, Step_2_1), '\\='(Step_1_2, Step_3_0), '\\='(Step_2_1, Step_3_0), operator(classification, ZZ_2)).
+pipeline([Step_1_3, Step_2_2, Step_3_1, Step_4_0], ZZ_3) :- (step(Step_1_3), step(Step_2_2), step(Step_3_1), step(Step_4_0), '\\='(Step_1_3, classification), '\\='(Step_2_2, classification), '\\='(Step_3_1, classification), '\\='(Step_4_0, classification), '\\='(Step_1_3, Step_2_2), '\\='(Step_1_3, Step_3_1), '\\='(Step_1_3, Step_4_0), '\\='(Step_2_2, Step_3_1), '\\='(Step_2_2, Step_4_0), '\\='(Step_3_1, Step_4_0), operator(classification, ZZ_3)).
+':=>'(p307679, sensitive_group([0])) :- true.
+':=>'(p185370, sensitive_group([1])) :- true.
+':=>'(p952916, sensitive_group([0])) :- true.
+':=>'(p382917, sensitive_group([1])) :- true.
+':=>'(p881736, sensitive_group([2])) :- true.
+':=>'(p409703, sensitive_group([3])) :- true.
+':=>'(p204960, sensitive_group([4])) :- true.
+':=>'(p923508, sensitive_group([5])) :- true.
+':=>'(p215728, sensitive_group([0, 0])) :- true.
+':=>'(p924140, sensitive_group([0, 1])) :- true.
+':=>'(p339950, sensitive_group([0, 2])) :- true.
+':=>'(p669432, sensitive_group([0, 3])) :- true.
+':=>'(p316227, sensitive_group([0, 4])) :- true.
+':=>'(p370925, sensitive_group([0, 5])) :- true.
+':=>'(p572206, sensitive_group([1, 0])) :- true.
+':=>'(p655176, sensitive_group([1, 1])) :- true.
+':=>'(p866198, sensitive_group([1, 2])) :- true.
+':=>'(p503821, sensitive_group([1, 3])) :- true.
+':=>'(p792273, sensitive_group([1, 4])) :- true.
+':=>'(p572339, sensitive_group([1, 5])) :- true.
+
+Checking Config
+Exporting Config
+Saving Graph
+Exporting AutoML input
+Exporting Space
+Exporting Constraints
+Input created for iteration Config(iteration=4, dataset=compass, metric=balanced_accuracy, fairnessMetric=demographic_parity_ratio, sensitiveFeatures=[sex, race], mode=max, batchSize=999999, timeBudget=900, seed=42)
+Here is the standard output/error of the command:
+
+c010bd603df3eaef1099560e3c8448b07d4b8b75157da1e2c7a08573ce1dad33
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+WARNING:root:No module named 'rpy2': FairAdapt will be unavailable. To install, run:
+pip install 'aif360[FairAdapt]'
+INFO:flaml.tune.searcher.blendsearch:No low-cost partial config given to the search algorithm. For cost-frugal search, consider providing low-cost values for cost-related hps via 'low_cost_partial_config'. More info can be found at https://microsoft.github.io/FLAML/docs/FAQ#about-low_cost_partial_config-in-tune
+AutoML: starting optimization.
+66
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 9, 'weights': np.str_('distance')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 8}, 'prototype': np.str_('rebalancing_normalization_mitigation_features_classification')}
+{'demographic_parity_ratio': np.float64(0.4928617158788625), 'balanced_accuracy': np.float64(0.64393580316052), 'by_group': {'0_0': np.float64(0.81), '0_2': np.float64(0.72), '0_3': np.float64(0.5), '1_0': np.float64(1.0), '1_2': np.float64(0.68), '1_3': np.float64(0.66), '1_5': np.float64(0.58)}, 'status': 'success', 'total_time': 28.19365382194519, 'fit_time': np.float64(4.224079132080078), 'score_time': np.float64(0.04220705032348633), 'absolute_time': 1746698788.9352624, 'flatten_demographic_parity_ratio': '0.54_0.55_0.39_0.44_0.54', 'flatten_balanced_accuracy': '0.66_0.63_0.63_0.65_0.65'}
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+67
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(10), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'mitigation': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.6077495229009425), 'balanced_accuracy': np.float64(0.6510287207406702), 'by_group': {'0_0': np.float64(0.81), '0_2': np.float64(0.79), '0_3': np.float64(0.61), '1_0': np.float64(1.0), '1_2': np.float64(0.77), '1_3': np.float64(0.73), '1_5': np.float64(0.7)}, 'status': 'success', 'total_time': 10.821420192718506, 'fit_time': np.float64(2.121352958679199), 'score_time': np.float64(0.0065285682678222655), 'absolute_time': 1746698799.8570328, 'flatten_demographic_parity_ratio': '0.7_0.49_0.84_0.46_0.55', 'flatten_balanced_accuracy': '0.63_0.67_0.61_0.67_0.67'}
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 622, in objective
+    fair_scores, fair_scores_by_group = _compute_fair_metric(
+                                        ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/objective.py", line 381, in _compute_fair_metric
+    y_pred = np.array(scores["estimator"][fold].predict(x_original))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/imblearn/pipeline.py", line 658, in predict
+    Xt = transform.transform(Xt)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/utils/_set_output.py", line 319, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/decomposition/_base.py", line 134, in transform
+    xp, _ = get_namespace(X, self.components_, self.explained_variance_)
+                             ^^^^^^^^^^^^^^^^
+AttributeError: 'PCA' object has no attribute 'components_'. Did you mean: 'n_components'?
+
+68
+fail
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(5), 'solver': np.str_('adam')}, 'features': {'type': np.str_('PCA'), 'n_components': 5}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'0_0': -inf, '0_2': -inf, '0_3': -inf, '1_0': -inf, '1_2': -inf, '1_3': -inf, '1_5': -inf}, 'status': 'fail', 'total_time': 80.15801239013672, 'fit_time': np.float64(15.981501531600951), 'score_time': np.float64(0.011545705795288085), 'absolute_time': 1746698880.121673}
+69
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 3, 'max_leaf_nodes': 5, 'min_samples_split': 5, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(2.0)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_mitigation_rebalancing_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.568718306293301), 'balanced_accuracy': np.float64(0.6278932243100271), 'by_group': {'0_0': np.float64(0.77), '0_2': np.float64(0.88), '0_3': np.float64(0.6), '1_0': np.float64(0.99), '1_2': np.float64(0.82), '1_3': np.float64(0.74), '1_5': np.float64(0.75)}, 'status': 'success', 'total_time': 54.84581446647644, 'fit_time': np.float64(10.910314989089965), 'score_time': np.float64(0.016448354721069335), 'absolute_time': 1746698935.0704844, 'flatten_demographic_parity_ratio': '0.42_0.73_0.73_0.62_0.34', 'flatten_balanced_accuracy': '0.64_0.61_0.64_0.62_0.63'}
+70
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(50), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.5589567320868813), 'balanced_accuracy': np.float64(0.6252382048399874), 'by_group': {'0_0': np.float64(0.75), '0_2': np.float64(0.85), '0_3': np.float64(0.61), '1_0': np.float64(0.98), '1_2': np.float64(0.83), '1_3': np.float64(0.71), '1_5': np.float64(0.75)}, 'status': 'success', 'total_time': 194.10005950927734, 'fit_time': np.float64(38.534691381454465), 'score_time': np.float64(0.09624977111816406), 'absolute_time': 1746699129.2898273, 'flatten_demographic_parity_ratio': '0.51_0.68_0.71_0.54_0.35', 'flatten_balanced_accuracy': '0.64_0.63_0.62_0.61_0.62'}
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 585, in objective
+    pipeline = self._instantiate_pipeline(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/objective.py", line 485, in _instantiate_pipeline
+    _check_coherence(prototype, config)
+  File "/home/automl/hamlet/objective.py", line 96, in _check_coherence
+    raise Exception(f"""PCA before {config["mitigation"]["type"]}""")
+Exception: PCA before LFR_wrapper
+
+71
+fail
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 6, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(2.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_mitigation_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'0_0': -inf, '0_2': -inf, '0_3': -inf, '1_0': -inf, '1_2': -inf, '1_3': -inf, '1_5': -inf}, 'status': 'fail', 'total_time': 0.0004572868347167969, 'fit_time': 0, 'score_time': 0, 'absolute_time': 1746699129.4182792}
+72
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 12, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'mitigation': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('normalization_features_rebalancing_mitigation_classification')}
+{'demographic_parity_ratio': np.float64(0.33323294311249685), 'balanced_accuracy': np.float64(0.6185619774974557), 'by_group': {'0_0': np.float64(0.76), '0_2': np.float64(0.57), '0_3': np.float64(0.41), '1_0': np.float64(1.0), '1_2': np.float64(0.55), '1_3': np.float64(0.53), '1_5': np.float64(0.37)}, 'status': 'success', 'total_time': 1.5691308975219727, 'fit_time': np.float64(0.03310384750366211), 'score_time': np.float64(0.12532925605773926), 'absolute_time': 1746699131.0926032, 'flatten_demographic_parity_ratio': '0.43_0.4_0.38_0.1_0.35', 'flatten_balanced_accuracy': '0.62_0.6_0.62_0.64_0.61'}
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+73
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 7, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(2.0)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('rebalancing_features_normalization_mitigation_classification')}
+{'demographic_parity_ratio': np.float64(0.5006000181602955), 'balanced_accuracy': np.float64(0.6200389518897793), 'by_group': {'0_0': np.float64(0.82), '0_2': np.float64(0.74), '0_3': np.float64(0.52), '1_0': np.float64(1.0), '1_2': np.float64(0.74), '1_3': np.float64(0.74), '1_5': np.float64(0.58)}, 'status': 'success', 'total_time': 106.69355177879333, 'fit_time': np.float64(20.84573640823364), 'score_time': np.float64(0.1345874309539795), 'absolute_time': 1746699237.8977451, 'flatten_demographic_parity_ratio': '0.54_0.44_0.58_0.48_0.47', 'flatten_balanced_accuracy': '0.62_0.61_0.62_0.63_0.62'}
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+74
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 6, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_normalization_features_mitigation_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.5470317829613918), 'balanced_accuracy': np.float64(0.6389971771824694), 'by_group': {'0_0': np.float64(0.74), '0_2': np.float64(0.81), '0_3': np.float64(0.58), '1_0': np.float64(1.0), '1_2': np.float64(0.83), '1_3': np.float64(0.73), '1_5': np.float64(0.72)}, 'status': 'success', 'total_time': 16.290966033935547, 'fit_time': np.float64(3.214815950393677), 'score_time': np.float64(0.007337141036987305), 'absolute_time': 1746699255.8531497, 'flatten_demographic_parity_ratio': '0.55_0.53_0.73_0.61_0.31', 'flatten_balanced_accuracy': '0.65_0.64_0.64_0.63_0.64'}
+75
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'mitigation': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.23665199651710575), 'balanced_accuracy': np.float64(0.6342110061066555), 'by_group': {'0_0': np.float64(0.77), '0_2': np.float64(0.51), '0_3': np.float64(0.24), '1_0': np.float64(1.0), '1_2': np.float64(0.54), '1_3': np.float64(0.52), '1_5': np.float64(0.46)}, 'status': 'success', 'total_time': 0.6680722236633301, 'fit_time': np.float64(0.09021353721618652), 'score_time': np.float64(0.007326793670654297), 'absolute_time': 1746699256.6292543, 'flatten_demographic_parity_ratio': '0.37_0.14_0.35_0.14_0.19', 'flatten_balanced_accuracy': '0.64_0.63_0.63_0.65_0.62'}
+76
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 6, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.7096627088006502), 'balanced_accuracy': np.float64(0.623136170002229), 'by_group': {'0_0': np.float64(0.85), '0_2': np.float64(0.92), '0_3': np.float64(0.73), '1_0': np.float64(0.98), '1_2': np.float64(0.87), '1_3': np.float64(0.81), '1_5': np.float64(0.83)}, 'status': 'success', 'total_time': 94.1543538570404, 'fit_time': np.float64(18.7723117351532), 'score_time': np.float64(0.014635467529296875), 'absolute_time': 1746699350.9023561, 'flatten_demographic_parity_ratio': '0.55_0.65_0.83_0.77_0.75', 'flatten_balanced_accuracy': '0.65_0.62_0.62_0.62_0.61'}
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 585, in objective
+    pipeline = self._instantiate_pipeline(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/objective.py", line 485, in _instantiate_pipeline
+    _check_coherence(prototype, config)
+  File "/home/automl/hamlet/objective.py", line 96, in _check_coherence
+    raise Exception(f"""PCA before {config["mitigation"]["type"]}""")
+Exception: PCA before LFR_wrapper
+
+77
+fail
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 5, 'max_features': 3, 'max_leaf_nodes': 5, 'min_samples_split': 6, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('PCA'), 'n_components': 3}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(2.0)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('features_normalization_rebalancing_mitigation_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'0_0': -inf, '0_2': -inf, '0_3': -inf, '1_0': -inf, '1_2': -inf, '1_3': -inf, '1_5': -inf}, 'status': 'fail', 'total_time': 0.0004918575286865234, 'fit_time': 0, 'score_time': 0, 'absolute_time': 1746699351.0357761}
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+78
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 4}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification')}
+{'demographic_parity_ratio': np.float64(0.3287138659283635), 'balanced_accuracy': np.float64(0.6849033252157207), 'by_group': {'0_0': np.float64(0.42), '0_2': np.float64(0.49), '0_3': np.float64(0.34), '1_0': np.float64(1.0), '1_2': np.float64(0.67), '1_3': np.float64(0.66), '1_5': np.float64(0.7)}, 'status': 'success', 'total_time': 9.420131206512451, 'fit_time': np.float64(1.7502991676330566), 'score_time': np.float64(0.00676727294921875), 'absolute_time': 1746699360.5950594, 'flatten_demographic_parity_ratio': '0.43_0.22_0.36_0.26_0.38', 'flatten_balanced_accuracy': '0.69_0.69_0.67_0.69_0.69'}
+79
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 3, 'max_leaf_nodes': 2, 'min_samples_split': 4, 'n_estimators': np.int64(100)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.False_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('normalization_rebalancing_mitigation_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.6538442660845338), 'balanced_accuracy': np.float64(0.6220322195358158), 'by_group': {'0_0': np.float64(0.82), '0_2': np.float64(0.85), '0_3': np.float64(0.71), '1_0': np.float64(1.0), '1_2': np.float64(0.86), '1_3': np.float64(0.79), '1_5': np.float64(0.81)}, 'status': 'success', 'total_time': 36.60041522979736, 'fit_time': np.float64(7.244255399703979), 'score_time': np.float64(0.023377084732055665), 'absolute_time': 1746699397.3239834, 'flatten_demographic_parity_ratio': '0.55_0.46_0.75_0.67_0.85', 'flatten_balanced_accuracy': '0.65_0.59_0.64_0.62_0.6'}
+80
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 1, 'max_features': 4, 'max_leaf_nodes': 3, 'min_samples_split': 3, 'n_estimators': np.int64(25)}, 'features': {'type': np.str_('PCA'), 'n_components': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(2.0)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.5101188082891605), 'balanced_accuracy': np.float64(0.6287659463728128), 'by_group': {'0_0': np.float64(0.73), '0_2': np.float64(0.81), '0_3': np.float64(0.55), '1_0': np.float64(1.0), '1_2': np.float64(0.81), '1_3': np.float64(0.72), '1_5': np.float64(0.72)}, 'status': 'success', 'total_time': 47.33561325073242, 'fit_time': np.float64(9.407261323928832), 'score_time': np.float64(0.014948368072509766), 'absolute_time': 1746699444.7805207, 'flatten_demographic_parity_ratio': '0.44_0.53_0.73_0.53_0.31', 'flatten_balanced_accuracy': '0.64_0.65_0.61_0.61_0.64'}
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+81
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 20, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('SelectKBest'), 'k': 4}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 8}, 'mitigation': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.3604145533465131), 'balanced_accuracy': np.float64(0.6689472643509331), 'by_group': {'0_0': np.float64(0.7), '0_2': np.float64(0.58), '0_3': np.float64(0.38), '1_0': np.float64(1.0), '1_2': np.float64(0.66), '1_3': np.float64(0.57), '1_5': np.float64(0.51)}, 'status': 'success', 'total_time': 4.006728172302246, 'fit_time': np.float64(0.2752194881439209), 'score_time': np.float64(0.152968692779541), 'absolute_time': 1746699448.9248092, 'flatten_demographic_parity_ratio': '0.39_0.35_0.41_0.41_0.24', 'flatten_balanced_accuracy': '0.66_0.67_0.66_0.68_0.67'}
+82
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 3, 'max_leaf_nodes': 4, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.42890109723133873), 'balanced_accuracy': np.float64(0.6564738170031286), 'by_group': {'0_0': np.float64(0.72), '0_2': np.float64(0.66), '0_3': np.float64(0.43), '1_0': np.float64(1.0), '1_2': np.float64(0.57), '1_3': np.float64(0.54), '1_5': np.float64(0.53)}, 'status': 'success', 'total_time': 1.0615406036376953, 'fit_time': np.float64(0.16602234840393065), 'score_time': np.float64(0.008549356460571289), 'absolute_time': 1746699451.9051597, 'flatten_demographic_parity_ratio': '0.45_0.45_0.47_0.49_0.29', 'flatten_balanced_accuracy': '0.65_0.67_0.66_0.66_0.65'}
+83
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 5, 'max_features': 4, 'max_leaf_nodes': 5, 'min_samples_split': 2, 'n_estimators': np.int64(75)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.5669362706052893), 'balanced_accuracy': np.float64(0.6261137823360337), 'by_group': {'0_0': np.float64(0.75), '0_2': np.float64(0.82), '0_3': np.float64(0.64), '1_0': np.float64(1.0), '1_2': np.float64(0.86), '1_3': np.float64(0.72), '1_5': np.float64(0.74)}, 'status': 'success', 'total_time': 38.81294369697571, 'fit_time': np.float64(7.692870378494263), 'score_time': np.float64(0.020717859268188477), 'absolute_time': 1746699490.835878, 'flatten_demographic_parity_ratio': '0.67_0.55_0.72_0.57_0.33', 'flatten_balanced_accuracy': '0.63_0.64_0.62_0.61_0.63'}
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+84
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 3, 'max_leaf_nodes': 5, 'min_samples_split': 2, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('SelectKBest'), 'k': 5}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'mitigation': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.3751071160048919), 'balanced_accuracy': np.float64(0.6875027596528442), 'by_group': {'0_0': np.float64(0.75), '0_2': np.float64(0.66), '0_3': np.float64(0.38), '1_0': np.float64(1.0), '1_2': np.float64(0.7), '1_3': np.float64(0.63), '1_5': np.float64(0.53)}, 'status': 'success', 'total_time': 2.381167411804199, 'fit_time': np.float64(0.41144089698791503), 'score_time': np.float64(0.016927003860473633), 'absolute_time': 1746699493.3375998, 'flatten_demographic_parity_ratio': '0.36_0.4_0.43_0.4_0.29', 'flatten_balanced_accuracy': '0.68_0.7_0.69_0.69_0.68'}
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+85
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_mitigation_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.32964529282003086), 'balanced_accuracy': np.float64(0.6744282753174085), 'by_group': {'0_0': np.float64(0.7), '0_2': np.float64(0.59), '0_3': np.float64(0.33), '1_0': np.float64(1.0), '1_2': np.float64(0.65), '1_3': np.float64(0.64), '1_5': np.float64(0.6)}, 'status': 'success', 'total_time': 3.3078536987304688, 'fit_time': np.float64(0.6223994731903076), 'score_time': np.float64(0.004388618469238281), 'absolute_time': 1746699496.778218, 'flatten_demographic_parity_ratio': '0.35_0.23_0.43_0.32_0.31', 'flatten_balanced_accuracy': '0.67_0.68_0.66_0.69_0.67'}
+86
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 2, 'max_features': 3, 'max_leaf_nodes': 6, 'min_samples_split': 3, 'n_estimators': np.int64(75)}, 'features': {'type': np.str_('PCA'), 'n_components': 5}, 'mitigation': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_normalization_mitigation_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.4181323109761742), 'balanced_accuracy': np.float64(0.6821153774811819), 'by_group': {'0_0': np.float64(0.72), '0_2': np.float64(0.63), '0_3': np.float64(0.43), '1_0': np.float64(1.0), '1_2': np.float64(0.69), '1_3': np.float64(0.63), '1_5': np.float64(0.58)}, 'status': 'success', 'total_time': 3.783505916595459, 'fit_time': np.float64(0.7033904075622559), 'score_time': np.float64(0.011771869659423829), 'absolute_time': 1746699500.6902945, 'flatten_demographic_parity_ratio': '0.43_0.48_0.45_0.44_0.29', 'flatten_balanced_accuracy': '0.69_0.68_0.68_0.7_0.67'}
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+/usr/local/lib/python3.12/site-packages/sklearn/feature_selection/_univariate_selection.py:112: RuntimeWarning: invalid value encountered in divide
+  f = msb / msw
+87
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(10), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 7}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.5)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('rebalancing_normalization_features_mitigation_classification')}
+{'demographic_parity_ratio': np.float64(0.4768684711734984), 'balanced_accuracy': np.float64(0.679773224769157), 'by_group': {'0_0': np.float64(0.7), '0_2': np.float64(0.68), '0_3': np.float64(0.48), '1_0': np.float64(1.0), '1_2': np.float64(0.7), '1_3': np.float64(0.76), '1_5': np.float64(0.75)}, 'status': 'success', 'total_time': 6.67032527923584, 'fit_time': np.float64(1.259106492996216), 'score_time': np.float64(0.006304931640625), 'absolute_time': 1746699507.4834545, 'flatten_demographic_parity_ratio': '0.48_0.46_0.53_0.59_0.34', 'flatten_balanced_accuracy': '0.68_0.67_0.67_0.69_0.68'}
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 585, in objective
+    pipeline = self._instantiate_pipeline(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/objective.py", line 485, in _instantiate_pipeline
+    _check_coherence(prototype, config)
+  File "/home/automl/hamlet/objective.py", line 96, in _check_coherence
+    raise Exception(f"""PCA before {config["mitigation"]["type"]}""")
+Exception: PCA before CorrelationRemover
+
+88
+fail
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 4, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 8}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'prototype': np.str_('features_mitigation_normalization_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'0_0': -inf, '0_2': -inf, '0_3': -inf, '1_0': -inf, '1_2': -inf, '1_3': -inf, '1_5': -inf}, 'status': 'fail', 'total_time': 0.0004298686981201172, 'fit_time': 0, 'score_time': 0, 'absolute_time': 1746699507.6274457}
+89
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(5), 'solver': np.str_('adam')}, 'features': {'type': np.str_('PCA'), 'n_components': 7}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.5)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('normalization_mitigation_rebalancing_features_classification')}
+{'demographic_parity_ratio': np.float64(0.5497632157473173), 'balanced_accuracy': np.float64(0.6698845808746738), 'by_group': {'0_0': np.float64(0.82), '0_2': np.float64(0.85), '0_3': np.float64(0.55), '1_0': np.float64(1.0), '1_2': np.float64(0.73), '1_3': np.float64(0.74), '1_5': np.float64(0.84)}, 'status': 'success', 'total_time': 23.96383261680603, 'fit_time': np.float64(4.744704818725586), 'score_time': np.float64(0.00978837013244629), 'absolute_time': 1746699531.7270122, 'flatten_demographic_parity_ratio': '0.57_0.61_0.51_0.62_0.43', 'flatten_balanced_accuracy': '0.67_0.68_0.66_0.68_0.66'}
+90
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.01), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(25), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.75)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.False_}, 'prototype': np.str_('normalization_mitigation_rebalancing_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.19433887577799994), 'balanced_accuracy': np.float64(0.6360623279506634), 'by_group': {'0_0': np.float64(0.4), '0_2': np.float64(0.42), '0_3': np.float64(0.19), '1_0': np.float64(1.0), '1_2': np.float64(0.82), '1_3': np.float64(0.68), '1_5': np.float64(0.61)}, 'status': 'success', 'total_time': 1.92747163772583, 'fit_time': np.float64(0.339932918548584), 'score_time': np.float64(0.008726406097412109), 'absolute_time': 1746699533.819093, 'flatten_demographic_parity_ratio': '0.26_0.1_0.27_0.25_0.09', 'flatten_balanced_accuracy': '0.65_0.63_0.62_0.64_0.64'}
+91
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 2, 'max_features': 4, 'max_leaf_nodes': 5, 'min_samples_split': 5, 'n_estimators': np.int64(75)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('normalization_rebalancing_mitigation_features_classification')}
+{'demographic_parity_ratio': np.float64(0.479228156218911), 'balanced_accuracy': np.float64(0.6054827424747808), 'by_group': {'0_0': np.float64(0.9), '0_2': np.float64(0.68), '0_3': np.float64(0.48), '1_0': np.float64(1.0), '1_2': np.float64(0.71), '1_3': np.float64(0.7), '1_5': np.float64(0.61)}, 'status': 'success', 'total_time': 19.064504623413086, 'fit_time': np.float64(3.741432523727417), 'score_time': np.float64(0.02127838134765625), 'absolute_time': 1746699554.681496, 'flatten_demographic_parity_ratio': '0.45_0.5_0.44_0.45_0.56', 'flatten_balanced_accuracy': '0.62_0.61_0.61_0.6_0.59'}
+92
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 10, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('normalization_features_rebalancing_mitigation_classification')}
+{'demographic_parity_ratio': np.float64(0.4921830963363242), 'balanced_accuracy': np.float64(0.6200360530590718), 'by_group': {'0_0': np.float64(0.75), '0_2': np.float64(0.63), '0_3': np.float64(0.5), '1_0': np.float64(1.0), '1_2': np.float64(0.66), '1_3': np.float64(0.7), '1_5': np.float64(0.63)}, 'status': 'success', 'total_time': 13.577176809310913, 'fit_time': np.float64(2.3110160350799562), 'score_time': np.float64(0.1880345821380615), 'absolute_time': 1746699568.3854072, 'flatten_demographic_parity_ratio': '0.53_0.62_0.48_0.43_0.41', 'flatten_balanced_accuracy': '0.63_0.63_0.61_0.6_0.64'}
+93
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(1.0)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('normalization_features_rebalancing_mitigation_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.38396399679326965), 'balanced_accuracy': np.float64(0.6221036862277701), 'by_group': {'0_0': np.float64(0.88), '0_2': np.float64(0.84), '0_3': np.float64(0.44), '1_0': np.float64(1.0), '1_2': np.float64(0.68), '1_3': np.float64(0.59), '1_5': np.float64(0.46)}, 'status': 'success', 'total_time': 156.5527482032776, 'fit_time': np.float64(31.2225350856781), 'score_time': np.float64(0.03397889137268066), 'absolute_time': 1746699725.0660307, 'flatten_demographic_parity_ratio': '0.22_0.43_0.47_0.47_0.33', 'flatten_balanced_accuracy': '0.62_0.61_0.62_0.65_0.62'}
+AutoML: optimization done.
+AutoML: miner done.
+AutoML: export done.
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+hamlet_1522150517
+AutoML execution ended

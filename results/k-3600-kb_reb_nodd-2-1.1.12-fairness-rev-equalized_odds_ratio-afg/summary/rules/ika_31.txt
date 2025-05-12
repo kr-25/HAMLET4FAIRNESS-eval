@@ -1,0 +1,31 @@
+%% Iteration: 1
+
+cc2563307373485971389 :=> forbidden([features,rebalancing,normalization], nn). % equalized_odds_ratio
+cc1928714151281492118 :=> forbidden([features,rebalancing,normalization], rf). % equalized_odds_ratio
+cc2146682415743808481 :=> forbidden([features,rebalancing,normalization], knn). % equalized_odds_ratio
+
+
+
+%% Iteration: 2
+
+cc2397202044456187050 :=> mandatory([normalization,rebalancing], nn). % balanced_accuracy
+cc2623161356660104116 :=> mandatory([features,normalization], nn). % balanced_accuracy
+cc2808372517763750195 :=> mandatory([features,rebalancing], nn). % balanced_accuracy
+
+
+
+%% Iteration: 3
+
+
+
+
+%% Iteration: 4
+
+discriminate(pipeline([normalization], nn), [male,div/sep]).
+discriminate(pipeline([features], nn), [male,div/sep]).
+discriminate(pipeline([rebalancing], nn), [male,div/sep]).
+discriminate(pipeline([rebalancing], rf), [male,div/sep]).
+discriminate(pipeline([normalization], rf), [male,div/sep]).
+discriminate(pipeline([features], rf), [male,div/sep]).
+
+

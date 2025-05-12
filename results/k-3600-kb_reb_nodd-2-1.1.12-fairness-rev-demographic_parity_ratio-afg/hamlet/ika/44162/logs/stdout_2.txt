@@ -1,0 +1,141 @@
+Sensitive groups ready!
+Theory ready!
+Theory:
+step(normalization) :- true.
+step(features) :- true.
+step(mitigation) :- true.
+step(rebalancing) :- true.
+step(classification) :- true.
+operator(normalization, power_transformer) :- true.
+operator(normalization, robust_scaler) :- true.
+operator(normalization, standard) :- true.
+operator(normalization, minmax) :- true.
+operator(features, select_k_best) :- true.
+operator(features, pca) :- true.
+operator(mitigation, corr_remover) :- true.
+operator(mitigation, lfr) :- true.
+operator(rebalancing, near_miss) :- true.
+operator(rebalancing, smote) :- true.
+operator(classification, knn) :- true.
+operator(classification, nn) :- true.
+operator(classification, rf) :- true.
+hyperparameter(robust_scaler, with_centering, choice) :- true.
+hyperparameter(robust_scaler, with_scaling, choice) :- true.
+hyperparameter(standard, with_mean, choice) :- true.
+hyperparameter(standard, with_std, choice) :- true.
+hyperparameter(select_k_best, k, randint) :- true.
+hyperparameter(pca, n_components, randint) :- true.
+hyperparameter(corr_remover, alpha, choice) :- true.
+hyperparameter(lfr, n_prototypes, choice) :- true.
+hyperparameter(lfr, reconstruct_weight, choice) :- true.
+hyperparameter(lfr, fairness_weight, choice) :- true.
+hyperparameter(near_miss, n_neighbors, randint) :- true.
+hyperparameter(smote, k_neighbors, randint) :- true.
+hyperparameter(knn, n_neighbors, randint) :- true.
+hyperparameter(knn, weights, choice) :- true.
+hyperparameter(knn, metric, choice) :- true.
+hyperparameter(nn, n_hidden_layers, choice) :- true.
+hyperparameter(nn, n_neurons, choice) :- true.
+hyperparameter(nn, activation, choice) :- true.
+hyperparameter(nn, solver, choice) :- true.
+hyperparameter(nn, alpha, choice) :- true.
+hyperparameter(nn, learning_rate, choice) :- true.
+hyperparameter(rf, n_estimators, choice) :- true.
+hyperparameter(rf, max_depth, randint) :- true.
+hyperparameter(rf, max_features, randint) :- true.
+hyperparameter(rf, min_samples_split, randint) :- true.
+hyperparameter(rf, max_leaf_nodes, randint) :- true.
+hyperparameter(rf, bootstrap, choice) :- true.
+hyperparameter(rf, criterion, choice) :- true.
+domain(robust_scaler, with_centering, [true, false]) :- true.
+domain(robust_scaler, with_scaling, [true, false]) :- true.
+domain(standard, with_mean, [true, false]) :- true.
+domain(standard, with_std, [true, false]) :- true.
+domain(select_k_best, k, [1, 10]) :- true.
+domain(pca, n_components, [1, 8]) :- true.
+domain(corr_remover, alpha, [0.25, 0.5, 0.75, 1.0]) :- true.
+domain(lfr, n_prototypes, [10, 50, 100, 200]) :- true.
+domain(lfr, reconstruct_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(lfr, fairness_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(near_miss, n_neighbors, [1, 4]) :- true.
+domain(smote, k_neighbors, [5, 8]) :- true.
+domain(knn, n_neighbors, [3, 20]) :- true.
+domain(knn, weights, [uniform, distance]) :- true.
+domain(knn, metric, [minkowski, euclidean, manhattan]) :- true.
+domain(nn, n_hidden_layers, [1, 5, 10, 20]) :- true.
+domain(nn, n_neurons, [5, 10, 25, 50]) :- true.
+domain(nn, activation, [logistic, tanh, relu]) :- true.
+domain(nn, solver, [lbfgs, sgd, adam]) :- true.
+domain(nn, alpha, [0.0001, 0.001, 0.01, 0.00001]) :- true.
+domain(nn, learning_rate, [constant, invscaling, adaptive]) :- true.
+domain(rf, n_estimators, [10, 25, 50, 75, 100]) :- true.
+domain(rf, max_depth, [1, 5]) :- true.
+domain(rf, max_features, [1, 4]) :- true.
+domain(rf, min_samples_split, [2, 6]) :- true.
+domain(rf, max_leaf_nodes, [2, 6]) :- true.
+domain(rf, bootstrap, [true, false]) :- true.
+domain(rf, criterion, [gini, entropy]) :- true.
+dataset(compass) :- true.
+metric(balanced_accuracy) :- true.
+fairness_metric(demographic_parity_ratio) :- true.
+sensitive_feature(sex, [0, 1]) :- true.
+sensitive_feature(race, [0, 1, 2, 3, 4, 5]) :- true.
+pipeline([Step_1_0], ZZ_0) :- (step(Step_1_0), '\\='(Step_1_0, classification), operator(classification, ZZ_0)).
+pipeline([Step_1_1, Step_2_0], ZZ_1) :- (step(Step_1_1), step(Step_2_0), '\\='(Step_1_1, classification), '\\='(Step_2_0, classification), '\\='(Step_1_1, Step_2_0), operator(classification, ZZ_1)).
+pipeline([Step_1_2, Step_2_1, Step_3_0], ZZ_2) :- (step(Step_1_2), step(Step_2_1), step(Step_3_0), '\\='(Step_1_2, classification), '\\='(Step_2_1, classification), '\\='(Step_3_0, classification), '\\='(Step_1_2, Step_2_1), '\\='(Step_1_2, Step_3_0), '\\='(Step_2_1, Step_3_0), operator(classification, ZZ_2)).
+pipeline([Step_1_3, Step_2_2, Step_3_1, Step_4_0], ZZ_3) :- (step(Step_1_3), step(Step_2_2), step(Step_3_1), step(Step_4_0), '\\='(Step_1_3, classification), '\\='(Step_2_2, classification), '\\='(Step_3_1, classification), '\\='(Step_4_0, classification), '\\='(Step_1_3, Step_2_2), '\\='(Step_1_3, Step_3_1), '\\='(Step_1_3, Step_4_0), '\\='(Step_2_2, Step_3_1), '\\='(Step_2_2, Step_4_0), '\\='(Step_3_1, Step_4_0), operator(classification, ZZ_3)).
+':=>'(p903077, sensitive_group([0])) :- true.
+':=>'(p175706, sensitive_group([1])) :- true.
+':=>'(p534635, sensitive_group([0])) :- true.
+':=>'(p443462, sensitive_group([1])) :- true.
+':=>'(p842614, sensitive_group([2])) :- true.
+':=>'(p577948, sensitive_group([3])) :- true.
+':=>'(p976592, sensitive_group([4])) :- true.
+':=>'(p902156, sensitive_group([5])) :- true.
+':=>'(p156593, sensitive_group([0, 0])) :- true.
+':=>'(p719495, sensitive_group([0, 1])) :- true.
+':=>'(p843167, sensitive_group([0, 2])) :- true.
+':=>'(p248010, sensitive_group([0, 3])) :- true.
+':=>'(p429060, sensitive_group([0, 4])) :- true.
+':=>'(p686448, sensitive_group([0, 5])) :- true.
+':=>'(p257733, sensitive_group([1, 0])) :- true.
+':=>'(p836482, sensitive_group([1, 1])) :- true.
+':=>'(p697495, sensitive_group([1, 2])) :- true.
+':=>'(p711147, sensitive_group([1, 3])) :- true.
+':=>'(p464105, sensitive_group([1, 4])) :- true.
+':=>'(p777219, sensitive_group([1, 5])) :- true.
+
+Checking Config
+Exporting Config
+Saving Graph
+Exporting AutoML input
+Exporting Space
+Exporting Constraints
+Input created for iteration Config(iteration=2, dataset=compass, metric=balanced_accuracy, fairnessMetric=demographic_parity_ratio, sensitiveFeatures=[sex, race], mode=max, batchSize=999999, timeBudget=900, seed=42)
+Here is the standard output/error of the command:
+
+6ead4ce8ea233a994f0c0f3ea3a542ee7047886c184af99e9ec0d9d7ab6f55d1
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+WARNING:root:No module named 'rpy2': FairAdapt will be unavailable. To install, run:
+pip install 'aif360[FairAdapt]'
+INFO:flaml.tune.searcher.blendsearch:No low-cost partial config given to the search algorithm. For cost-frugal search, consider providing low-cost values for cost-related hps via 'low_cost_partial_config'. More info can be found at https://microsoft.github.io/FLAML/docs/FAQ#about-low_cost_partial_config-in-tune
+AutoML: starting optimization.
+Timeout
+57
+fail
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(50), 'solver': np.str_('lbfgs')}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'features': {'type': np.str_('FunctionTransformer')}, 'mitigation': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'0_0': -inf, '0_2': -inf, '0_3': -inf, '1_0': -inf, '1_2': -inf, '1_3': -inf, '1_5': -inf}, 'status': 'fail', 'total_time': 900.0345921516418, 'fit_time': 0, 'score_time': 0, 'absolute_time': 1746697768.0829327}
+AutoML: optimization done.
+AutoML: miner done.
+AutoML: export done.
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+hamlet_874982717
+AutoML execution ended

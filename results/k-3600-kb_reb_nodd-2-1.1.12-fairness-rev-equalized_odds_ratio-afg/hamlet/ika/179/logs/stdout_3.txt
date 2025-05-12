@@ -1,0 +1,248 @@
+Sensitive groups ready!
+Theory ready!
+Theory:
+step(normalization) :- true.
+step(features) :- true.
+step(mitigation) :- true.
+step(rebalancing) :- true.
+step(classification) :- true.
+operator(normalization, power_transformer) :- true.
+operator(normalization, robust_scaler) :- true.
+operator(normalization, standard) :- true.
+operator(normalization, minmax) :- true.
+operator(features, select_k_best) :- true.
+operator(features, pca) :- true.
+operator(mitigation, corr_remover) :- true.
+operator(mitigation, lfr) :- true.
+operator(rebalancing, near_miss) :- true.
+operator(rebalancing, smote) :- true.
+operator(classification, knn) :- true.
+operator(classification, nn) :- true.
+operator(classification, rf) :- true.
+hyperparameter(robust_scaler, with_centering, choice) :- true.
+hyperparameter(robust_scaler, with_scaling, choice) :- true.
+hyperparameter(standard, with_mean, choice) :- true.
+hyperparameter(standard, with_std, choice) :- true.
+hyperparameter(select_k_best, k, randint) :- true.
+hyperparameter(pca, n_components, randint) :- true.
+hyperparameter(corr_remover, alpha, choice) :- true.
+hyperparameter(lfr, n_prototypes, choice) :- true.
+hyperparameter(lfr, reconstruct_weight, choice) :- true.
+hyperparameter(lfr, fairness_weight, choice) :- true.
+hyperparameter(near_miss, n_neighbors, randint) :- true.
+hyperparameter(smote, k_neighbors, randint) :- true.
+hyperparameter(knn, n_neighbors, randint) :- true.
+hyperparameter(knn, weights, choice) :- true.
+hyperparameter(knn, metric, choice) :- true.
+hyperparameter(nn, n_hidden_layers, choice) :- true.
+hyperparameter(nn, n_neurons, choice) :- true.
+hyperparameter(nn, activation, choice) :- true.
+hyperparameter(nn, solver, choice) :- true.
+hyperparameter(nn, alpha, choice) :- true.
+hyperparameter(nn, learning_rate, choice) :- true.
+hyperparameter(rf, n_estimators, choice) :- true.
+hyperparameter(rf, max_depth, randint) :- true.
+hyperparameter(rf, max_features, randint) :- true.
+hyperparameter(rf, min_samples_split, randint) :- true.
+hyperparameter(rf, max_leaf_nodes, randint) :- true.
+hyperparameter(rf, bootstrap, choice) :- true.
+hyperparameter(rf, criterion, choice) :- true.
+domain(robust_scaler, with_centering, [true, false]) :- true.
+domain(robust_scaler, with_scaling, [true, false]) :- true.
+domain(standard, with_mean, [true, false]) :- true.
+domain(standard, with_std, [true, false]) :- true.
+domain(select_k_best, k, [1, 10]) :- true.
+domain(pca, n_components, [1, 8]) :- true.
+domain(corr_remover, alpha, [0.25, 0.5, 0.75, 1.0]) :- true.
+domain(lfr, n_prototypes, [10, 50, 100, 200]) :- true.
+domain(lfr, reconstruct_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(lfr, fairness_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(near_miss, n_neighbors, [1, 4]) :- true.
+domain(smote, k_neighbors, [5, 8]) :- true.
+domain(knn, n_neighbors, [3, 20]) :- true.
+domain(knn, weights, [uniform, distance]) :- true.
+domain(knn, metric, [minkowski, euclidean, manhattan]) :- true.
+domain(nn, n_hidden_layers, [1, 5, 10, 20]) :- true.
+domain(nn, n_neurons, [5, 10, 25, 50]) :- true.
+domain(nn, activation, [logistic, tanh, relu]) :- true.
+domain(nn, solver, [lbfgs, sgd, adam]) :- true.
+domain(nn, alpha, [0.0001, 0.001, 0.01, 0.00001]) :- true.
+domain(nn, learning_rate, [constant, invscaling, adaptive]) :- true.
+domain(rf, n_estimators, [10, 25, 50, 75, 100]) :- true.
+domain(rf, max_depth, [1, 5]) :- true.
+domain(rf, max_features, [1, 4]) :- true.
+domain(rf, min_samples_split, [2, 6]) :- true.
+domain(rf, max_leaf_nodes, [2, 6]) :- true.
+domain(rf, bootstrap, [true, false]) :- true.
+domain(rf, criterion, [gini, entropy]) :- true.
+dataset(adult) :- true.
+metric(balanced_accuracy) :- true.
+fairness_metric(equalized_odds_ratio) :- true.
+sensitive_feature(sex, ['Male', 'Female']) :- true.
+sensitive_feature(race, ['Amer-Indian-Eskimo', 'Asian-Pac-Islander', 'Black', 'Other', 'White']) :- true.
+':=>'(mc0, unbalanced_dataset) :- true.
+pipeline([Step_1_0], ZZ_0) :- (step(Step_1_0), '\\='(Step_1_0, classification), operator(classification, ZZ_0)).
+pipeline([Step_1_1, Step_2_0], ZZ_1) :- (step(Step_1_1), step(Step_2_0), '\\='(Step_1_1, classification), '\\='(Step_2_0, classification), '\\='(Step_1_1, Step_2_0), operator(classification, ZZ_1)).
+pipeline([Step_1_2, Step_2_1, Step_3_0], ZZ_2) :- (step(Step_1_2), step(Step_2_1), step(Step_3_0), '\\='(Step_1_2, classification), '\\='(Step_2_1, classification), '\\='(Step_3_0, classification), '\\='(Step_1_2, Step_2_1), '\\='(Step_1_2, Step_3_0), '\\='(Step_2_1, Step_3_0), operator(classification, ZZ_2)).
+pipeline([Step_1_3, Step_2_2, Step_3_1, Step_4_0], ZZ_3) :- (step(Step_1_3), step(Step_2_2), step(Step_3_1), step(Step_4_0), '\\='(Step_1_3, classification), '\\='(Step_2_2, classification), '\\='(Step_3_1, classification), '\\='(Step_4_0, classification), '\\='(Step_1_3, Step_2_2), '\\='(Step_1_3, Step_3_1), '\\='(Step_1_3, Step_4_0), '\\='(Step_2_2, Step_3_1), '\\='(Step_2_2, Step_4_0), '\\='(Step_3_1, Step_4_0), operator(classification, ZZ_3)).
+':=>'(p261552, sensitive_group(['Male'])) :- true.
+':=>'(p214708, sensitive_group(['Female'])) :- true.
+':=>'(p764624, sensitive_group(['Amer-Indian-Eskimo'])) :- true.
+':=>'(p776125, sensitive_group(['Asian-Pac-Islander'])) :- true.
+':=>'(p213504, sensitive_group(['Black'])) :- true.
+':=>'(p89856, sensitive_group(['Other'])) :- true.
+':=>'(p426597, sensitive_group(['White'])) :- true.
+':=>'(p25841, sensitive_group(['Male', 'Amer-Indian-Eskimo'])) :- true.
+':=>'(p727000, sensitive_group(['Male', 'Asian-Pac-Islander'])) :- true.
+':=>'(p86560, sensitive_group(['Male', 'Black'])) :- true.
+':=>'(p127764, sensitive_group(['Male', 'Other'])) :- true.
+':=>'(p653291, sensitive_group(['Male', 'White'])) :- true.
+':=>'(p764009, sensitive_group(['Female', 'Amer-Indian-Eskimo'])) :- true.
+':=>'(p14588, sensitive_group(['Female', 'Asian-Pac-Islander'])) :- true.
+':=>'(p719598, sensitive_group(['Female', 'Black'])) :- true.
+':=>'(p680520, sensitive_group(['Female', 'Other'])) :- true.
+':=>'(p476678, sensitive_group(['Female', 'White'])) :- true.
+
+Checking Config
+Exporting Config
+Saving Graph
+Exporting AutoML input
+Exporting Space
+Exporting Constraints
+Input created for iteration Config(iteration=3, dataset=adult, metric=balanced_accuracy, fairnessMetric=equalized_odds_ratio, sensitiveFeatures=[sex, race], mode=max, batchSize=999999, timeBudget=900, seed=42)
+Here is the standard output/error of the command:
+
+54fd3f32437d53b9f968f60958cfa4feaf29844418f24e6b4b39689233c5e5da
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+WARNING:root:No module named 'rpy2': FairAdapt will be unavailable. To install, run:
+pip install 'aif360[FairAdapt]'
+INFO:flaml.tune.searcher.blendsearch:No low-cost partial config given to the search algorithm. For cost-frugal search, consider providing low-cost values for cost-related hps via 'low_cost_partial_config'. More info can be found at https://microsoft.github.io/FLAML/docs/FAQ#about-low_cost_partial_config-in-tune
+AutoML: starting optimization.
+14
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 7}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')}
+{'equalized_odds_ratio': np.float64(0.19596257046389398), 'balanced_accuracy': np.float64(0.8044506791413445), 'by_group': {'Asian-Pac-Islander_Female': np.float64(0.46), 'Asian-Pac-Islander_Male': np.float64(1.0), 'Black_Female': np.float64(0.2), 'Black_Male': np.float64(0.68), 'White_Female': np.float64(0.21), 'White_Male': np.float64(0.66)}, 'status': 'success', 'total_time': 385.71684646606445, 'fit_time': np.float64(76.69391174316407), 'score_time': np.float64(0.13480668067932128), 'absolute_time': 1746703408.2094748, 'flatten_equalized_odds_ratio': '0.18_0.17_0.22_0.23_0.18', 'flatten_balanced_accuracy': '0.81_0.79_0.82_0.8_0.8'}
+15
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 4, 'max_leaf_nodes': 6, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('SelectKBest'), 'k': 1}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification')}
+{'equalized_odds_ratio': np.float64(0.0582027222636438), 'balanced_accuracy': np.float64(0.6667258257680875), 'by_group': {'Asian-Pac-Islander_Female': np.float64(0.74), 'Asian-Pac-Islander_Male': np.float64(1.0), 'Black_Female': np.float64(0.19), 'Black_Male': np.float64(0.4), 'White_Female': np.float64(0.06), 'White_Male': np.float64(0.21)}, 'status': 'success', 'total_time': 2.070688486099243, 'fit_time': np.float64(0.26387825012207033), 'score_time': np.float64(0.012790822982788086), 'absolute_time': 1746703410.375067, 'flatten_equalized_odds_ratio': '0.05_0.06_0.07_0.05_0.06', 'flatten_balanced_accuracy': '0.67_0.67_0.67_0.66_0.66'}
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 585, in objective
+    pipeline = self._instantiate_pipeline(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/objective.py", line 485, in _instantiate_pipeline
+    _check_coherence(prototype, config)
+  File "/home/automl/hamlet/objective.py", line 96, in _check_coherence
+    raise Exception(f"""PCA before {config["mitigation"]["type"]}""")
+Exception: PCA before CorrelationRemover
+
+16
+fail
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 1, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 2, 'n_estimators': np.int64(25)}, 'features': {'type': np.str_('PCA'), 'n_components': 5}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'prototype': np.str_('rebalancing_features_mitigation_normalization_classification')}
+{'equalized_odds_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'Asian-Pac-Islander_Female': -inf, 'Asian-Pac-Islander_Male': -inf, 'Black_Female': -inf, 'Black_Male': -inf, 'White_Female': -inf, 'White_Male': -inf}, 'status': 'fail', 'total_time': 0.0006890296936035156, 'fit_time': 0, 'score_time': 0, 'absolute_time': 1746703410.46263}
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 609, in objective
+    scores = cross_validate(
+             ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/utils/_param_validation.py", line 216, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/model_selection/_validation.py", line 431, in cross_validate
+    _warn_or_raise_about_fit_failures(results, error_score)
+  File "/usr/local/lib/python3.12/site-packages/sklearn/model_selection/_validation.py", line 517, in _warn_or_raise_about_fit_failures
+    raise ValueError(all_fits_failed_message)
+ValueError: 
+All the 5 fits failed.
+It is very likely that your model is misconfigured.
+You can try to debug the error by setting error_score='raise'.
+
+Below are more details about the failures:
+--------------------------------------------------------------------------------
+5 fits failed with the following error:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/sklearn/model_selection/_validation.py", line 866, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+  File "/usr/local/lib/python3.12/site-packages/sklearn/base.py", line 1389, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/imblearn/pipeline.py", line 518, in fit
+    Xt, yt = self._fit(X, y, routed_params, raw_params=params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/imblearn/pipeline.py", line 430, in _fit
+    X, fitted_transformer = fit_transform_one_cached(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/joblib/memory.py", line 312, in __call__
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/imblearn/pipeline.py", line 1383, in _fit_transform_one
+    res = transformer.fit_transform(X, y, **params.get("fit_transform", {}))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/utils/_set_output.py", line 319, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/transformers/lfr_wrapper.py", line 76, in fit_transform
+    df_X, df_y = self._prepare_dataset(X, y, fit=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/transformers/lfr_wrapper.py", line 37, in _prepare_dataset
+    raise Exception("No sensitive features to mitigate")
+Exception: No sensitive features to mitigate
+
+
+17
+fail
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(10), 'solver': np.str_('adam')}, 'features': {'type': np.str_('SelectKBest'), 'k': 5}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'prototype': np.str_('rebalancing_normalization_features_mitigation_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'equalized_odds_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'Asian-Pac-Islander_Female': -inf, 'Asian-Pac-Islander_Male': -inf, 'Black_Female': -inf, 'Black_Male': -inf, 'White_Female': -inf, 'White_Male': -inf}, 'status': 'fail', 'total_time': 0.24831557273864746, 'fit_time': 0, 'score_time': 0, 'absolute_time': 1746703410.7979143}
+18
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 5, 'max_features': 2, 'max_leaf_nodes': 2, 'min_samples_split': 3, 'n_estimators': np.int64(25)}, 'features': {'type': np.str_('SelectKBest'), 'k': 1}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'equalized_odds_ratio': np.float64(0.013929050882220406), 'balanced_accuracy': np.float64(0.6615853346748451), 'by_group': {'Asian-Pac-Islander_Female': np.float64(0.67), 'Asian-Pac-Islander_Male': np.float64(1.0), 'Black_Female': np.float64(0.19), 'Black_Male': np.float64(0.2), 'White_Female': np.float64(0.01), 'White_Male': np.float64(0.26)}, 'status': 'success', 'total_time': 1.4176831245422363, 'fit_time': np.float64(0.13781485557556153), 'score_time': np.float64(0.012217903137207031), 'absolute_time': 1746703412.3081303, 'flatten_equalized_odds_ratio': '0.01_0.02_0.02_0.01_0.01', 'flatten_balanced_accuracy': '0.66_0.66_0.67_0.66_0.66'}
+19
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 16, 'weights': np.str_('distance')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.5)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('normalization_mitigation_features_rebalancing_classification')}
+{'equalized_odds_ratio': np.float64(0.09982312091238661), 'balanced_accuracy': np.float64(0.656348551170668), 'by_group': {'Asian-Pac-Islander_Female': np.float64(0.87), 'Asian-Pac-Islander_Male': np.float64(0.95), 'Black_Female': np.float64(0.31), 'Black_Male': np.float64(0.5), 'White_Female': np.float64(0.1), 'White_Male': np.float64(0.13)}, 'status': 'success', 'total_time': 4.041475772857666, 'fit_time': np.float64(0.28223109245300293), 'score_time': np.float64(0.22215189933776855), 'absolute_time': 1746703416.4417439, 'flatten_equalized_odds_ratio': '0.08_0.09_0.13_0.11_0.09', 'flatten_balanced_accuracy': '0.65_0.66_0.65_0.67_0.66'}
+The result for {'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 1, 'max_features': 1, 'max_leaf_nodes': 5, 'min_samples_split': 6, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('SelectKBest'), 'k': 5}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')} was NaN
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 649, in objective
+    raise Exception(f"The result for {config} was NaN")
+Exception: The result for {'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 1, 'max_features': 1, 'max_leaf_nodes': 5, 'min_samples_split': 6, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('SelectKBest'), 'k': 5}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')} was NaN
+
+20
+fail
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 1, 'max_features': 1, 'max_leaf_nodes': 5, 'min_samples_split': 6, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('SelectKBest'), 'k': 5}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'equalized_odds_ratio': -inf, 'balanced_accuracy': np.float64(0.5099033783684614), 'by_group': {'Asian-Pac-Islander_Female': np.float64(0.83), 'Asian-Pac-Islander_Male': np.float64(0.92), 'Black_Female': np.float64(0.82), 'Black_Male': np.float64(0.68), 'White_Female': np.float64(0.84), 'White_Male': np.float64(0.82)}, 'status': 'fail', 'total_time': 396.3761508464813, 'fit_time': np.float64(64.25814008712769), 'score_time': np.float64(0.03919253349304199), 'absolute_time': 1746703812.9124177, 'flatten_equalized_odds_ratio': '0.8_0.48_0.51_0.75_nan', 'flatten_balanced_accuracy': '0.51_0.5_0.52_0.51_0.5'}
+21
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'mitigation': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')}
+{'equalized_odds_ratio': np.float64(0.06299071796764237), 'balanced_accuracy': np.float64(0.7953182495902247), 'by_group': {'Asian-Pac-Islander_Female': np.float64(0.16), 'Asian-Pac-Islander_Male': np.float64(1.0), 'Black_Female': np.float64(0.06), 'Black_Male': np.float64(0.48), 'White_Female': np.float64(0.11), 'White_Male': np.float64(0.88)}, 'status': 'success', 'total_time': 13.64054799079895, 'fit_time': np.float64(2.5747718811035156), 'score_time': np.float64(0.013250732421875), 'absolute_time': 1746703826.627496, 'flatten_equalized_odds_ratio': '0.06_0.05_0.06_0.09_0.06', 'flatten_balanced_accuracy': '0.8_0.79_0.8_0.8_0.79'}
+The result for {'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 16, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}} was NaN
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 649, in objective
+    raise Exception(f"The result for {config} was NaN")
+Exception: The result for {'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 16, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}} was NaN
+
+22
+fail
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 16, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'equalized_odds_ratio': -inf, 'balanced_accuracy': np.float64(0.5051153269926426), 'by_group': {'Asian-Pac-Islander_Female': np.float64(0.48), 'Asian-Pac-Islander_Male': np.float64(0.75), 'Black_Female': np.float64(0.12), 'Black_Male': np.float64(0.12), 'White_Female': np.float64(0.11), 'White_Male': np.float64(0.12)}, 'status': 'fail', 'total_time': 288.8165006637573, 'fit_time': np.float64(51.304742097854614), 'score_time': np.float64(3.0130395889282227), 'absolute_time': 1746704116.4890327, 'flatten_equalized_odds_ratio': 'nan_0.21_nan_nan_0.0', 'flatten_balanced_accuracy': '0.5_0.53_0.5_0.5_0.5'}
+AutoML: optimization done.
+AutoML: miner done.
+AutoML: export done.
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+hamlet_1602667841
+AutoML execution ended

@@ -1,0 +1,9 @@
+%% Iteration: 1
+
+cc5852791870854613569 :=> mandatory_order([mitigation,normalization], rf). % balanced_accuracy
+cc8489315326384507087 :=> mandatory_order([mitigation,features], rf). % balanced_accuracy
+cc3834968728400752100 :=> mandatory([mitigation,normalization], rf). % balanced_accuracy
+cc1720598130180110068 :=> mandatory([mitigation,features], rf). % balanced_accuracy
+cc4425624435998193181 :=> mandatory([rebalancing,mitigation], rf). % balanced_accuracy
+
+

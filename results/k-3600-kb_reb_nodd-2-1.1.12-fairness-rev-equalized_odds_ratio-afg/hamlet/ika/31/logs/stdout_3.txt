@@ -1,0 +1,274 @@
+Sensitive groups ready!
+Theory ready!
+Theory:
+step(normalization) :- true.
+step(features) :- true.
+step(mitigation) :- true.
+step(rebalancing) :- true.
+step(classification) :- true.
+operator(normalization, power_transformer) :- true.
+operator(normalization, robust_scaler) :- true.
+operator(normalization, standard) :- true.
+operator(normalization, minmax) :- true.
+operator(features, select_k_best) :- true.
+operator(features, pca) :- true.
+operator(mitigation, corr_remover) :- true.
+operator(mitigation, lfr) :- true.
+operator(rebalancing, near_miss) :- true.
+operator(rebalancing, smote) :- true.
+operator(classification, knn) :- true.
+operator(classification, nn) :- true.
+operator(classification, rf) :- true.
+hyperparameter(robust_scaler, with_centering, choice) :- true.
+hyperparameter(robust_scaler, with_scaling, choice) :- true.
+hyperparameter(standard, with_mean, choice) :- true.
+hyperparameter(standard, with_std, choice) :- true.
+hyperparameter(select_k_best, k, randint) :- true.
+hyperparameter(pca, n_components, randint) :- true.
+hyperparameter(corr_remover, alpha, choice) :- true.
+hyperparameter(lfr, n_prototypes, choice) :- true.
+hyperparameter(lfr, reconstruct_weight, choice) :- true.
+hyperparameter(lfr, fairness_weight, choice) :- true.
+hyperparameter(near_miss, n_neighbors, randint) :- true.
+hyperparameter(smote, k_neighbors, randint) :- true.
+hyperparameter(knn, n_neighbors, randint) :- true.
+hyperparameter(knn, weights, choice) :- true.
+hyperparameter(knn, metric, choice) :- true.
+hyperparameter(nn, n_hidden_layers, choice) :- true.
+hyperparameter(nn, n_neurons, choice) :- true.
+hyperparameter(nn, activation, choice) :- true.
+hyperparameter(nn, solver, choice) :- true.
+hyperparameter(nn, alpha, choice) :- true.
+hyperparameter(nn, learning_rate, choice) :- true.
+hyperparameter(rf, n_estimators, choice) :- true.
+hyperparameter(rf, max_depth, randint) :- true.
+hyperparameter(rf, max_features, randint) :- true.
+hyperparameter(rf, min_samples_split, randint) :- true.
+hyperparameter(rf, max_leaf_nodes, randint) :- true.
+hyperparameter(rf, bootstrap, choice) :- true.
+hyperparameter(rf, criterion, choice) :- true.
+domain(robust_scaler, with_centering, [true, false]) :- true.
+domain(robust_scaler, with_scaling, [true, false]) :- true.
+domain(standard, with_mean, [true, false]) :- true.
+domain(standard, with_std, [true, false]) :- true.
+domain(select_k_best, k, [1, 10]) :- true.
+domain(pca, n_components, [1, 8]) :- true.
+domain(corr_remover, alpha, [0.25, 0.5, 0.75, 1.0]) :- true.
+domain(lfr, n_prototypes, [10, 50, 100, 200]) :- true.
+domain(lfr, reconstruct_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(lfr, fairness_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(near_miss, n_neighbors, [1, 4]) :- true.
+domain(smote, k_neighbors, [5, 8]) :- true.
+domain(knn, n_neighbors, [3, 20]) :- true.
+domain(knn, weights, [uniform, distance]) :- true.
+domain(knn, metric, [minkowski, euclidean, manhattan]) :- true.
+domain(nn, n_hidden_layers, [1, 5, 10, 20]) :- true.
+domain(nn, n_neurons, [5, 10, 25, 50]) :- true.
+domain(nn, activation, [logistic, tanh, relu]) :- true.
+domain(nn, solver, [lbfgs, sgd, adam]) :- true.
+domain(nn, alpha, [0.0001, 0.001, 0.01, 0.00001]) :- true.
+domain(nn, learning_rate, [constant, invscaling, adaptive]) :- true.
+domain(rf, n_estimators, [10, 25, 50, 75, 100]) :- true.
+domain(rf, max_depth, [1, 5]) :- true.
+domain(rf, max_features, [1, 4]) :- true.
+domain(rf, min_samples_split, [2, 6]) :- true.
+domain(rf, max_leaf_nodes, [2, 6]) :- true.
+domain(rf, bootstrap, [true, false]) :- true.
+domain(rf, criterion, [gini, entropy]) :- true.
+dataset('credit-g') :- true.
+metric(balanced_accuracy) :- true.
+fairness_metric(equalized_odds_ratio) :- true.
+sensitive_feature(personal_status, [single, 'div/dep/mar', 'mar/wid']) :- true.
+sensitive_feature(sex, [male, female]) :- true.
+':=>'(mc0, unbalanced_dataset) :- true.
+':=>'(cc2176598619324919269, forbidden([features, rebalancing, normalization], nn)) :- true.
+':=>'(cc8902563500948610302, forbidden([features, normalization, rebalancing], rf)) :- true.
+':=>'(cc3796249177659540061, mandatory([normalization], rf)) :- true.
+':=>'(cc6832024142464238921, mandatory([features], rf)) :- true.
+':=>'(cc5810850906881127573, forbidden([features, normalization, rebalancing], knn)) :- true.
+pipeline([Step_1_0], ZZ_0) :- (step(Step_1_0), '\\='(Step_1_0, classification), operator(classification, ZZ_0)).
+pipeline([Step_1_1, Step_2_0], ZZ_1) :- (step(Step_1_1), step(Step_2_0), '\\='(Step_1_1, classification), '\\='(Step_2_0, classification), '\\='(Step_1_1, Step_2_0), operator(classification, ZZ_1)).
+pipeline([Step_1_2, Step_2_1, Step_3_0], ZZ_2) :- (step(Step_1_2), step(Step_2_1), step(Step_3_0), '\\='(Step_1_2, classification), '\\='(Step_2_1, classification), '\\='(Step_3_0, classification), '\\='(Step_1_2, Step_2_1), '\\='(Step_1_2, Step_3_0), '\\='(Step_2_1, Step_3_0), operator(classification, ZZ_2)).
+pipeline([Step_1_3, Step_2_2, Step_3_1, Step_4_0], ZZ_3) :- (step(Step_1_3), step(Step_2_2), step(Step_3_1), step(Step_4_0), '\\='(Step_1_3, classification), '\\='(Step_2_2, classification), '\\='(Step_3_1, classification), '\\='(Step_4_0, classification), '\\='(Step_1_3, Step_2_2), '\\='(Step_1_3, Step_3_1), '\\='(Step_1_3, Step_4_0), '\\='(Step_2_2, Step_3_1), '\\='(Step_2_2, Step_4_0), '\\='(Step_3_1, Step_4_0), operator(classification, ZZ_3)).
+':=>'(p153429, sensitive_group([single])) :- true.
+':=>'(p324584, sensitive_group(['div/dep/mar'])) :- true.
+':=>'(p348347, sensitive_group(['mar/wid'])) :- true.
+':=>'(p821131, sensitive_group([male])) :- true.
+':=>'(p770699, sensitive_group([female])) :- true.
+':=>'(p407708, sensitive_group([single, male])) :- true.
+':=>'(p9234, sensitive_group([single, female])) :- true.
+':=>'(p363011, sensitive_group(['div/dep/mar', male])) :- true.
+':=>'(p921417, sensitive_group(['div/dep/mar', female])) :- true.
+':=>'(p32734, sensitive_group(['mar/wid', male])) :- true.
+':=>'(p392653, sensitive_group(['mar/wid', female])) :- true.
+':=>'(p325971, pipeline([], rf)) :- true.
+':=>'(p281192, pipeline([], rf)) :- true.
+':=>'(p185086, pipeline([normalization], rf)) :- true.
+':=>'(p864877, pipeline([features], rf)) :- true.
+':=>'(p395585, pipeline([mitigation], rf)) :- true.
+':=>'(p339705, pipeline([mitigation], rf)) :- true.
+':=>'(p491455, pipeline([rebalancing], rf)) :- true.
+':=>'(p895987, pipeline([rebalancing], rf)) :- true.
+':=>'(p38069, pipeline([normalization, mitigation], rf)) :- true.
+':=>'(p433486, pipeline([normalization, rebalancing], rf)) :- true.
+':=>'(p46121, pipeline([features, mitigation], rf)) :- true.
+':=>'(p973327, pipeline([features, rebalancing], rf)) :- true.
+':=>'(p717758, pipeline([mitigation, normalization], rf)) :- true.
+':=>'(p564207, pipeline([mitigation, features], rf)) :- true.
+':=>'(p915270, pipeline([mitigation, rebalancing], rf)) :- true.
+':=>'(p342420, pipeline([mitigation, rebalancing], rf)) :- true.
+':=>'(p14221, pipeline([rebalancing, normalization], rf)) :- true.
+':=>'(p623668, pipeline([rebalancing, features], rf)) :- true.
+':=>'(p131794, pipeline([rebalancing, mitigation], rf)) :- true.
+':=>'(p879149, pipeline([rebalancing, mitigation], rf)) :- true.
+':=>'(p569742, pipeline([normalization, features, rebalancing], knn)) :- true.
+':=>'(p670548, pipeline([normalization, features, rebalancing], nn)) :- true.
+':=>'(p744483, pipeline([normalization, features, rebalancing], rf)) :- true.
+':=>'(p292358, pipeline([normalization, mitigation, rebalancing], rf)) :- true.
+':=>'(p35620, pipeline([normalization, rebalancing, features], knn)) :- true.
+':=>'(p960104, pipeline([normalization, rebalancing, features], nn)) :- true.
+':=>'(p727913, pipeline([normalization, rebalancing, features], rf)) :- true.
+':=>'(p363325, pipeline([normalization, rebalancing, mitigation], rf)) :- true.
+':=>'(p881873, pipeline([features, normalization, rebalancing], knn)) :- true.
+':=>'(p209884, pipeline([features, normalization, rebalancing], nn)) :- true.
+':=>'(p713983, pipeline([features, normalization, rebalancing], rf)) :- true.
+':=>'(p391472, pipeline([features, mitigation, rebalancing], rf)) :- true.
+':=>'(p993555, pipeline([features, rebalancing, normalization], knn)) :- true.
+':=>'(p935368, pipeline([features, rebalancing, normalization], nn)) :- true.
+':=>'(p616454, pipeline([features, rebalancing, normalization], rf)) :- true.
+':=>'(p270703, pipeline([features, rebalancing, mitigation], rf)) :- true.
+':=>'(p98980, pipeline([mitigation, normalization, rebalancing], rf)) :- true.
+':=>'(p806032, pipeline([mitigation, features, rebalancing], rf)) :- true.
+':=>'(p870294, pipeline([mitigation, rebalancing, normalization], rf)) :- true.
+':=>'(p143317, pipeline([mitigation, rebalancing, features], rf)) :- true.
+':=>'(p402147, pipeline([rebalancing, normalization, features], knn)) :- true.
+':=>'(p34879, pipeline([rebalancing, normalization, features], nn)) :- true.
+':=>'(p253916, pipeline([rebalancing, normalization, features], rf)) :- true.
+':=>'(p950350, pipeline([rebalancing, normalization, mitigation], rf)) :- true.
+':=>'(p405101, pipeline([rebalancing, features, normalization], knn)) :- true.
+':=>'(p883393, pipeline([rebalancing, features, normalization], nn)) :- true.
+':=>'(p947401, pipeline([rebalancing, features, normalization], rf)) :- true.
+':=>'(p985011, pipeline([rebalancing, features, mitigation], rf)) :- true.
+':=>'(p675353, pipeline([rebalancing, mitigation, normalization], rf)) :- true.
+':=>'(p812723, pipeline([rebalancing, mitigation, features], rf)) :- true.
+':=>'(p512569, pipeline([normalization, features, mitigation, rebalancing], knn)) :- true.
+':=>'(p919352, pipeline([normalization, features, mitigation, rebalancing], nn)) :- true.
+':=>'(p154036, pipeline([normalization, features, mitigation, rebalancing], rf)) :- true.
+':=>'(p684562, pipeline([normalization, features, rebalancing, mitigation], knn)) :- true.
+':=>'(p977376, pipeline([normalization, features, rebalancing, mitigation], nn)) :- true.
+':=>'(p345062, pipeline([normalization, features, rebalancing, mitigation], rf)) :- true.
+':=>'(p128733, pipeline([normalization, mitigation, features, rebalancing], knn)) :- true.
+':=>'(p44566, pipeline([normalization, mitigation, features, rebalancing], nn)) :- true.
+':=>'(p361373, pipeline([normalization, mitigation, features, rebalancing], rf)) :- true.
+':=>'(p555661, pipeline([normalization, mitigation, rebalancing, features], knn)) :- true.
+':=>'(p777388, pipeline([normalization, mitigation, rebalancing, features], nn)) :- true.
+':=>'(p474243, pipeline([normalization, mitigation, rebalancing, features], rf)) :- true.
+':=>'(p908931, pipeline([normalization, rebalancing, features, mitigation], knn)) :- true.
+':=>'(p270644, pipeline([normalization, rebalancing, features, mitigation], nn)) :- true.
+':=>'(p44861, pipeline([normalization, rebalancing, features, mitigation], rf)) :- true.
+':=>'(p965679, pipeline([normalization, rebalancing, mitigation, features], knn)) :- true.
+':=>'(p465186, pipeline([normalization, rebalancing, mitigation, features], nn)) :- true.
+':=>'(p119518, pipeline([normalization, rebalancing, mitigation, features], rf)) :- true.
+':=>'(p171439, pipeline([features, normalization, mitigation, rebalancing], knn)) :- true.
+':=>'(p707883, pipeline([features, normalization, mitigation, rebalancing], nn)) :- true.
+':=>'(p977540, pipeline([features, normalization, mitigation, rebalancing], rf)) :- true.
+':=>'(p816723, pipeline([features, normalization, rebalancing, mitigation], knn)) :- true.
+':=>'(p701967, pipeline([features, normalization, rebalancing, mitigation], nn)) :- true.
+':=>'(p815074, pipeline([features, normalization, rebalancing, mitigation], rf)) :- true.
+':=>'(p310322, pipeline([features, mitigation, normalization, rebalancing], knn)) :- true.
+':=>'(p595684, pipeline([features, mitigation, normalization, rebalancing], nn)) :- true.
+':=>'(p662521, pipeline([features, mitigation, normalization, rebalancing], rf)) :- true.
+':=>'(p295223, pipeline([features, mitigation, rebalancing, normalization], knn)) :- true.
+':=>'(p832304, pipeline([features, mitigation, rebalancing, normalization], nn)) :- true.
+':=>'(p997149, pipeline([features, mitigation, rebalancing, normalization], rf)) :- true.
+':=>'(p712516, pipeline([features, rebalancing, normalization, mitigation], knn)) :- true.
+':=>'(p370300, pipeline([features, rebalancing, normalization, mitigation], nn)) :- true.
+':=>'(p342889, pipeline([features, rebalancing, normalization, mitigation], rf)) :- true.
+':=>'(p771932, pipeline([features, rebalancing, mitigation, normalization], knn)) :- true.
+':=>'(p194840, pipeline([features, rebalancing, mitigation, normalization], nn)) :- true.
+':=>'(p641800, pipeline([features, rebalancing, mitigation, normalization], rf)) :- true.
+':=>'(p945248, pipeline([mitigation, normalization, features, rebalancing], knn)) :- true.
+':=>'(p820129, pipeline([mitigation, normalization, features, rebalancing], nn)) :- true.
+':=>'(p928661, pipeline([mitigation, normalization, features, rebalancing], rf)) :- true.
+':=>'(p212435, pipeline([mitigation, normalization, rebalancing, features], knn)) :- true.
+':=>'(p896133, pipeline([mitigation, normalization, rebalancing, features], nn)) :- true.
+':=>'(p229788, pipeline([mitigation, normalization, rebalancing, features], rf)) :- true.
+':=>'(p747216, pipeline([mitigation, features, normalization, rebalancing], knn)) :- true.
+':=>'(p234179, pipeline([mitigation, features, normalization, rebalancing], nn)) :- true.
+':=>'(p221006, pipeline([mitigation, features, normalization, rebalancing], rf)) :- true.
+':=>'(p727133, pipeline([mitigation, features, rebalancing, normalization], knn)) :- true.
+':=>'(p263125, pipeline([mitigation, features, rebalancing, normalization], nn)) :- true.
+':=>'(p182458, pipeline([mitigation, features, rebalancing, normalization], rf)) :- true.
+':=>'(p897689, pipeline([mitigation, rebalancing, normalization, features], knn)) :- true.
+':=>'(p365200, pipeline([mitigation, rebalancing, normalization, features], nn)) :- true.
+':=>'(p535328, pipeline([mitigation, rebalancing, normalization, features], rf)) :- true.
+':=>'(p979850, pipeline([mitigation, rebalancing, features, normalization], knn)) :- true.
+':=>'(p742677, pipeline([mitigation, rebalancing, features, normalization], nn)) :- true.
+':=>'(p2102, pipeline([mitigation, rebalancing, features, normalization], rf)) :- true.
+':=>'(p524354, pipeline([rebalancing, normalization, features, mitigation], knn)) :- true.
+':=>'(p236207, pipeline([rebalancing, normalization, features, mitigation], nn)) :- true.
+':=>'(p383006, pipeline([rebalancing, normalization, features, mitigation], rf)) :- true.
+':=>'(p755038, pipeline([rebalancing, normalization, mitigation, features], knn)) :- true.
+':=>'(p498594, pipeline([rebalancing, normalization, mitigation, features], nn)) :- true.
+':=>'(p993576, pipeline([rebalancing, normalization, mitigation, features], rf)) :- true.
+':=>'(p867755, pipeline([rebalancing, features, normalization, mitigation], knn)) :- true.
+':=>'(p503572, pipeline([rebalancing, features, normalization, mitigation], nn)) :- true.
+':=>'(p70222, pipeline([rebalancing, features, normalization, mitigation], rf)) :- true.
+':=>'(p13820, pipeline([rebalancing, features, mitigation, normalization], knn)) :- true.
+':=>'(p54928, pipeline([rebalancing, features, mitigation, normalization], nn)) :- true.
+':=>'(p154509, pipeline([rebalancing, features, mitigation, normalization], rf)) :- true.
+':=>'(p297700, pipeline([rebalancing, mitigation, normalization, features], knn)) :- true.
+':=>'(p435637, pipeline([rebalancing, mitigation, normalization, features], nn)) :- true.
+':=>'(p908855, pipeline([rebalancing, mitigation, normalization, features], rf)) :- true.
+':=>'(p403451, pipeline([rebalancing, mitigation, features, normalization], knn)) :- true.
+':=>'(p65681, pipeline([rebalancing, mitigation, features, normalization], nn)) :- true.
+':=>'(p945930, pipeline([rebalancing, mitigation, features, normalization], rf)) :- true.
+
+Checking Config
+Exporting Config
+Saving Graph
+Exporting AutoML input
+Exporting Space
+Exporting Constraints
+Input created for iteration Config(iteration=3, dataset=credit-g, metric=balanced_accuracy, fairnessMetric=equalized_odds_ratio, sensitiveFeatures=[personal_status, sex], mode=max, batchSize=999999, timeBudget=900, seed=42)
+Here is the standard output/error of the command:
+
+b0dfecb9d46c4ca165bb31032ea2dfa334fe50453797a701078c312d057f4cd1
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+WARNING:root:No module named 'rpy2': FairAdapt will be unavailable. To install, run:
+pip install 'aif360[FairAdapt]'
+INFO:flaml.tune.searcher.blendsearch:No low-cost partial config given to the search algorithm. For cost-frugal search, consider providing low-cost values for cost-related hps via 'low_cost_partial_config'. More info can be found at https://microsoft.github.io/FLAML/docs/FAQ#about-low_cost_partial_config-in-tune
+Trying to add: (Forbidden: features == 'FunctionTransformer' && Forbidden: classification == 'RandomForestClassifier')
+Added successfully: (Forbidden: features == 'FunctionTransformer' && Forbidden: classification == 'RandomForestClassifier')
+Trying to add: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'RandomForestClassifier')
+Added successfully: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'RandomForestClassifier')
+Trying to add: (Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: rebalancing in {'NearMiss', 'SMOTE'} && Forbidden: classification == 'KNeighborsClassifier')
+Added successfully: (Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: rebalancing in {'NearMiss', 'SMOTE'} && Forbidden: classification == 'KNeighborsClassifier')
+Trying to add: (Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: rebalancing in {'NearMiss', 'SMOTE'} && Forbidden: classification == 'RandomForestClassifier')
+Added successfully: (Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: rebalancing in {'NearMiss', 'SMOTE'} && Forbidden: classification == 'RandomForestClassifier')
+Trying to add: (Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: rebalancing in {'NearMiss', 'SMOTE'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'MLPClassifier')
+Added successfully: (Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: rebalancing in {'NearMiss', 'SMOTE'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'MLPClassifier')
+AutoML: starting optimization.
+187
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 16, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(1.0)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_mitigation_normalization_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'equalized_odds_ratio': np.float64(0.910016420361248), 'balanced_accuracy': np.float64(0.5102380952380952), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.92), 'male_mar/wid': np.float64(0.97), 'male_single': np.float64(0.95)}, 'status': 'success', 'total_time': 5.116818904876709, 'fit_time': np.float64(0.7747637271881104), 'score_time': np.float64(0.19946041107177734), 'absolute_time': 1746694193.1348217, 'flatten_equalized_odds_ratio': '0.79_1.0_0.93_0.83_1.0', 'flatten_balanced_accuracy': '0.54_0.5_0.5_0.51_0.5'}
+Timeout
+188
+fail
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(50), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')}
+{'equalized_odds_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'female_div/dep/mar': -inf, 'male_div/sep': -inf, 'male_mar/wid': -inf, 'male_single': -inf}, 'status': 'fail', 'total_time': 900.1684439182281, 'fit_time': 0, 'score_time': 0, 'absolute_time': 1746695093.5172012}
+AutoML: optimization done.
+AutoML: miner done.
+AutoML: export done.
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+hamlet_899664157
+AutoML execution ended

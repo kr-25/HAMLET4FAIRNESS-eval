@@ -1,0 +1,25 @@
+%% Iteration: 1
+
+
+
+
+%% Iteration: 2
+
+
+
+
+%% Iteration: 3
+
+
+
+
+%% Iteration: 4
+
+cc3063710100398270396 :=> mandatory_order([mitigation,normalization], rf). % equalized_odds_ratio
+cc3857398475449111588 :=> mandatory_order([mitigation,rebalancing], rf). % equalized_odds_ratio
+cc966358399798039472 :=> mandatory_order([mitigation,features], rf). % equalized_odds_ratio
+cc8650483511236313435 :=> mandatory_order([rebalancing,normalization], rf). % equalized_odds_ratio
+cc5278588666647797562 :=> mandatory([rebalancing,normalization,mitigation], rf). % equalized_odds_ratio
+cc6867442376425684750 :=> mandatory([rebalancing,mitigation,features], rf). % equalized_odds_ratio
+
+

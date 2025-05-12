@@ -1,0 +1,4 @@
+cc4959159713972187482 :=> mandatory_order([mitigation,normalization], rf). % demographic_parity_ratio
+cc1789640065795047887 :=> mandatory_order([mitigation,features], rf). % demographic_parity_ratio
+cc5340748734589839244 :=> mandatory([normalization,mitigation], rf). % demographic_parity_ratio
+cc3747879427474707489 :=> mandatory([features,mitigation], rf). % demographic_parity_ratio

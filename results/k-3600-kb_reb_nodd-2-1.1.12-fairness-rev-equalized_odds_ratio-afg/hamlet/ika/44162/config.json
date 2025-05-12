@@ -1,0 +1,1 @@
+{"iteration":4,"dataset":"compass","metric":"balanced_accuracy","fairnessMetric":"equalized_odds_ratio","sensitiveFeatures":["sex","race"],"mode":"max","batchSize":999999,"timeBudget":900,"seed":42}

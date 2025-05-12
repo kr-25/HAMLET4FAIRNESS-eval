@@ -1,0 +1,16 @@
+cc6879317989374125140 :=> mandatory_order([mitigation,features], rf). % demographic_parity_ratio
+cc5621299089657265006 :=> mandatory([features,normalization], nn). % demographic_parity_ratio
+cc7466873496047421045 :=> mandatory([mitigation,normalization], nn). % demographic_parity_ratio
+cc1046974847385033543 :=> mandatory([rebalancing,normalization], nn). % demographic_parity_ratio
+cc3446651192380935411 :=> mandatory([features,rebalancing], rf). % demographic_parity_ratio
+cc3848074166242549320 :=> mandatory([normalization,features,mitigation], rf). % demographic_parity_ratio
+cc1404030476019268258 :=> forbidden([normalization,mitigation,rebalancing,features], nn). % demographic_parity_ratio
+cc3598366647903292900 :=> forbidden([normalization,mitigation,rebalancing,features], knn). % demographic_parity_ratio
+cc4718914882170258577 :=> mandatory([mitigation], nn). % balanced_accuracy
+discriminate(pipeline([rebalancing], knn), [male,div/sep]).
+discriminate(pipeline([mitigation], knn), [male,div/sep]).
+discriminate(pipeline([features], knn), [male,div/sep]).
+discriminate(pipeline([normalization], knn), [male,div/sep]).
+discriminate(pipeline([features,mitigation], knn), [male,div/sep]).
+discriminate(pipeline([features,rebalancing], knn), [male,div/sep]).
+discriminate(pipeline([mitigation,rebalancing], knn), [male,div/sep]).

@@ -2,7 +2,10 @@
 
 This is the repository for reproducing the experiments performed in **HAMLET4Fairness: Enhancing Fairness in AI Pipelines through Human-Centered AutoML and Argumentation**.
 
-If you are interest in discovering HAMLET as an end-to-end AutoML framework, please refer to the [GitHub repository](https://github.com/kr-25/HAMLET4FAIRNESS).
+- The folder ```results``` provides the already-computed results.
+- The folder ```resources``` provides the supplementary material and the LogicalKBs used in the experiments
+
+If you are interest in discovering and running HAMLET as an end-to-end AutoML framework, please refer to the [GitHub repository](https://github.com/kr-25/HAMLET4FAIRNESS).
 
 # Requirements
 

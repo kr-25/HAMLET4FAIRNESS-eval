@@ -1,0 +1,4 @@
+cc6360677271007828484 :=> forbidden([mitigation], nn). % equalized_odds_ratio
+cc4260300970891341768 :=> forbidden([normalization], nn). % equalized_odds_ratio
+cc717983522903218310 :=> forbidden([rebalancing], nn). % equalized_odds_ratio
+cc435030458663587991 :=> forbidden([features], nn). % equalized_odds_ratio

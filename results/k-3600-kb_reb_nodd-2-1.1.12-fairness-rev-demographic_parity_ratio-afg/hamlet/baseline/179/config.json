@@ -1,0 +1,1 @@
+{"iteration":1,"dataset":"adult","metric":"balanced_accuracy","fairnessMetric":"demographic_parity_ratio","sensitiveFeatures":["sex","race"],"mode":"max","batchSize":999999,"timeBudget":3600,"seed":42}

@@ -1,0 +1,41 @@
+%% Iteration: 1
+
+
+
+
+%% Iteration: 2
+
+cc4959159713972187482 :=> mandatory_order([mitigation,normalization], rf). % demographic_parity_ratio
+cc1789640065795047887 :=> mandatory_order([mitigation,features], rf). % demographic_parity_ratio
+cc5340748734589839244 :=> mandatory([normalization,mitigation], rf). % demographic_parity_ratio
+cc3747879427474707489 :=> mandatory([features,mitigation], rf). % demographic_parity_ratio
+
+
+%% Iteration: 3
+
+cc6108586047793131085 :=> mandatory_order([mitigation,normalization], knn). % demographic_parity_ratio
+cc14388833156950494 :=> mandatory_order([mitigation,features], knn). % demographic_parity_ratio
+cc5655295055715739781 :=> mandatory_order([mitigation,normalization], rf). % demographic_parity_ratio
+cc7757524154654718432 :=> mandatory_order([mitigation,features], rf). % demographic_parity_ratio
+cc3702546264745894298 :=> mandatory_order([mitigation,normalization], nn). % demographic_parity_ratio
+cc1408165911154310731 :=> mandatory_order([mitigation,features], nn). % demographic_parity_ratio
+cc2037219412306235482 :=> mandatory([normalization,features,mitigation], knn). % demographic_parity_ratio
+cc7258870839650161586 :=> mandatory([mitigation,normalization], rf). % demographic_parity_ratio
+cc7940436500285682894 :=> mandatory([features,mitigation], rf). % demographic_parity_ratio
+cc7118458281804345632 :=> mandatory([normalization,features,mitigation], nn). % demographic_parity_ratio
+
+
+%% Iteration: 4
+
+cc3094914882973909324 :=> mandatory_order([mitigation,normalization], rf). % demographic_parity_ratio
+cc144178922774094990 :=> mandatory_order([mitigation,features], rf). % demographic_parity_ratio
+cc2537680696351739855 :=> mandatory_order([mitigation,normalization], knn). % demographic_parity_ratio
+cc6922958188385712075 :=> mandatory_order([mitigation,normalization], nn). % demographic_parity_ratio
+cc261562760441350431 :=> mandatory_order([mitigation,features], knn). % demographic_parity_ratio
+cc1883245360655203213 :=> mandatory_order([mitigation,features], nn). % demographic_parity_ratio
+cc7643707498747094514 :=> mandatory([mitigation,normalization], rf). % demographic_parity_ratio
+cc1806138676539113395 :=> mandatory([mitigation,features], rf). % demographic_parity_ratio
+cc2124504633535728589 :=> mandatory([mitigation,normalization,features], knn). % demographic_parity_ratio
+cc1795870470392619634 :=> mandatory([mitigation,normalization,features], nn). % demographic_parity_ratio
+
+

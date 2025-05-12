@@ -1,0 +1,35 @@
+cc6550643520665473034 :=> mandatory_order([mitigation,features], rf). % demographic_parity_ratio
+cc5656489010867903417 :=> mandatory_order([normalization,features], rf). % demographic_parity_ratio
+cc2950414221474875227 :=> mandatory([features,normalization,mitigation], nn). % demographic_parity_ratio
+cc2229053160863581880 :=> mandatory([features,normalization,mitigation], rf). % demographic_parity_ratio
+cc3948826366353702696 :=> mandatory([normalization,rebalancing,mitigation], nn). % demographic_parity_ratio
+cc3611089982613366118 :=> forbidden([normalization,features,rebalancing,mitigation], nn). % demographic_parity_ratio
+cc8752260634729574039 :=> mandatory_order([normalization,mitigation], nn). % balanced_accuracy
+discriminate(pipeline([mitigation], nn), [female,div/dep/mar]).
+discriminate(pipeline([features], nn), [female,div/dep/mar]).
+discriminate(pipeline([mitigation], nn), [male,div/sep]).
+discriminate(pipeline([features], nn), [male,div/sep]).
+discriminate(pipeline([mitigation], nn), [male,mar/wid]).
+discriminate(pipeline([features], nn), [male,mar/wid]).
+discriminate(pipeline([mitigation], nn), [male,single]).
+discriminate(pipeline([features], nn), [male,single]).
+discriminate(pipeline([normalization], nn), [female,div/dep/mar]).
+discriminate(pipeline([normalization], nn), [male,div/sep]).
+discriminate(pipeline([rebalancing], nn), [male,div/sep]).
+discriminate(pipeline([normalization], nn), [male,mar/wid]).
+discriminate(pipeline([normalization], nn), [male,single]).
+discriminate(pipeline([rebalancing], nn), [female,div/dep/mar]).
+discriminate(pipeline([rebalancing], nn), [male,mar/wid]).
+discriminate(pipeline([rebalancing], nn), [male,single]).
+discriminate(pipeline([features,mitigation], nn), [female,div/dep/mar]).
+discriminate(pipeline([normalization,mitigation], nn), [female,div/dep/mar]).
+discriminate(pipeline([features,rebalancing], nn), [female,div/dep/mar]).
+discriminate(pipeline([features,mitigation], nn), [male,div/sep]).
+discriminate(pipeline([normalization,mitigation], nn), [male,div/sep]).
+discriminate(pipeline([features,rebalancing], nn), [male,div/sep]).
+discriminate(pipeline([features,mitigation], nn), [male,mar/wid]).
+discriminate(pipeline([normalization,mitigation], nn), [male,mar/wid]).
+discriminate(pipeline([features,rebalancing], nn), [male,mar/wid]).
+discriminate(pipeline([features,mitigation], nn), [male,single]).
+discriminate(pipeline([normalization,mitigation], nn), [male,single]).
+discriminate(pipeline([features,rebalancing], nn), [male,single]).

@@ -1,0 +1,411 @@
+Sensitive groups ready!
+Theory ready!
+Theory:
+step(normalization) :- true.
+step(features) :- true.
+step(mitigation) :- true.
+step(rebalancing) :- true.
+step(classification) :- true.
+operator(normalization, power_transformer) :- true.
+operator(normalization, robust_scaler) :- true.
+operator(normalization, standard) :- true.
+operator(normalization, minmax) :- true.
+operator(features, select_k_best) :- true.
+operator(features, pca) :- true.
+operator(mitigation, corr_remover) :- true.
+operator(mitigation, lfr) :- true.
+operator(rebalancing, near_miss) :- true.
+operator(rebalancing, smote) :- true.
+operator(classification, knn) :- true.
+operator(classification, nn) :- true.
+operator(classification, rf) :- true.
+hyperparameter(robust_scaler, with_centering, choice) :- true.
+hyperparameter(robust_scaler, with_scaling, choice) :- true.
+hyperparameter(standard, with_mean, choice) :- true.
+hyperparameter(standard, with_std, choice) :- true.
+hyperparameter(select_k_best, k, randint) :- true.
+hyperparameter(pca, n_components, randint) :- true.
+hyperparameter(corr_remover, alpha, choice) :- true.
+hyperparameter(lfr, n_prototypes, choice) :- true.
+hyperparameter(lfr, reconstruct_weight, choice) :- true.
+hyperparameter(lfr, fairness_weight, choice) :- true.
+hyperparameter(near_miss, n_neighbors, randint) :- true.
+hyperparameter(smote, k_neighbors, randint) :- true.
+hyperparameter(knn, n_neighbors, randint) :- true.
+hyperparameter(knn, weights, choice) :- true.
+hyperparameter(knn, metric, choice) :- true.
+hyperparameter(nn, n_hidden_layers, choice) :- true.
+hyperparameter(nn, n_neurons, choice) :- true.
+hyperparameter(nn, activation, choice) :- true.
+hyperparameter(nn, solver, choice) :- true.
+hyperparameter(nn, alpha, choice) :- true.
+hyperparameter(nn, learning_rate, choice) :- true.
+hyperparameter(rf, n_estimators, choice) :- true.
+hyperparameter(rf, max_depth, randint) :- true.
+hyperparameter(rf, max_features, randint) :- true.
+hyperparameter(rf, min_samples_split, randint) :- true.
+hyperparameter(rf, max_leaf_nodes, randint) :- true.
+hyperparameter(rf, bootstrap, choice) :- true.
+hyperparameter(rf, criterion, choice) :- true.
+domain(robust_scaler, with_centering, [true, false]) :- true.
+domain(robust_scaler, with_scaling, [true, false]) :- true.
+domain(standard, with_mean, [true, false]) :- true.
+domain(standard, with_std, [true, false]) :- true.
+domain(select_k_best, k, [1, 10]) :- true.
+domain(pca, n_components, [1, 8]) :- true.
+domain(corr_remover, alpha, [0.25, 0.5, 0.75, 1.0]) :- true.
+domain(lfr, n_prototypes, [10, 50, 100, 200]) :- true.
+domain(lfr, reconstruct_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(lfr, fairness_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(near_miss, n_neighbors, [1, 4]) :- true.
+domain(smote, k_neighbors, [5, 8]) :- true.
+domain(knn, n_neighbors, [3, 20]) :- true.
+domain(knn, weights, [uniform, distance]) :- true.
+domain(knn, metric, [minkowski, euclidean, manhattan]) :- true.
+domain(nn, n_hidden_layers, [1, 5, 10, 20]) :- true.
+domain(nn, n_neurons, [5, 10, 25, 50]) :- true.
+domain(nn, activation, [logistic, tanh, relu]) :- true.
+domain(nn, solver, [lbfgs, sgd, adam]) :- true.
+domain(nn, alpha, [0.0001, 0.001, 0.01, 0.00001]) :- true.
+domain(nn, learning_rate, [constant, invscaling, adaptive]) :- true.
+domain(rf, n_estimators, [10, 25, 50, 75, 100]) :- true.
+domain(rf, max_depth, [1, 5]) :- true.
+domain(rf, max_features, [1, 4]) :- true.
+domain(rf, min_samples_split, [2, 6]) :- true.
+domain(rf, max_leaf_nodes, [2, 6]) :- true.
+domain(rf, bootstrap, [true, false]) :- true.
+domain(rf, criterion, [gini, entropy]) :- true.
+':=>'(c1, mandatory([mitigation], classification)) :- true.
+':=>'(c3, mandatory_order([mitigation, features], classification)) :- true.
+':=>'(c4, mandatory_order([mitigation, normalization], classification)) :- true.
+':=>'(c5, mandatory([normalization], knn)) :- true.
+':=>'(c6, mandatory([normalization], nn)) :- true.
+dataset(compass) :- true.
+metric(balanced_accuracy) :- true.
+fairness_metric(demographic_parity_ratio) :- true.
+sensitive_feature(sex, [0, 1]) :- true.
+sensitive_feature(race, [0, 1, 2, 3, 4, 5]) :- true.
+pipeline([Step_1_0], ZZ_0) :- (step(Step_1_0), '\\='(Step_1_0, classification), operator(classification, ZZ_0)).
+pipeline([Step_1_1, Step_2_0], ZZ_1) :- (step(Step_1_1), step(Step_2_0), '\\='(Step_1_1, classification), '\\='(Step_2_0, classification), '\\='(Step_1_1, Step_2_0), operator(classification, ZZ_1)).
+pipeline([Step_1_2, Step_2_1, Step_3_0], ZZ_2) :- (step(Step_1_2), step(Step_2_1), step(Step_3_0), '\\='(Step_1_2, classification), '\\='(Step_2_1, classification), '\\='(Step_3_0, classification), '\\='(Step_1_2, Step_2_1), '\\='(Step_1_2, Step_3_0), '\\='(Step_2_1, Step_3_0), operator(classification, ZZ_2)).
+pipeline([Step_1_3, Step_2_2, Step_3_1, Step_4_0], ZZ_3) :- (step(Step_1_3), step(Step_2_2), step(Step_3_1), step(Step_4_0), '\\='(Step_1_3, classification), '\\='(Step_2_2, classification), '\\='(Step_3_1, classification), '\\='(Step_4_0, classification), '\\='(Step_1_3, Step_2_2), '\\='(Step_1_3, Step_3_1), '\\='(Step_1_3, Step_4_0), '\\='(Step_2_2, Step_3_1), '\\='(Step_2_2, Step_4_0), '\\='(Step_3_1, Step_4_0), operator(classification, ZZ_3)).
+':=>'(p198261, sensitive_group([0])) :- true.
+':=>'(p919661, sensitive_group([1])) :- true.
+':=>'(p866306, sensitive_group([0])) :- true.
+':=>'(p927349, sensitive_group([1])) :- true.
+':=>'(p495679, sensitive_group([2])) :- true.
+':=>'(p378184, sensitive_group([3])) :- true.
+':=>'(p277503, sensitive_group([4])) :- true.
+':=>'(p273479, sensitive_group([5])) :- true.
+':=>'(p45233, sensitive_group([0, 0])) :- true.
+':=>'(p615871, sensitive_group([0, 1])) :- true.
+':=>'(p912848, sensitive_group([0, 2])) :- true.
+':=>'(p815411, sensitive_group([0, 3])) :- true.
+':=>'(p309956, sensitive_group([0, 4])) :- true.
+':=>'(p787312, sensitive_group([0, 5])) :- true.
+':=>'(p493548, sensitive_group([1, 0])) :- true.
+':=>'(p223671, sensitive_group([1, 1])) :- true.
+':=>'(p515798, sensitive_group([1, 2])) :- true.
+':=>'(p421231, sensitive_group([1, 3])) :- true.
+':=>'(p59419, sensitive_group([1, 4])) :- true.
+':=>'(p119896, sensitive_group([1, 5])) :- true.
+':=>'(p805961, pipeline([], knn)) :- true.
+':=>'(p360829, pipeline([], knn)) :- true.
+':=>'(p305032, pipeline([], nn)) :- true.
+':=>'(p617640, pipeline([], nn)) :- true.
+':=>'(p755053, pipeline([], rf)) :- true.
+':=>'(p94827, pipeline([normalization], knn)) :- true.
+':=>'(p676291, pipeline([normalization], nn)) :- true.
+':=>'(p152846, pipeline([normalization], rf)) :- true.
+':=>'(p780495, pipeline([features], knn)) :- true.
+':=>'(p268271, pipeline([features], knn)) :- true.
+':=>'(p699323, pipeline([features], nn)) :- true.
+':=>'(p187380, pipeline([features], nn)) :- true.
+':=>'(p158915, pipeline([features], rf)) :- true.
+':=>'(p554640, pipeline([mitigation], knn)) :- true.
+':=>'(p565929, pipeline([mitigation], nn)) :- true.
+':=>'(p685518, pipeline([rebalancing], knn)) :- true.
+':=>'(p951115, pipeline([rebalancing], knn)) :- true.
+':=>'(p712521, pipeline([rebalancing], nn)) :- true.
+':=>'(p481929, pipeline([rebalancing], nn)) :- true.
+':=>'(p124327, pipeline([rebalancing], rf)) :- true.
+':=>'(p562147, pipeline([normalization, features], knn)) :- true.
+':=>'(p528666, pipeline([normalization, features], nn)) :- true.
+':=>'(p83797, pipeline([normalization, features], rf)) :- true.
+':=>'(p752366, pipeline([normalization, mitigation], knn)) :- true.
+':=>'(p233499, pipeline([normalization, mitigation], nn)) :- true.
+':=>'(p770036, pipeline([normalization, mitigation], rf)) :- true.
+':=>'(p38003, pipeline([normalization, rebalancing], knn)) :- true.
+':=>'(p879619, pipeline([normalization, rebalancing], nn)) :- true.
+':=>'(p328246, pipeline([normalization, rebalancing], rf)) :- true.
+':=>'(p102637, pipeline([features, normalization], knn)) :- true.
+':=>'(p756986, pipeline([features, normalization], nn)) :- true.
+':=>'(p141255, pipeline([features, normalization], rf)) :- true.
+':=>'(p18999, pipeline([features, mitigation], knn)) :- true.
+':=>'(p29612, pipeline([features, mitigation], knn)) :- true.
+':=>'(p343525, pipeline([features, mitigation], nn)) :- true.
+':=>'(p973931, pipeline([features, mitigation], nn)) :- true.
+':=>'(p793016, pipeline([features, mitigation], rf)) :- true.
+':=>'(p73165, pipeline([features, rebalancing], knn)) :- true.
+':=>'(p21720, pipeline([features, rebalancing], knn)) :- true.
+':=>'(p845763, pipeline([features, rebalancing], nn)) :- true.
+':=>'(p74707, pipeline([features, rebalancing], nn)) :- true.
+':=>'(p148392, pipeline([features, rebalancing], rf)) :- true.
+':=>'(p77397, pipeline([mitigation, features], knn)) :- true.
+':=>'(p589725, pipeline([mitigation, features], nn)) :- true.
+':=>'(p219355, pipeline([mitigation, rebalancing], knn)) :- true.
+':=>'(p255842, pipeline([mitigation, rebalancing], nn)) :- true.
+':=>'(p925477, pipeline([rebalancing, normalization], knn)) :- true.
+':=>'(p743203, pipeline([rebalancing, normalization], nn)) :- true.
+':=>'(p920453, pipeline([rebalancing, normalization], rf)) :- true.
+':=>'(p86579, pipeline([rebalancing, features], knn)) :- true.
+':=>'(p512450, pipeline([rebalancing, features], knn)) :- true.
+':=>'(p943775, pipeline([rebalancing, features], nn)) :- true.
+':=>'(p901596, pipeline([rebalancing, features], nn)) :- true.
+':=>'(p836697, pipeline([rebalancing, features], rf)) :- true.
+':=>'(p785213, pipeline([rebalancing, mitigation], knn)) :- true.
+':=>'(p366466, pipeline([rebalancing, mitigation], nn)) :- true.
+':=>'(p376854, pipeline([normalization, features, mitigation], knn)) :- true.
+':=>'(p32185, pipeline([normalization, features, mitigation], knn)) :- true.
+':=>'(p321259, pipeline([normalization, features, mitigation], nn)) :- true.
+':=>'(p103286, pipeline([normalization, features, mitigation], nn)) :- true.
+':=>'(p985106, pipeline([normalization, features, mitigation], rf)) :- true.
+':=>'(p756424, pipeline([normalization, features, mitigation], rf)) :- true.
+':=>'(p247404, pipeline([normalization, features, rebalancing], knn)) :- true.
+':=>'(p560097, pipeline([normalization, features, rebalancing], nn)) :- true.
+':=>'(p633859, pipeline([normalization, features, rebalancing], rf)) :- true.
+':=>'(p277315, pipeline([normalization, mitigation, features], knn)) :- true.
+':=>'(p856182, pipeline([normalization, mitigation, features], nn)) :- true.
+':=>'(p285023, pipeline([normalization, mitigation, features], rf)) :- true.
+':=>'(p10070, pipeline([normalization, mitigation, rebalancing], knn)) :- true.
+':=>'(p821455, pipeline([normalization, mitigation, rebalancing], nn)) :- true.
+':=>'(p893384, pipeline([normalization, mitigation, rebalancing], rf)) :- true.
+':=>'(p187645, pipeline([normalization, rebalancing, features], knn)) :- true.
+':=>'(p2972, pipeline([normalization, rebalancing, features], nn)) :- true.
+':=>'(p839374, pipeline([normalization, rebalancing, features], rf)) :- true.
+':=>'(p223307, pipeline([normalization, rebalancing, mitigation], knn)) :- true.
+':=>'(p741401, pipeline([normalization, rebalancing, mitigation], nn)) :- true.
+':=>'(p662021, pipeline([normalization, rebalancing, mitigation], rf)) :- true.
+':=>'(p634368, pipeline([features, normalization, mitigation], knn)) :- true.
+':=>'(p416334, pipeline([features, normalization, mitigation], knn)) :- true.
+':=>'(p117372, pipeline([features, normalization, mitigation], nn)) :- true.
+':=>'(p617447, pipeline([features, normalization, mitigation], nn)) :- true.
+':=>'(p451858, pipeline([features, normalization, mitigation], rf)) :- true.
+':=>'(p865868, pipeline([features, normalization, mitigation], rf)) :- true.
+':=>'(p393838, pipeline([features, normalization, rebalancing], knn)) :- true.
+':=>'(p581428, pipeline([features, normalization, rebalancing], nn)) :- true.
+':=>'(p525532, pipeline([features, normalization, rebalancing], rf)) :- true.
+':=>'(p247143, pipeline([features, mitigation, normalization], knn)) :- true.
+':=>'(p764461, pipeline([features, mitigation, normalization], nn)) :- true.
+':=>'(p679778, pipeline([features, mitigation, normalization], rf)) :- true.
+':=>'(p509553, pipeline([features, mitigation, rebalancing], knn)) :- true.
+':=>'(p507111, pipeline([features, mitigation, rebalancing], knn)) :- true.
+':=>'(p718174, pipeline([features, mitigation, rebalancing], nn)) :- true.
+':=>'(p609782, pipeline([features, mitigation, rebalancing], nn)) :- true.
+':=>'(p512852, pipeline([features, mitigation, rebalancing], rf)) :- true.
+':=>'(p746749, pipeline([features, rebalancing, normalization], knn)) :- true.
+':=>'(p854715, pipeline([features, rebalancing, normalization], nn)) :- true.
+':=>'(p351390, pipeline([features, rebalancing, normalization], rf)) :- true.
+':=>'(p729750, pipeline([features, rebalancing, mitigation], knn)) :- true.
+':=>'(p758165, pipeline([features, rebalancing, mitigation], knn)) :- true.
+':=>'(p855766, pipeline([features, rebalancing, mitigation], nn)) :- true.
+':=>'(p779209, pipeline([features, rebalancing, mitigation], nn)) :- true.
+':=>'(p843427, pipeline([features, rebalancing, mitigation], rf)) :- true.
+':=>'(p568309, pipeline([mitigation, features, rebalancing], knn)) :- true.
+':=>'(p915184, pipeline([mitigation, features, rebalancing], nn)) :- true.
+':=>'(p537759, pipeline([mitigation, rebalancing, features], knn)) :- true.
+':=>'(p310323, pipeline([mitigation, rebalancing, features], nn)) :- true.
+':=>'(p422099, pipeline([rebalancing, normalization, features], knn)) :- true.
+':=>'(p408421, pipeline([rebalancing, normalization, features], nn)) :- true.
+':=>'(p245530, pipeline([rebalancing, normalization, features], rf)) :- true.
+':=>'(p58334, pipeline([rebalancing, normalization, mitigation], knn)) :- true.
+':=>'(p707668, pipeline([rebalancing, normalization, mitigation], nn)) :- true.
+':=>'(p81661, pipeline([rebalancing, normalization, mitigation], rf)) :- true.
+':=>'(p392865, pipeline([rebalancing, features, normalization], knn)) :- true.
+':=>'(p919306, pipeline([rebalancing, features, normalization], nn)) :- true.
+':=>'(p932337, pipeline([rebalancing, features, normalization], rf)) :- true.
+':=>'(p885057, pipeline([rebalancing, features, mitigation], knn)) :- true.
+':=>'(p287908, pipeline([rebalancing, features, mitigation], knn)) :- true.
+':=>'(p743877, pipeline([rebalancing, features, mitigation], nn)) :- true.
+':=>'(p192890, pipeline([rebalancing, features, mitigation], nn)) :- true.
+':=>'(p454979, pipeline([rebalancing, features, mitigation], rf)) :- true.
+':=>'(p527878, pipeline([rebalancing, mitigation, features], knn)) :- true.
+':=>'(p755126, pipeline([rebalancing, mitigation, features], nn)) :- true.
+':=>'(p7769, pipeline([normalization, features, mitigation, rebalancing], knn)) :- true.
+':=>'(p608920, pipeline([normalization, features, mitigation, rebalancing], knn)) :- true.
+':=>'(p44379, pipeline([normalization, features, mitigation, rebalancing], nn)) :- true.
+':=>'(p330952, pipeline([normalization, features, mitigation, rebalancing], nn)) :- true.
+':=>'(p933765, pipeline([normalization, features, mitigation, rebalancing], rf)) :- true.
+':=>'(p259094, pipeline([normalization, features, mitigation, rebalancing], rf)) :- true.
+':=>'(p346097, pipeline([normalization, features, rebalancing, mitigation], knn)) :- true.
+':=>'(p893094, pipeline([normalization, features, rebalancing, mitigation], knn)) :- true.
+':=>'(p901559, pipeline([normalization, features, rebalancing, mitigation], nn)) :- true.
+':=>'(p254943, pipeline([normalization, features, rebalancing, mitigation], nn)) :- true.
+':=>'(p997240, pipeline([normalization, features, rebalancing, mitigation], rf)) :- true.
+':=>'(p446616, pipeline([normalization, features, rebalancing, mitigation], rf)) :- true.
+':=>'(p432330, pipeline([normalization, mitigation, features, rebalancing], knn)) :- true.
+':=>'(p64363, pipeline([normalization, mitigation, features, rebalancing], nn)) :- true.
+':=>'(p698102, pipeline([normalization, mitigation, features, rebalancing], rf)) :- true.
+':=>'(p210939, pipeline([normalization, mitigation, rebalancing, features], knn)) :- true.
+':=>'(p809628, pipeline([normalization, mitigation, rebalancing, features], nn)) :- true.
+':=>'(p294530, pipeline([normalization, mitigation, rebalancing, features], rf)) :- true.
+':=>'(p991481, pipeline([normalization, rebalancing, features, mitigation], knn)) :- true.
+':=>'(p482999, pipeline([normalization, rebalancing, features, mitigation], knn)) :- true.
+':=>'(p709373, pipeline([normalization, rebalancing, features, mitigation], nn)) :- true.
+':=>'(p929530, pipeline([normalization, rebalancing, features, mitigation], nn)) :- true.
+':=>'(p801800, pipeline([normalization, rebalancing, features, mitigation], rf)) :- true.
+':=>'(p264194, pipeline([normalization, rebalancing, features, mitigation], rf)) :- true.
+':=>'(p296233, pipeline([normalization, rebalancing, mitigation, features], knn)) :- true.
+':=>'(p832693, pipeline([normalization, rebalancing, mitigation, features], nn)) :- true.
+':=>'(p107491, pipeline([normalization, rebalancing, mitigation, features], rf)) :- true.
+':=>'(p29647, pipeline([features, normalization, mitigation, rebalancing], knn)) :- true.
+':=>'(p368446, pipeline([features, normalization, mitigation, rebalancing], knn)) :- true.
+':=>'(p294505, pipeline([features, normalization, mitigation, rebalancing], nn)) :- true.
+':=>'(p887048, pipeline([features, normalization, mitigation, rebalancing], nn)) :- true.
+':=>'(p287718, pipeline([features, normalization, mitigation, rebalancing], rf)) :- true.
+':=>'(p996005, pipeline([features, normalization, mitigation, rebalancing], rf)) :- true.
+':=>'(p724377, pipeline([features, normalization, rebalancing, mitigation], knn)) :- true.
+':=>'(p494575, pipeline([features, normalization, rebalancing, mitigation], knn)) :- true.
+':=>'(p459308, pipeline([features, normalization, rebalancing, mitigation], nn)) :- true.
+':=>'(p923825, pipeline([features, normalization, rebalancing, mitigation], nn)) :- true.
+':=>'(p158590, pipeline([features, normalization, rebalancing, mitigation], rf)) :- true.
+':=>'(p824991, pipeline([features, normalization, rebalancing, mitigation], rf)) :- true.
+':=>'(p962182, pipeline([features, mitigation, normalization, rebalancing], knn)) :- true.
+':=>'(p800875, pipeline([features, mitigation, normalization, rebalancing], nn)) :- true.
+':=>'(p288478, pipeline([features, mitigation, normalization, rebalancing], rf)) :- true.
+':=>'(p527332, pipeline([features, mitigation, rebalancing, normalization], knn)) :- true.
+':=>'(p830991, pipeline([features, mitigation, rebalancing, normalization], nn)) :- true.
+':=>'(p56958, pipeline([features, mitigation, rebalancing, normalization], rf)) :- true.
+':=>'(p91178, pipeline([features, rebalancing, normalization, mitigation], knn)) :- true.
+':=>'(p387782, pipeline([features, rebalancing, normalization, mitigation], knn)) :- true.
+':=>'(p733525, pipeline([features, rebalancing, normalization, mitigation], nn)) :- true.
+':=>'(p61649, pipeline([features, rebalancing, normalization, mitigation], nn)) :- true.
+':=>'(p141296, pipeline([features, rebalancing, normalization, mitigation], rf)) :- true.
+':=>'(p208240, pipeline([features, rebalancing, normalization, mitigation], rf)) :- true.
+':=>'(p830084, pipeline([features, rebalancing, mitigation, normalization], knn)) :- true.
+':=>'(p581086, pipeline([features, rebalancing, mitigation, normalization], nn)) :- true.
+':=>'(p557025, pipeline([features, rebalancing, mitigation, normalization], rf)) :- true.
+':=>'(p731546, pipeline([rebalancing, normalization, features, mitigation], knn)) :- true.
+':=>'(p281232, pipeline([rebalancing, normalization, features, mitigation], knn)) :- true.
+':=>'(p695200, pipeline([rebalancing, normalization, features, mitigation], nn)) :- true.
+':=>'(p338657, pipeline([rebalancing, normalization, features, mitigation], nn)) :- true.
+':=>'(p477221, pipeline([rebalancing, normalization, features, mitigation], rf)) :- true.
+':=>'(p259815, pipeline([rebalancing, normalization, features, mitigation], rf)) :- true.
+':=>'(p463783, pipeline([rebalancing, normalization, mitigation, features], knn)) :- true.
+':=>'(p726889, pipeline([rebalancing, normalization, mitigation, features], nn)) :- true.
+':=>'(p599146, pipeline([rebalancing, normalization, mitigation, features], rf)) :- true.
+':=>'(p970618, pipeline([rebalancing, features, normalization, mitigation], knn)) :- true.
+':=>'(p518143, pipeline([rebalancing, features, normalization, mitigation], knn)) :- true.
+':=>'(p405136, pipeline([rebalancing, features, normalization, mitigation], nn)) :- true.
+':=>'(p768574, pipeline([rebalancing, features, normalization, mitigation], nn)) :- true.
+':=>'(p705158, pipeline([rebalancing, features, normalization, mitigation], rf)) :- true.
+':=>'(p855786, pipeline([rebalancing, features, normalization, mitigation], rf)) :- true.
+':=>'(p799547, pipeline([rebalancing, features, mitigation, normalization], knn)) :- true.
+':=>'(p41697, pipeline([rebalancing, features, mitigation, normalization], nn)) :- true.
+':=>'(p456773, pipeline([rebalancing, features, mitigation, normalization], rf)) :- true.
+
+Checking Config
+Exporting Config
+Saving Graph
+Exporting AutoML input
+Exporting Space
+Exporting Constraints
+Input created for iteration Config(iteration=3, dataset=compass, metric=balanced_accuracy, fairnessMetric=demographic_parity_ratio, sensitiveFeatures=[sex, race], mode=max, batchSize=999999, timeBudget=900, seed=42)
+Here is the standard output/error of the command:
+
+69714a812ca1a6d9169dae71aa426a7e930657c63a80e6cc4fd9a5d3f03dd502
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+WARNING:root:No module named 'rpy2': FairAdapt will be unavailable. To install, run:
+pip install 'aif360[FairAdapt]'
+INFO:flaml.tune.searcher.blendsearch:No low-cost partial config given to the search algorithm. For cost-frugal search, consider providing low-cost values for cost-related hps via 'low_cost_partial_config'. More info can be found at https://microsoft.github.io/FLAML/docs/FAQ#about-low_cost_partial_config-in-tune
+Trying to add: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'MLPClassifier')
+Added successfully: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'MLPClassifier')
+Trying to add: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'KNeighborsClassifier')
+Failed to add: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'KNeighborsClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: normalization == 'FunctionTransformer')
+Trying to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'KNeighborsClassifier')
+Failed to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'KNeighborsClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'MLPClassifier')
+Failed to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'MLPClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'RandomForestClassifier')
+Failed to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'RandomForestClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'KNeighborsClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'KNeighborsClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'MLPClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'MLPClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'RandomForestClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'RandomForestClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'KNeighborsClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'KNeighborsClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'MLPClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'MLPClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'RandomForestClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'RandomForestClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+AutoML: starting optimization.
+45
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('tanh'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 10}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.5249011294662849), 'balanced_accuracy': np.float64(0.623035463022055), 'by_group': {'0_0': np.float64(0.72), '0_2': np.float64(0.84), '0_3': np.float64(0.58), '1_0': np.float64(1.0), '1_2': np.float64(0.82), '1_3': np.float64(0.71), '1_5': np.float64(0.74)}, 'status': 'success', 'total_time': 56.07943058013916, 'fit_time': np.float64(10.145888137817384), 'score_time': np.float64(0.014049434661865234), 'absolute_time': 1746710971.761203, 'flatten_demographic_parity_ratio': '0.45_0.41_0.69_0.53_0.54', 'flatten_balanced_accuracy': '0.63_0.62_0.62_0.61_0.63'}
+46
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 10}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.6822951585001092), 'balanced_accuracy': np.float64(0.626081203509835), 'by_group': {'0_0': np.float64(0.79), '0_2': np.float64(0.86), '0_3': np.float64(0.73), '1_0': np.float64(1.0), '1_2': np.float64(0.86), '1_3': np.float64(0.77), '1_5': np.float64(0.8)}, 'status': 'success', 'total_time': 101.08521294593811, 'fit_time': np.float64(19.257399225234984), 'score_time': np.float64(0.0603543758392334), 'absolute_time': 1746711072.9247403, 'flatten_demographic_parity_ratio': '0.72_0.57_0.71_0.62_0.79', 'flatten_balanced_accuracy': '0.63_0.64_0.63_0.62_0.61'}
+47
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 10}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.6447301084444417), 'balanced_accuracy': np.float64(0.6197615426987875), 'by_group': {'0_0': np.float64(0.81), '0_2': np.float64(0.89), '0_3': np.float64(0.67), '1_0': np.float64(0.99), '1_2': np.float64(0.9), '1_3': np.float64(0.78), '1_5': np.float64(0.8)}, 'status': 'success', 'total_time': 130.24348187446594, 'fit_time': np.float64(24.949022817611695), 'score_time': np.float64(0.06791186332702637), 'absolute_time': 1746711203.250488, 'flatten_demographic_parity_ratio': '0.74_0.56_0.76_0.82_0.35', 'flatten_balanced_accuracy': '0.63_0.64_0.6_0.61_0.62'}
+48
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 10}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.5560694201684135), 'balanced_accuracy': np.float64(0.6298786529022398), 'by_group': {'0_0': np.float64(0.73), '0_2': np.float64(0.84), '0_3': np.float64(0.6), '1_0': np.float64(1.0), '1_2': np.float64(0.83), '1_3': np.float64(0.73), '1_5': np.float64(0.76)}, 'status': 'success', 'total_time': 70.7193009853363, 'fit_time': np.float64(13.228331279754638), 'score_time': np.float64(0.0208526611328125), 'absolute_time': 1746711274.0463986, 'flatten_demographic_parity_ratio': '0.45_0.52_0.71_0.75_0.35', 'flatten_balanced_accuracy': '0.63_0.65_0.62_0.62_0.63'}
+49
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 5, 'max_features': 1, 'max_leaf_nodes': 4, 'min_samples_split': 5, 'n_estimators': np.int64(75)}, 'features': {'type': np.str_('SelectKBest'), 'k': 10}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.5407853135956258), 'balanced_accuracy': np.float64(0.6337882080810398), 'by_group': {'0_0': np.float64(0.73), '0_2': np.float64(0.81), '0_3': np.float64(0.55), '1_0': np.float64(1.0), '1_2': np.float64(0.83), '1_3': np.float64(0.74), '1_5': np.float64(0.73)}, 'status': 'success', 'total_time': 58.30361080169678, 'fit_time': np.float64(10.997133350372314), 'score_time': np.float64(0.01987318992614746), 'absolute_time': 1746711332.437736, 'flatten_demographic_parity_ratio': '0.41_0.58_0.74_0.64_0.34', 'flatten_balanced_accuracy': '0.64_0.63_0.63_0.63_0.63'}
+50
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 1, 'max_features': 3, 'max_leaf_nodes': 4, 'min_samples_split': 5, 'n_estimators': np.int64(75)}, 'features': {'type': np.str_('SelectKBest'), 'k': 10}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(2.0)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.6497075937168402), 'balanced_accuracy': np.float64(0.6228201868049495), 'by_group': {'0_0': np.float64(0.78), '0_2': np.float64(0.88), '0_3': np.float64(0.69), '1_0': np.float64(0.99), '1_2': np.float64(0.84), '1_3': np.float64(0.77), '1_5': np.float64(0.82)}, 'status': 'success', 'total_time': 86.4204318523407, 'fit_time': np.float64(16.390894508361818), 'score_time': np.float64(0.01831645965576172), 'absolute_time': 1746711418.9390495, 'flatten_demographic_parity_ratio': '0.56_0.68_0.7_0.62_0.69', 'flatten_balanced_accuracy': '0.64_0.63_0.6_0.63_0.62'}
+51
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 5, 'max_features': 4, 'max_leaf_nodes': 3, 'min_samples_split': 5, 'n_estimators': np.int64(25)}, 'features': {'type': np.str_('SelectKBest'), 'k': 10}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.5586739428636551), 'balanced_accuracy': np.float64(0.6262145389145533), 'by_group': {'0_0': np.float64(0.77), '0_2': np.float64(0.88), '0_3': np.float64(0.59), '1_0': np.float64(0.98), '1_2': np.float64(0.82), '1_3': np.float64(0.74), '1_5': np.float64(0.73)}, 'status': 'success', 'total_time': 53.7367467880249, 'fit_time': np.float64(9.928361701965333), 'score_time': np.float64(0.014704561233520508), 'absolute_time': 1746711472.7570302, 'flatten_demographic_parity_ratio': '0.42_0.65_0.79_0.62_0.32', 'flatten_balanced_accuracy': '0.64_0.61_0.62_0.62_0.64'}
+52
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 5, 'max_features': 1, 'max_leaf_nodes': 5, 'min_samples_split': 4, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('SelectKBest'), 'k': 2}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(0.5)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 4}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.5480473155231868), 'balanced_accuracy': np.float64(0.6315922647255541), 'by_group': {'0_0': np.float64(0.77), '0_2': np.float64(0.89), '0_3': np.float64(0.58), '1_0': np.float64(1.0), '1_2': np.float64(0.84), '1_3': np.float64(0.74), '1_5': np.float64(0.78)}, 'status': 'success', 'total_time': 98.49029564857483, 'fit_time': np.float64(12.274635648727417), 'score_time': np.float64(0.023131418228149413), 'absolute_time': 1746711571.331412, 'flatten_demographic_parity_ratio': '0.41_0.58_0.69_0.76_0.31', 'flatten_balanced_accuracy': '0.64_0.64_0.62_0.62_0.64'}
+53
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(10), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.5639244701466821), 'balanced_accuracy': np.float64(0.6286673229417529), 'by_group': {'0_0': np.float64(0.74), '0_2': np.float64(0.83), '0_3': np.float64(0.6), '1_0': np.float64(0.97), '1_2': np.float64(0.81), '1_3': np.float64(0.73), '1_5': np.float64(0.75)}, 'status': 'success', 'total_time': 73.051687002182, 'fit_time': np.float64(14.417218160629272), 'score_time': np.float64(0.04886107444763184), 'absolute_time': 1746711645.2306004, 'flatten_demographic_parity_ratio': '0.6_0.64_0.7_0.59_0.3', 'flatten_balanced_accuracy': '0.64_0.62_0.62_0.62_0.64'}
+54
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.6054592399902393), 'balanced_accuracy': np.float64(0.6236417406313842), 'by_group': {'0_0': np.float64(0.79), '0_2': np.float64(0.9), '0_3': np.float64(0.65), '1_0': np.float64(0.97), '1_2': np.float64(0.85), '1_3': np.float64(0.76), '1_5': np.float64(0.78)}, 'status': 'success', 'total_time': 59.64941740036011, 'fit_time': np.float64(11.731031894683838), 'score_time': np.float64(0.05167579650878906), 'absolute_time': 1746711704.977795, 'flatten_demographic_parity_ratio': '0.58_0.6_0.77_0.72_0.35', 'flatten_balanced_accuracy': '0.64_0.62_0.61_0.63_0.62'}
+55
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 8}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.5317412882219256), 'balanced_accuracy': np.float64(0.6230066547831035), 'by_group': {'0_0': np.float64(0.71), '0_2': np.float64(0.8), '0_3': np.float64(0.56), '1_0': np.float64(1.0), '1_2': np.float64(0.82), '1_3': np.float64(0.73), '1_5': np.float64(0.73)}, 'status': 'success', 'total_time': 108.54120969772339, 'fit_time': np.float64(21.505513191223145), 'score_time': np.float64(0.055660152435302736), 'absolute_time': 1746711813.6024017, 'flatten_demographic_parity_ratio': '0.46_0.59_0.72_0.62_0.27', 'flatten_balanced_accuracy': '0.63_0.63_0.61_0.62_0.62'}
+AutoML: optimization done.
+AutoML: miner done.
+AutoML: export done.
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+hamlet_1953167908
+AutoML execution ended

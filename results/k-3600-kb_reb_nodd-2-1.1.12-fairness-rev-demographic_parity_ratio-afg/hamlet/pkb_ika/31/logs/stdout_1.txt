@@ -1,0 +1,889 @@
+Sensitive groups ready!
+Theory ready!
+Theory:
+step(normalization) :- true.
+step(features) :- true.
+step(mitigation) :- true.
+step(rebalancing) :- true.
+step(classification) :- true.
+operator(normalization, power_transformer) :- true.
+operator(normalization, robust_scaler) :- true.
+operator(normalization, standard) :- true.
+operator(normalization, minmax) :- true.
+operator(features, select_k_best) :- true.
+operator(features, pca) :- true.
+operator(mitigation, corr_remover) :- true.
+operator(mitigation, lfr) :- true.
+operator(rebalancing, near_miss) :- true.
+operator(rebalancing, smote) :- true.
+operator(classification, knn) :- true.
+operator(classification, nn) :- true.
+operator(classification, rf) :- true.
+hyperparameter(robust_scaler, with_centering, choice) :- true.
+hyperparameter(robust_scaler, with_scaling, choice) :- true.
+hyperparameter(standard, with_mean, choice) :- true.
+hyperparameter(standard, with_std, choice) :- true.
+hyperparameter(select_k_best, k, randint) :- true.
+hyperparameter(pca, n_components, randint) :- true.
+hyperparameter(corr_remover, alpha, choice) :- true.
+hyperparameter(lfr, n_prototypes, choice) :- true.
+hyperparameter(lfr, reconstruct_weight, choice) :- true.
+hyperparameter(lfr, fairness_weight, choice) :- true.
+hyperparameter(near_miss, n_neighbors, randint) :- true.
+hyperparameter(smote, k_neighbors, randint) :- true.
+hyperparameter(knn, n_neighbors, randint) :- true.
+hyperparameter(knn, weights, choice) :- true.
+hyperparameter(knn, metric, choice) :- true.
+hyperparameter(nn, n_hidden_layers, choice) :- true.
+hyperparameter(nn, n_neurons, choice) :- true.
+hyperparameter(nn, activation, choice) :- true.
+hyperparameter(nn, solver, choice) :- true.
+hyperparameter(nn, alpha, choice) :- true.
+hyperparameter(nn, learning_rate, choice) :- true.
+hyperparameter(rf, n_estimators, choice) :- true.
+hyperparameter(rf, max_depth, randint) :- true.
+hyperparameter(rf, max_features, randint) :- true.
+hyperparameter(rf, min_samples_split, randint) :- true.
+hyperparameter(rf, max_leaf_nodes, randint) :- true.
+hyperparameter(rf, bootstrap, choice) :- true.
+hyperparameter(rf, criterion, choice) :- true.
+domain(robust_scaler, with_centering, [true, false]) :- true.
+domain(robust_scaler, with_scaling, [true, false]) :- true.
+domain(standard, with_mean, [true, false]) :- true.
+domain(standard, with_std, [true, false]) :- true.
+domain(select_k_best, k, [1, 10]) :- true.
+domain(pca, n_components, [1, 8]) :- true.
+domain(corr_remover, alpha, [0.25, 0.5, 0.75, 1.0]) :- true.
+domain(lfr, n_prototypes, [10, 50, 100, 200]) :- true.
+domain(lfr, reconstruct_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(lfr, fairness_weight, [0.1, 0.5, 1.0, 2.0]) :- true.
+domain(near_miss, n_neighbors, [1, 4]) :- true.
+domain(smote, k_neighbors, [5, 8]) :- true.
+domain(knn, n_neighbors, [3, 20]) :- true.
+domain(knn, weights, [uniform, distance]) :- true.
+domain(knn, metric, [minkowski, euclidean, manhattan]) :- true.
+domain(nn, n_hidden_layers, [1, 5, 10, 20]) :- true.
+domain(nn, n_neurons, [5, 10, 25, 50]) :- true.
+domain(nn, activation, [logistic, tanh, relu]) :- true.
+domain(nn, solver, [lbfgs, sgd, adam]) :- true.
+domain(nn, alpha, [0.0001, 0.001, 0.01, 0.00001]) :- true.
+domain(nn, learning_rate, [constant, invscaling, adaptive]) :- true.
+domain(rf, n_estimators, [10, 25, 50, 75, 100]) :- true.
+domain(rf, max_depth, [1, 5]) :- true.
+domain(rf, max_features, [1, 4]) :- true.
+domain(rf, min_samples_split, [2, 6]) :- true.
+domain(rf, max_leaf_nodes, [2, 6]) :- true.
+domain(rf, bootstrap, [true, false]) :- true.
+domain(rf, criterion, [gini, entropy]) :- true.
+':=>'(c1, mandatory([mitigation], classification)) :- true.
+':=>'(c3, mandatory_order([mitigation, features], classification)) :- true.
+':=>'(c4, mandatory_order([mitigation, normalization], classification)) :- true.
+':=>'(c5, mandatory([normalization], knn)) :- true.
+':=>'(c6, mandatory([normalization], nn)) :- true.
+dataset('credit-g') :- true.
+metric(balanced_accuracy) :- true.
+fairness_metric(demographic_parity_ratio) :- true.
+sensitive_feature(personal_status, [single, 'div/dep/mar', 'mar/wid']) :- true.
+sensitive_feature(sex, [male, female]) :- true.
+':=>'(mc0, unbalanced_dataset) :- true.
+pipeline([Step_1_0], ZZ_0) :- (step(Step_1_0), '\\='(Step_1_0, classification), operator(classification, ZZ_0)).
+pipeline([Step_1_1, Step_2_0], ZZ_1) :- (step(Step_1_1), step(Step_2_0), '\\='(Step_1_1, classification), '\\='(Step_2_0, classification), '\\='(Step_1_1, Step_2_0), operator(classification, ZZ_1)).
+pipeline([Step_1_2, Step_2_1, Step_3_0], ZZ_2) :- (step(Step_1_2), step(Step_2_1), step(Step_3_0), '\\='(Step_1_2, classification), '\\='(Step_2_1, classification), '\\='(Step_3_0, classification), '\\='(Step_1_2, Step_2_1), '\\='(Step_1_2, Step_3_0), '\\='(Step_2_1, Step_3_0), operator(classification, ZZ_2)).
+pipeline([Step_1_3, Step_2_2, Step_3_1, Step_4_0], ZZ_3) :- (step(Step_1_3), step(Step_2_2), step(Step_3_1), step(Step_4_0), '\\='(Step_1_3, classification), '\\='(Step_2_2, classification), '\\='(Step_3_1, classification), '\\='(Step_4_0, classification), '\\='(Step_1_3, Step_2_2), '\\='(Step_1_3, Step_3_1), '\\='(Step_1_3, Step_4_0), '\\='(Step_2_2, Step_3_1), '\\='(Step_2_2, Step_4_0), '\\='(Step_3_1, Step_4_0), operator(classification, ZZ_3)).
+':=>'(p802379, sensitive_group([single])) :- true.
+':=>'(p604855, sensitive_group(['div/dep/mar'])) :- true.
+':=>'(p108204, sensitive_group(['mar/wid'])) :- true.
+':=>'(p864694, sensitive_group([male])) :- true.
+':=>'(p638193, sensitive_group([female])) :- true.
+':=>'(p840179, sensitive_group([single, male])) :- true.
+':=>'(p117604, sensitive_group([single, female])) :- true.
+':=>'(p623388, sensitive_group(['div/dep/mar', male])) :- true.
+':=>'(p184393, sensitive_group(['div/dep/mar', female])) :- true.
+':=>'(p640352, sensitive_group(['mar/wid', male])) :- true.
+':=>'(p320608, sensitive_group(['mar/wid', female])) :- true.
+':=>'(p441099, pipeline([], knn)) :- true.
+':=>'(p749242, pipeline([], knn)) :- true.
+':=>'(p73421, pipeline([], nn)) :- true.
+':=>'(p648307, pipeline([], nn)) :- true.
+':=>'(p278601, pipeline([], rf)) :- true.
+':=>'(p89118, pipeline([normalization], knn)) :- true.
+':=>'(p430526, pipeline([normalization], nn)) :- true.
+':=>'(p841164, pipeline([normalization], rf)) :- true.
+':=>'(p665561, pipeline([features], knn)) :- true.
+':=>'(p120282, pipeline([features], knn)) :- true.
+':=>'(p941426, pipeline([features], nn)) :- true.
+':=>'(p128317, pipeline([features], nn)) :- true.
+':=>'(p558183, pipeline([features], rf)) :- true.
+':=>'(p633528, pipeline([mitigation], knn)) :- true.
+':=>'(p414004, pipeline([mitigation], nn)) :- true.
+':=>'(p450613, pipeline([rebalancing], knn)) :- true.
+':=>'(p683305, pipeline([rebalancing], knn)) :- true.
+':=>'(p866232, pipeline([rebalancing], nn)) :- true.
+':=>'(p962912, pipeline([rebalancing], nn)) :- true.
+':=>'(p945631, pipeline([rebalancing], rf)) :- true.
+':=>'(p358784, pipeline([normalization, features], knn)) :- true.
+':=>'(p913838, pipeline([normalization, features], nn)) :- true.
+':=>'(p150029, pipeline([normalization, features], rf)) :- true.
+':=>'(p666655, pipeline([normalization, mitigation], knn)) :- true.
+':=>'(p836623, pipeline([normalization, mitigation], nn)) :- true.
+':=>'(p255718, pipeline([normalization, mitigation], rf)) :- true.
+':=>'(p123066, pipeline([normalization, rebalancing], knn)) :- true.
+':=>'(p513692, pipeline([normalization, rebalancing], nn)) :- true.
+':=>'(p683281, pipeline([normalization, rebalancing], rf)) :- true.
+':=>'(p343672, pipeline([features, normalization], knn)) :- true.
+':=>'(p536590, pipeline([features, normalization], nn)) :- true.
+':=>'(p201251, pipeline([features, normalization], rf)) :- true.
+':=>'(p372814, pipeline([features, mitigation], knn)) :- true.
+':=>'(p824898, pipeline([features, mitigation], knn)) :- true.
+':=>'(p552225, pipeline([features, mitigation], nn)) :- true.
+':=>'(p902243, pipeline([features, mitigation], nn)) :- true.
+':=>'(p277710, pipeline([features, mitigation], rf)) :- true.
+':=>'(p84255, pipeline([features, rebalancing], knn)) :- true.
+':=>'(p282834, pipeline([features, rebalancing], knn)) :- true.
+':=>'(p524856, pipeline([features, rebalancing], nn)) :- true.
+':=>'(p608205, pipeline([features, rebalancing], nn)) :- true.
+':=>'(p862665, pipeline([features, rebalancing], rf)) :- true.
+':=>'(p979859, pipeline([mitigation, features], knn)) :- true.
+':=>'(p570495, pipeline([mitigation, features], nn)) :- true.
+':=>'(p983541, pipeline([mitigation, rebalancing], knn)) :- true.
+':=>'(p869189, pipeline([mitigation, rebalancing], nn)) :- true.
+':=>'(p754830, pipeline([rebalancing, normalization], knn)) :- true.
+':=>'(p195178, pipeline([rebalancing, normalization], nn)) :- true.
+':=>'(p814242, pipeline([rebalancing, normalization], rf)) :- true.
+':=>'(p536029, pipeline([rebalancing, features], knn)) :- true.
+':=>'(p356136, pipeline([rebalancing, features], knn)) :- true.
+':=>'(p357833, pipeline([rebalancing, features], nn)) :- true.
+':=>'(p496344, pipeline([rebalancing, features], nn)) :- true.
+':=>'(p994246, pipeline([rebalancing, features], rf)) :- true.
+':=>'(p825554, pipeline([rebalancing, mitigation], knn)) :- true.
+':=>'(p138660, pipeline([rebalancing, mitigation], nn)) :- true.
+':=>'(p885910, pipeline([normalization, features, mitigation], knn)) :- true.
+':=>'(p679193, pipeline([normalization, features, mitigation], knn)) :- true.
+':=>'(p510227, pipeline([normalization, features, mitigation], nn)) :- true.
+':=>'(p33421, pipeline([normalization, features, mitigation], nn)) :- true.
+':=>'(p880212, pipeline([normalization, features, mitigation], rf)) :- true.
+':=>'(p36467, pipeline([normalization, features, mitigation], rf)) :- true.
+':=>'(p482469, pipeline([normalization, features, rebalancing], knn)) :- true.
+':=>'(p276605, pipeline([normalization, features, rebalancing], nn)) :- true.
+':=>'(p396812, pipeline([normalization, features, rebalancing], rf)) :- true.
+':=>'(p307964, pipeline([normalization, mitigation, features], knn)) :- true.
+':=>'(p561453, pipeline([normalization, mitigation, features], nn)) :- true.
+':=>'(p326107, pipeline([normalization, mitigation, features], rf)) :- true.
+':=>'(p88442, pipeline([normalization, mitigation, rebalancing], knn)) :- true.
+':=>'(p32131, pipeline([normalization, mitigation, rebalancing], nn)) :- true.
+':=>'(p724425, pipeline([normalization, mitigation, rebalancing], rf)) :- true.
+':=>'(p805274, pipeline([normalization, rebalancing, features], knn)) :- true.
+':=>'(p241289, pipeline([normalization, rebalancing, features], nn)) :- true.
+':=>'(p448642, pipeline([normalization, rebalancing, features], rf)) :- true.
+':=>'(p956798, pipeline([normalization, rebalancing, mitigation], knn)) :- true.
+':=>'(p524389, pipeline([normalization, rebalancing, mitigation], nn)) :- true.
+':=>'(p482171, pipeline([normalization, rebalancing, mitigation], rf)) :- true.
+':=>'(p296707, pipeline([features, normalization, mitigation], knn)) :- true.
+':=>'(p354402, pipeline([features, normalization, mitigation], knn)) :- true.
+':=>'(p218700, pipeline([features, normalization, mitigation], nn)) :- true.
+':=>'(p239822, pipeline([features, normalization, mitigation], nn)) :- true.
+':=>'(p329216, pipeline([features, normalization, mitigation], rf)) :- true.
+':=>'(p623760, pipeline([features, normalization, mitigation], rf)) :- true.
+':=>'(p149693, pipeline([features, normalization, rebalancing], knn)) :- true.
+':=>'(p507088, pipeline([features, normalization, rebalancing], nn)) :- true.
+':=>'(p305386, pipeline([features, normalization, rebalancing], rf)) :- true.
+':=>'(p293910, pipeline([features, mitigation, normalization], knn)) :- true.
+':=>'(p777299, pipeline([features, mitigation, normalization], nn)) :- true.
+':=>'(p47064, pipeline([features, mitigation, normalization], rf)) :- true.
+':=>'(p390146, pipeline([features, mitigation, rebalancing], knn)) :- true.
+':=>'(p11495, pipeline([features, mitigation, rebalancing], knn)) :- true.
+':=>'(p692374, pipeline([features, mitigation, rebalancing], nn)) :- true.
+':=>'(p69378, pipeline([features, mitigation, rebalancing], nn)) :- true.
+':=>'(p398750, pipeline([features, mitigation, rebalancing], rf)) :- true.
+':=>'(p419220, pipeline([features, rebalancing, normalization], knn)) :- true.
+':=>'(p810434, pipeline([features, rebalancing, normalization], nn)) :- true.
+':=>'(p781866, pipeline([features, rebalancing, normalization], rf)) :- true.
+':=>'(p149906, pipeline([features, rebalancing, mitigation], knn)) :- true.
+':=>'(p189567, pipeline([features, rebalancing, mitigation], knn)) :- true.
+':=>'(p557803, pipeline([features, rebalancing, mitigation], nn)) :- true.
+':=>'(p61020, pipeline([features, rebalancing, mitigation], nn)) :- true.
+':=>'(p496218, pipeline([features, rebalancing, mitigation], rf)) :- true.
+':=>'(p595905, pipeline([mitigation, features, rebalancing], knn)) :- true.
+':=>'(p894427, pipeline([mitigation, features, rebalancing], nn)) :- true.
+':=>'(p945883, pipeline([mitigation, rebalancing, features], knn)) :- true.
+':=>'(p536884, pipeline([mitigation, rebalancing, features], nn)) :- true.
+':=>'(p380066, pipeline([rebalancing, normalization, features], knn)) :- true.
+':=>'(p481682, pipeline([rebalancing, normalization, features], nn)) :- true.
+':=>'(p674255, pipeline([rebalancing, normalization, features], rf)) :- true.
+':=>'(p75601, pipeline([rebalancing, normalization, mitigation], knn)) :- true.
+':=>'(p67599, pipeline([rebalancing, normalization, mitigation], nn)) :- true.
+':=>'(p397512, pipeline([rebalancing, normalization, mitigation], rf)) :- true.
+':=>'(p336921, pipeline([rebalancing, features, normalization], knn)) :- true.
+':=>'(p696035, pipeline([rebalancing, features, normalization], nn)) :- true.
+':=>'(p531176, pipeline([rebalancing, features, normalization], rf)) :- true.
+':=>'(p629170, pipeline([rebalancing, features, mitigation], knn)) :- true.
+':=>'(p853833, pipeline([rebalancing, features, mitigation], knn)) :- true.
+':=>'(p230570, pipeline([rebalancing, features, mitigation], nn)) :- true.
+':=>'(p783462, pipeline([rebalancing, features, mitigation], nn)) :- true.
+':=>'(p45302, pipeline([rebalancing, features, mitigation], rf)) :- true.
+':=>'(p239177, pipeline([rebalancing, mitigation, features], knn)) :- true.
+':=>'(p452991, pipeline([rebalancing, mitigation, features], nn)) :- true.
+':=>'(p341279, pipeline([normalization, features, mitigation, rebalancing], knn)) :- true.
+':=>'(p338006, pipeline([normalization, features, mitigation, rebalancing], knn)) :- true.
+':=>'(p644049, pipeline([normalization, features, mitigation, rebalancing], nn)) :- true.
+':=>'(p739139, pipeline([normalization, features, mitigation, rebalancing], nn)) :- true.
+':=>'(p346383, pipeline([normalization, features, mitigation, rebalancing], rf)) :- true.
+':=>'(p722645, pipeline([normalization, features, mitigation, rebalancing], rf)) :- true.
+':=>'(p5866, pipeline([normalization, features, rebalancing, mitigation], knn)) :- true.
+':=>'(p716844, pipeline([normalization, features, rebalancing, mitigation], knn)) :- true.
+':=>'(p271658, pipeline([normalization, features, rebalancing, mitigation], nn)) :- true.
+':=>'(p778819, pipeline([normalization, features, rebalancing, mitigation], nn)) :- true.
+':=>'(p369105, pipeline([normalization, features, rebalancing, mitigation], rf)) :- true.
+':=>'(p223075, pipeline([normalization, features, rebalancing, mitigation], rf)) :- true.
+':=>'(p335075, pipeline([normalization, mitigation, features, rebalancing], knn)) :- true.
+':=>'(p793099, pipeline([normalization, mitigation, features, rebalancing], nn)) :- true.
+':=>'(p987187, pipeline([normalization, mitigation, features, rebalancing], rf)) :- true.
+':=>'(p456923, pipeline([normalization, mitigation, rebalancing, features], knn)) :- true.
+':=>'(p150646, pipeline([normalization, mitigation, rebalancing, features], nn)) :- true.
+':=>'(p222471, pipeline([normalization, mitigation, rebalancing, features], rf)) :- true.
+':=>'(p995650, pipeline([normalization, rebalancing, features, mitigation], knn)) :- true.
+':=>'(p677538, pipeline([normalization, rebalancing, features, mitigation], knn)) :- true.
+':=>'(p529754, pipeline([normalization, rebalancing, features, mitigation], nn)) :- true.
+':=>'(p963793, pipeline([normalization, rebalancing, features, mitigation], nn)) :- true.
+':=>'(p557729, pipeline([normalization, rebalancing, features, mitigation], rf)) :- true.
+':=>'(p274245, pipeline([normalization, rebalancing, features, mitigation], rf)) :- true.
+':=>'(p514734, pipeline([normalization, rebalancing, mitigation, features], knn)) :- true.
+':=>'(p384658, pipeline([normalization, rebalancing, mitigation, features], nn)) :- true.
+':=>'(p991677, pipeline([normalization, rebalancing, mitigation, features], rf)) :- true.
+':=>'(p422873, pipeline([features, normalization, mitigation, rebalancing], knn)) :- true.
+':=>'(p537061, pipeline([features, normalization, mitigation, rebalancing], knn)) :- true.
+':=>'(p183128, pipeline([features, normalization, mitigation, rebalancing], nn)) :- true.
+':=>'(p160895, pipeline([features, normalization, mitigation, rebalancing], nn)) :- true.
+':=>'(p743292, pipeline([features, normalization, mitigation, rebalancing], rf)) :- true.
+':=>'(p891244, pipeline([features, normalization, mitigation, rebalancing], rf)) :- true.
+':=>'(p60458, pipeline([features, normalization, rebalancing, mitigation], knn)) :- true.
+':=>'(p545094, pipeline([features, normalization, rebalancing, mitigation], knn)) :- true.
+':=>'(p763681, pipeline([features, normalization, rebalancing, mitigation], nn)) :- true.
+':=>'(p242596, pipeline([features, normalization, rebalancing, mitigation], nn)) :- true.
+':=>'(p672447, pipeline([features, normalization, rebalancing, mitigation], rf)) :- true.
+':=>'(p601513, pipeline([features, normalization, rebalancing, mitigation], rf)) :- true.
+':=>'(p366146, pipeline([features, mitigation, normalization, rebalancing], knn)) :- true.
+':=>'(p426153, pipeline([features, mitigation, normalization, rebalancing], nn)) :- true.
+':=>'(p399715, pipeline([features, mitigation, normalization, rebalancing], rf)) :- true.
+':=>'(p954895, pipeline([features, mitigation, rebalancing, normalization], knn)) :- true.
+':=>'(p73161, pipeline([features, mitigation, rebalancing, normalization], nn)) :- true.
+':=>'(p8255, pipeline([features, mitigation, rebalancing, normalization], rf)) :- true.
+':=>'(p390598, pipeline([features, rebalancing, normalization, mitigation], knn)) :- true.
+':=>'(p106812, pipeline([features, rebalancing, normalization, mitigation], knn)) :- true.
+':=>'(p645683, pipeline([features, rebalancing, normalization, mitigation], nn)) :- true.
+':=>'(p314235, pipeline([features, rebalancing, normalization, mitigation], nn)) :- true.
+':=>'(p413073, pipeline([features, rebalancing, normalization, mitigation], rf)) :- true.
+':=>'(p693724, pipeline([features, rebalancing, normalization, mitigation], rf)) :- true.
+':=>'(p50961, pipeline([features, rebalancing, mitigation, normalization], knn)) :- true.
+':=>'(p561517, pipeline([features, rebalancing, mitigation, normalization], nn)) :- true.
+':=>'(p195037, pipeline([features, rebalancing, mitigation, normalization], rf)) :- true.
+':=>'(p199964, pipeline([rebalancing, normalization, features, mitigation], knn)) :- true.
+':=>'(p288218, pipeline([rebalancing, normalization, features, mitigation], knn)) :- true.
+':=>'(p36496, pipeline([rebalancing, normalization, features, mitigation], nn)) :- true.
+':=>'(p405033, pipeline([rebalancing, normalization, features, mitigation], nn)) :- true.
+':=>'(p768933, pipeline([rebalancing, normalization, features, mitigation], rf)) :- true.
+':=>'(p366184, pipeline([rebalancing, normalization, features, mitigation], rf)) :- true.
+':=>'(p829076, pipeline([rebalancing, normalization, mitigation, features], knn)) :- true.
+':=>'(p74923, pipeline([rebalancing, normalization, mitigation, features], nn)) :- true.
+':=>'(p511340, pipeline([rebalancing, normalization, mitigation, features], rf)) :- true.
+':=>'(p781295, pipeline([rebalancing, features, normalization, mitigation], knn)) :- true.
+':=>'(p579975, pipeline([rebalancing, features, normalization, mitigation], knn)) :- true.
+':=>'(p591853, pipeline([rebalancing, features, normalization, mitigation], nn)) :- true.
+':=>'(p975828, pipeline([rebalancing, features, normalization, mitigation], nn)) :- true.
+':=>'(p700840, pipeline([rebalancing, features, normalization, mitigation], rf)) :- true.
+':=>'(p273950, pipeline([rebalancing, features, normalization, mitigation], rf)) :- true.
+':=>'(p612929, pipeline([rebalancing, features, mitigation, normalization], knn)) :- true.
+':=>'(p669775, pipeline([rebalancing, features, mitigation, normalization], nn)) :- true.
+':=>'(p982623, pipeline([rebalancing, features, mitigation, normalization], rf)) :- true.
+
+Checking Config
+Exporting Config
+Saving Graph
+Exporting AutoML input
+Exporting Space
+Exporting Constraints
+Input created for iteration Config(iteration=1, dataset=credit-g, metric=balanced_accuracy, fairnessMetric=demographic_parity_ratio, sensitiveFeatures=[personal_status, sex], mode=max, batchSize=999999, timeBudget=900, seed=42)
+Here is the standard output/error of the command:
+
+59996c75809d33a92a424ebbc31cc59bd93884797359c67b22add45f410901c4
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+WARNING:root:No module named 'rpy2': FairAdapt will be unavailable. To install, run:
+pip install 'aif360[FairAdapt]'
+INFO:flaml.tune.searcher.blendsearch:No low-cost partial config given to the search algorithm. For cost-frugal search, consider providing low-cost values for cost-related hps via 'low_cost_partial_config'. More info can be found at https://microsoft.github.io/FLAML/docs/FAQ#about-low_cost_partial_config-in-tune
+Trying to add: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'MLPClassifier')
+Added successfully: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'MLPClassifier')
+Trying to add: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'KNeighborsClassifier')
+Failed to add: (Forbidden: normalization == 'FunctionTransformer' && Forbidden: classification == 'KNeighborsClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: normalization == 'FunctionTransformer')
+Trying to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'KNeighborsClassifier')
+Failed to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'KNeighborsClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'MLPClassifier')
+Failed to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'MLPClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'RandomForestClassifier')
+Failed to add: (Forbidden: mitigation == 'FunctionTransformer' && Forbidden: classification == 'RandomForestClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'KNeighborsClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'KNeighborsClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'MLPClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'MLPClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'RandomForestClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'features_mitigation_normalization_rebalancing_classification', 'features_mitigation_rebalancing_normalization_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'features_rebalancing_mitigation_normalization_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'rebalancing_features_mitigation_normalization_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: features in {'SelectKBest', 'PCA'} && Forbidden: classification == 'RandomForestClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'KNeighborsClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'KNeighborsClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'MLPClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'MLPClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+Trying to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'RandomForestClassifier')
+Failed to add: (Forbidden: prototype in {'normalization_features_mitigation_rebalancing_classification', 'features_normalization_mitigation_rebalancing_classification', 'normalization_mitigation_features_rebalancing_classification', 'normalization_mitigation_rebalancing_features_classification', 'normalization_features_rebalancing_mitigation_classification', 'features_normalization_rebalancing_mitigation_classification', 'features_rebalancing_normalization_mitigation_classification', 'normalization_rebalancing_features_mitigation_classification', 'rebalancing_normalization_features_mitigation_classification', 'rebalancing_features_normalization_mitigation_classification', 'normalization_rebalancing_mitigation_features_classification', 'rebalancing_normalization_mitigation_features_classification'} && Forbidden: mitigation in {'CorrelationRemover', 'LFR_wrapper'} && Forbidden: normalization in {'PowerTransformer', 'RobustScaler', 'StandardScaler', 'MinMaxScaler'} && Forbidden: classification == 'RandomForestClassifier')
+Reason: Given vector violates forbidden clause: (Forbidden: classification == 'KNeighborsClassifier' && Forbidden: mitigation == 'FunctionTransformer')
+AutoML: starting optimization.
+1
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 5, 'max_features': 3, 'max_leaf_nodes': 4, 'min_samples_split': 2, 'n_estimators': np.int64(75)}, 'features': {'type': np.str_('PCA'), 'n_components': 5}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.55812605230711), 'balanced_accuracy': np.float64(0.579047619047619), 'by_group': {'female_div/dep/mar': np.float64(0.83), 'male_div/sep': np.float64(0.63), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.71)}, 'status': 'success', 'total_time': 0.8641312122344971, 'fit_time': np.float64(0.14214081764221193), 'score_time': np.float64(0.007537364959716797), 'absolute_time': 1746704475.2800658, 'flatten_demographic_parity_ratio': '0.71_0.56_0.68_0.54_0.29', 'flatten_balanced_accuracy': '0.64_0.62_0.55_0.57_0.51'}
+2
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 15, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.744873949579832), 'balanced_accuracy': np.float64(0.5980952380952381), 'by_group': {'female_div/dep/mar': np.float64(0.81), 'male_div/sep': np.float64(0.77), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.9)}, 'status': 'success', 'total_time': 0.5457813739776611, 'fit_time': np.float64(0.0051518440246582035), 'score_time': np.float64(0.05166778564453125), 'absolute_time': 1746704476.533238, 'flatten_demographic_parity_ratio': '0.77_0.5_0.92_0.73_0.8', 'flatten_balanced_accuracy': '0.6_0.62_0.58_0.59_0.6'}
+3
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 1, 'max_leaf_nodes': 5, 'min_samples_split': 6, 'n_estimators': np.int64(50)}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_normalization_mitigation_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9581433680609546), 'balanced_accuracy': np.float64(0.5109523809523809), 'by_group': {'female_div/dep/mar': np.float64(0.99), 'male_div/sep': np.float64(0.97), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.97)}, 'status': 'success', 'total_time': 3.510150671005249, 'fit_time': np.float64(0.6695554256439209), 'score_time': np.float64(0.008684492111206055), 'absolute_time': 1746704480.0638049, 'flatten_demographic_parity_ratio': '0.95_1.0_0.94_0.9_1.0', 'flatten_balanced_accuracy': '0.54_0.5_0.5_0.51_0.5'}
+The result for {'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 15, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('SelectKBest'), 'k': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')} was NaN
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 649, in objective
+    raise Exception(f"The result for {config} was NaN")
+Exception: The result for {'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 15, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('SelectKBest'), 'k': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')} was NaN
+
+4
+fail
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 15, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('SelectKBest'), 'k': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': np.float64(0.5014285714285714), 'by_group': {'female_div/dep/mar': np.float64(0.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(0.0), 'male_single': np.float64(0.09)}, 'status': 'fail', 'total_time': 10.142534255981445, 'fit_time': np.float64(0.8864337921142578), 'score_time': np.float64(0.01634106636047363), 'absolute_time': 1746704490.2207942, 'flatten_demographic_parity_ratio': '0.0_nan_nan_nan_nan', 'flatten_balanced_accuracy': '0.51_0.5_0.5_0.5_0.5'}
+5
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(2.0)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.7174141080471996), 'balanced_accuracy': np.float64(0.5640476190476191), 'by_group': {'female_div/dep/mar': np.float64(0.88), 'male_div/sep': np.float64(0.82), 'male_mar/wid': np.float64(0.92), 'male_single': np.float64(0.81)}, 'status': 'success', 'total_time': 5.600724935531616, 'fit_time': np.float64(1.0892598628997803), 'score_time': np.float64(0.0071945667266845705), 'absolute_time': 1746704495.835282, 'flatten_demographic_parity_ratio': '0.71_0.74_0.84_0.78_0.51', 'flatten_balanced_accuracy': '0.62_0.59_0.54_0.56_0.51'}
+6
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 2, 'max_features': 1, 'max_leaf_nodes': 5, 'min_samples_split': 2, 'n_estimators': np.int64(25)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.703070222268645), 'balanced_accuracy': np.float64(0.5507142857142856), 'by_group': {'female_div/dep/mar': np.float64(0.87), 'male_div/sep': np.float64(0.8), 'male_mar/wid': np.float64(0.98), 'male_single': np.float64(0.77)}, 'status': 'success', 'total_time': 3.5431735515594482, 'fit_time': np.float64(0.6766506671905518), 'score_time': np.float64(0.010090255737304687), 'absolute_time': 1746704499.395495, 'flatten_demographic_parity_ratio': '0.84_0.74_0.66_0.8_0.48', 'flatten_balanced_accuracy': '0.56_0.58_0.54_0.56_0.52'}
+7
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 3, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 1}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(0.5)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.8120177982489316), 'balanced_accuracy': np.float64(0.4947619047619048), 'by_group': {'female_div/dep/mar': np.float64(0.82), 'male_div/sep': np.float64(0.94), 'male_mar/wid': np.float64(0.92), 'male_single': np.float64(0.97)}, 'status': 'success', 'total_time': 5.931492567062378, 'fit_time': np.float64(1.1413156986236572), 'score_time': np.float64(0.0164154052734375), 'absolute_time': 1746704505.343376, 'flatten_demographic_parity_ratio': '1.0_0.99_1.0_0.19_0.88', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.44_0.54'}
+8
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 4, 'max_features': 2, 'max_leaf_nodes': 6, 'min_samples_split': 3, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('PCA'), 'n_components': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.5632012388582815), 'balanced_accuracy': np.float64(0.5628571428571428), 'by_group': {'female_div/dep/mar': np.float64(0.85), 'male_div/sep': np.float64(0.6), 'male_mar/wid': np.float64(0.99), 'male_single': np.float64(0.69)}, 'status': 'success', 'total_time': 23.308037996292114, 'fit_time': np.float64(4.623935747146606), 'score_time': np.float64(0.011823511123657227), 'absolute_time': 1746704528.6673007, 'flatten_demographic_parity_ratio': '0.64_0.79_0.67_0.72_0.0', 'flatten_balanced_accuracy': '0.59_0.58_0.56_0.54_0.54'}
+9
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 6, 'weights': np.str_('distance')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.5698938338339594), 'balanced_accuracy': np.float64(0.5428571428571429), 'by_group': {'female_div/dep/mar': np.float64(0.82), 'male_div/sep': np.float64(0.62), 'male_mar/wid': np.float64(0.98), 'male_single': np.float64(0.75)}, 'status': 'success', 'total_time': 0.4754207134246826, 'fit_time': np.float64(0.02373790740966797), 'score_time': np.float64(0.020905828475952147), 'absolute_time': 1746704529.1588635, 'flatten_demographic_parity_ratio': '0.63_0.6_0.92_0.7_0.0', 'flatten_balanced_accuracy': '0.58_0.6_0.54_0.49_0.51'}
+10
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 1, 'max_features': 1, 'max_leaf_nodes': 2, 'min_samples_split': 4, 'n_estimators': np.int64(50)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_normalization_mitigation_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9579816513761468), 'balanced_accuracy': np.float64(0.5078571428571428), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.96), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.96)}, 'status': 'success', 'total_time': 3.8894710540771484, 'fit_time': np.float64(0.7490196228027344), 'score_time': np.float64(0.007460451126098633), 'absolute_time': 1746704533.725468, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_0.9_0.89', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.51_0.53'}
+11
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 3, 'max_features': 4, 'max_leaf_nodes': 6, 'min_samples_split': 4, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.7993850443403168), 'balanced_accuracy': np.float64(0.5330952380952381), 'by_group': {'female_div/dep/mar': np.float64(0.92), 'male_div/sep': np.float64(0.86), 'male_mar/wid': np.float64(0.98), 'male_single': np.float64(0.88)}, 'status': 'success', 'total_time': 1.5707423686981201, 'fit_time': np.float64(0.28182229995727537), 'score_time': np.float64(0.008778142929077148), 'absolute_time': 1746704535.3125434, 'flatten_demographic_parity_ratio': '0.79_0.8_0.87_0.9_0.63', 'flatten_balanced_accuracy': '0.52_0.56_0.51_0.52_0.55'}
+12
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 6, 'weights': np.str_('distance')}, 'features': {'type': np.str_('SelectKBest'), 'k': 8}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.7968218125960062), 'balanced_accuracy': np.float64(0.5204761904761904), 'by_group': {'female_div/dep/mar': np.float64(0.89), 'male_div/sep': np.float64(0.81), 'male_mar/wid': np.float64(0.99), 'male_single': np.float64(0.87)}, 'status': 'success', 'total_time': 5.9392290115356445, 'fit_time': np.float64(1.1026743412017823), 'score_time': np.float64(0.009233856201171875), 'absolute_time': 1746704541.2728791, 'flatten_demographic_parity_ratio': '0.91_0.68_0.97_0.9_0.53', 'flatten_balanced_accuracy': '0.49_0.57_0.48_0.51_0.55'}
+/usr/local/lib/python3.12/site-packages/numpy/_core/_methods.py:194: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+13
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 3, 'max_features': 1, 'max_leaf_nodes': 2, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('SelectKBest'), 'k': 9}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(0.5)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.6046736793646343), 'balanced_accuracy': np.float64(0.5059523809523809), 'by_group': {'female_div/dep/mar': np.float64(0.8), 'male_div/sep': np.float64(0.83), 'male_mar/wid': np.float64(0.73), 'male_single': np.float64(0.89)}, 'status': 'success', 'total_time': 23.633763790130615, 'fit_time': np.float64(1.0935990333557128), 'score_time': np.float64(0.007454013824462891), 'absolute_time': 1746704564.925962, 'flatten_demographic_parity_ratio': '0.41_0.75_0.85_0.35_0.66', 'flatten_balanced_accuracy': '0.44_0.56_0.52_0.49_0.52'}
+14
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9567741935483871), 'balanced_accuracy': np.float64(0.5061904761904762), 'by_group': {'female_div/dep/mar': np.float64(0.99), 'male_div/sep': np.float64(0.96), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 0.20316624641418457, 'fit_time': np.float64(0.01741757392883301), 'score_time': np.float64(0.004040431976318359), 'absolute_time': 1746704565.1487744, 'flatten_demographic_parity_ratio': '0.9_1.0_1.0_0.98_0.9', 'flatten_balanced_accuracy': '0.51_0.5_0.5_0.51_0.51'}
+15
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(1.0), 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 5.435181617736816, 'fit_time': np.float64(1.0612547874450684), 'score_time': np.float64(0.00535435676574707), 'absolute_time': 1746704570.6039011, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+16
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 19, 'weights': np.str_('distance')}, 'features': {'type': np.str_('PCA'), 'n_components': 6}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.5)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.5845826208836961), 'balanced_accuracy': np.float64(0.6697619047619047), 'by_group': {'female_div/dep/mar': np.float64(0.86), 'male_div/sep': np.float64(0.64), 'male_mar/wid': np.float64(0.8), 'male_single': np.float64(0.98)}, 'status': 'success', 'total_time': 0.37479662895202637, 'fit_time': np.float64(0.03853106498718262), 'score_time': np.float64(0.009174823760986328), 'absolute_time': 1746704571.006095, 'flatten_demographic_parity_ratio': '0.35_0.75_0.81_0.69_0.31', 'flatten_balanced_accuracy': '0.68_0.71_0.66_0.65_0.65'}
+17
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('gini'), 'max_depth': 4, 'max_features': 4, 'max_leaf_nodes': 3, 'min_samples_split': 4, 'n_estimators': np.int64(25)}, 'features': {'type': np.str_('PCA'), 'n_components': 3}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.7986345029231138), 'balanced_accuracy': np.float64(0.5488095238095237), 'by_group': {'female_div/dep/mar': np.float64(0.93), 'male_div/sep': np.float64(0.86), 'male_mar/wid': np.float64(0.97), 'male_single': np.float64(0.85)}, 'status': 'success', 'total_time': 5.98394513130188, 'fit_time': np.float64(1.1629611492156982), 'score_time': np.float64(0.00940408706665039), 'absolute_time': 1746704577.0176356, 'flatten_demographic_parity_ratio': '0.84_0.74_0.89_0.78_0.74', 'flatten_balanced_accuracy': '0.56_0.59_0.51_0.56_0.52'}
+18
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 3, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 8}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.7589219202276407), 'balanced_accuracy': np.float64(0.5419047619047619), 'by_group': {'female_div/dep/mar': np.float64(0.87), 'male_div/sep': np.float64(0.81), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.81)}, 'status': 'success', 'total_time': 5.3324408531188965, 'fit_time': np.float64(1.021528720855713), 'score_time': np.float64(0.01640310287475586), 'absolute_time': 1746704583.148577, 'flatten_demographic_parity_ratio': '0.86_0.9_0.76_0.71_0.56', 'flatten_balanced_accuracy': '0.6_0.56_0.53_0.48_0.55'}
+19
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.7024200877580566), 'balanced_accuracy': np.float64(0.5516666666666666), 'by_group': {'female_div/dep/mar': np.float64(0.9), 'male_div/sep': np.float64(0.78), 'male_mar/wid': np.float64(0.97), 'male_single': np.float64(0.76)}, 'status': 'success', 'total_time': 24.175138473510742, 'fit_time': np.float64(4.808411073684693), 'score_time': np.float64(0.006491851806640625), 'absolute_time': 1746704607.354574, 'flatten_demographic_parity_ratio': '0.84_0.74_0.74_0.78_0.41', 'flatten_balanced_accuracy': '0.56_0.59_0.55_0.55_0.5'}
+The result for {'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 11, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')} was NaN
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 649, in objective
+    raise Exception(f"The result for {config} was NaN")
+Exception: The result for {'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 11, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')} was NaN
+
+20
+fail
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 11, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': -inf, 'male_div/sep': -inf, 'male_mar/wid': -inf, 'male_single': -inf}, 'status': 'fail', 'total_time': 6.244546413421631, 'fit_time': np.float64(1.1657308101654054), 'score_time': np.float64(0.031734561920166014), 'absolute_time': 1746704613.629746, 'flatten_demographic_parity_ratio': 'nan_nan_nan_nan_nan', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+21
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('SelectKBest'), 'k': 3}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(2.0)}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(1.0), 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 35.98948097229004, 'fit_time': np.float64(1.0457191944122315), 'score_time': np.float64(0.007253694534301758), 'absolute_time': 1746704649.6500993, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+22
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(25), 'solver': np.str_('adam')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.982059123343527), 'balanced_accuracy': np.float64(0.5042857142857142), 'by_group': {'female_div/dep/mar': np.float64(0.99), 'male_div/sep': np.float64(0.99), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.98)}, 'status': 'success', 'total_time': 4.031508445739746, 'fit_time': np.float64(0.7808464050292969), 'score_time': np.float64(0.005702686309814453), 'absolute_time': 1746704653.7133203, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_1.0_0.91', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.52'}
+23
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('tanh'), 'alpha': np.float64(0.01), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(50), 'solver': np.str_('adam')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.5)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.7082420462462535), 'balanced_accuracy': np.float64(0.5528571428571428), 'by_group': {'female_div/dep/mar': np.float64(0.87), 'male_div/sep': np.float64(0.79), 'male_mar/wid': np.float64(0.97), 'male_single': np.float64(0.76)}, 'status': 'success', 'total_time': 6.051513671875, 'fit_time': np.float64(1.1837732315063476), 'score_time': np.float64(0.006060934066772461), 'absolute_time': 1746704659.8035672, 'flatten_demographic_parity_ratio': '0.84_0.74_0.7_0.78_0.48', 'flatten_balanced_accuracy': '0.56_0.58_0.54_0.56_0.53'}
+The result for {'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')} was NaN
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 649, in objective
+    raise Exception(f"The result for {config} was NaN")
+Exception: The result for {'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')} was NaN
+
+24
+fail
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': np.float64(0.49000000000000005), 'by_group': {'female_div/dep/mar': np.float64(0.78), 'male_div/sep': np.float64(0.58), 'male_mar/wid': np.float64(0.64), 'male_single': np.float64(0.54)}, 'status': 'fail', 'total_time': 9.535675764083862, 'fit_time': np.float64(1.4314595222473145), 'score_time': np.float64(0.005615139007568359), 'absolute_time': 1746704669.3757725, 'flatten_demographic_parity_ratio': 'nan_0.19_0.72_0.41_0.0', 'flatten_balanced_accuracy': '0.5_0.42_0.54_0.48_0.5'}
+25
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 8}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.6805711136669952), 'balanced_accuracy': np.float64(0.6640476190476191), 'by_group': {'female_div/dep/mar': np.float64(0.95), 'male_div/sep': np.float64(0.74), 'male_mar/wid': np.float64(0.87), 'male_single': np.float64(0.94)}, 'status': 'success', 'total_time': 1.0888032913208008, 'fit_time': np.float64(0.196492338180542), 'score_time': np.float64(0.0030876636505126954), 'absolute_time': 1746704670.5018582, 'flatten_demographic_parity_ratio': '0.39_0.75_0.86_0.77_0.63', 'flatten_balanced_accuracy': '0.66_0.72_0.67_0.62_0.64'}
+26
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.7283948518057899), 'balanced_accuracy': np.float64(0.6395238095238095), 'by_group': {'female_div/dep/mar': np.float64(0.84), 'male_div/sep': np.float64(0.84), 'male_mar/wid': np.float64(0.88), 'male_single': np.float64(0.94)}, 'status': 'success', 'total_time': 1.1387662887573242, 'fit_time': np.float64(0.20305924415588378), 'score_time': np.float64(0.0047912120819091795), 'absolute_time': 1746704672.5352926, 'flatten_demographic_parity_ratio': '0.53_0.83_0.75_0.81_0.72', 'flatten_balanced_accuracy': '0.58_0.67_0.65_0.67_0.63'}
+27
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 12, 'weights': np.str_('distance')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.7681887046902663), 'balanced_accuracy': np.float64(0.6019047619047619), 'by_group': {'female_div/dep/mar': np.float64(0.91), 'male_div/sep': np.float64(0.81), 'male_mar/wid': np.float64(0.95), 'male_single': np.float64(0.9)}, 'status': 'success', 'total_time': 0.4117617607116699, 'fit_time': np.float64(0.004717969894409179), 'score_time': np.float64(0.04247031211853027), 'absolute_time': 1746704672.9932766, 'flatten_demographic_parity_ratio': '0.8_0.64_0.79_0.78_0.83', 'flatten_balanced_accuracy': '0.61_0.67_0.59_0.58_0.56'}
+28
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 11, 'weights': np.str_('distance')}, 'features': {'type': np.str_('SelectKBest'), 'k': 2}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.75)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.5744138447424856), 'balanced_accuracy': np.float64(0.5997619047619047), 'by_group': {'female_div/dep/mar': np.float64(0.86), 'male_div/sep': np.float64(0.63), 'male_mar/wid': np.float64(0.69), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 0.1558067798614502, 'fit_time': np.float64(0.006747674942016601), 'score_time': np.float64(0.004233455657958985), 'absolute_time': 1746704673.2019863, 'flatten_demographic_parity_ratio': '0.28_0.59_0.68_0.8_0.53', 'flatten_balanced_accuracy': '0.62_0.56_0.58_0.57_0.67'}
+29
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 7, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.5)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('rebalancing_features_mitigation_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.9136878771525291), 'balanced_accuracy': np.float64(0.5111904761904762), 'by_group': {'female_div/dep/mar': np.float64(0.94), 'male_div/sep': np.float64(0.94), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.92)}, 'status': 'success', 'total_time': 7.492828845977783, 'fit_time': np.float64(1.399058198928833), 'score_time': np.float64(0.06056218147277832), 'absolute_time': 1746704680.7416408, 'flatten_demographic_parity_ratio': '0.96_0.9_0.94_0.77_1.0', 'flatten_balanced_accuracy': '0.54_0.55_0.51_0.45_0.5'}
+30
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('PCA'), 'n_components': 7}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.6918578004274207), 'balanced_accuracy': np.float64(0.6342857142857143), 'by_group': {'female_div/dep/mar': np.float64(0.8), 'male_div/sep': np.float64(0.77), 'male_mar/wid': np.float64(0.9), 'male_single': np.float64(0.92)}, 'status': 'success', 'total_time': 3.0073633193969727, 'fit_time': np.float64(0.5777277946472168), 'score_time': np.float64(0.004204893112182617), 'absolute_time': 1746704683.8011734, 'flatten_demographic_parity_ratio': '0.62_0.82_0.69_0.76_0.57', 'flatten_balanced_accuracy': '0.62_0.6_0.67_0.66_0.62'}
+31
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(10), 'solver': np.str_('adam')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 4}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.06545454545454546), 'balanced_accuracy': np.float64(0.615952380952381), 'by_group': {'female_div/dep/mar': np.float64(0.96), 'male_div/sep': np.float64(0.07), 'male_mar/wid': np.float64(0.66), 'male_single': np.float64(0.87)}, 'status': 'success', 'total_time': 1.4383125305175781, 'fit_time': np.float64(0.2657605171203613), 'score_time': np.float64(0.003361415863037109), 'absolute_time': 1746704685.2956283, 'flatten_demographic_parity_ratio': '0.0_0.0_0.33_0.0_0.0', 'flatten_balanced_accuracy': '0.63_0.63_0.62_0.6_0.6'}
+/usr/local/lib/python3.12/site-packages/numpy/_core/_methods.py:194: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/usr/local/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:3475: RuntimeWarning: overflow encountered in power
+  out[pos] = (np.power(x[pos] + 1, lmbda) - 1) / lmbda
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 622, in objective
+    fair_scores, fair_scores_by_group = _compute_fair_metric(
+                                        ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/objective.py", line 381, in _compute_fair_metric
+    y_pred = np.array(scores["estimator"][fold].predict(x_original))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/imblearn/pipeline.py", line 658, in predict
+    Xt = transform.transform(Xt)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/utils/_set_output.py", line 319, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py", line 1101, in transform
+    Xs = self._call_func_on_transformers(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py", line 873, in _call_func_on_transformers
+    transformers = list(
+                   ^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py", line 469, in _iter
+    transformers = self.transformers_
+                   ^^^^^^^^^^^^^^^^^^
+AttributeError: 'ColumnTransformer' object has no attribute 'transformers_'. Did you mean: 'transformers'?
+
+32
+fail
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.01), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(5), 'solver': np.str_('adam')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('features_mitigation_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'female_div/dep/mar': -inf, 'male_div/sep': -inf, 'male_mar/wid': -inf, 'male_single': -inf}, 'status': 'fail', 'total_time': 4.641942262649536, 'fit_time': np.float64(0.9079948902130127), 'score_time': np.float64(0.0051574230194091795), 'absolute_time': 1746704689.9921937}
+33
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 20, 'weights': np.str_('distance')}, 'features': {'type': np.str_('SelectKBest'), 'k': 8}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9800000000000001), 'balanced_accuracy': np.float64(0.5138095238095237), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.98), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 82.95089077949524, 'fit_time': np.float64(1.032721996307373), 'score_time': np.float64(0.008715295791625976), 'absolute_time': 1746704772.9995759, 'flatten_demographic_parity_ratio': '1.0_0.9_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.57_0.5_0.5_0.5'}
+34
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 1, 'max_features': 3, 'max_leaf_nodes': 3, 'min_samples_split': 4, 'n_estimators': np.int64(25)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.False_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_mitigation_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.7757839465449108), 'balanced_accuracy': np.float64(0.5621428571428572), 'by_group': {'female_div/dep/mar': np.float64(0.88), 'male_div/sep': np.float64(0.83), 'male_mar/wid': np.float64(0.98), 'male_single': np.float64(0.81)}, 'status': 'success', 'total_time': 6.624213695526123, 'fit_time': np.float64(1.296775722503662), 'score_time': np.float64(0.006893777847290039), 'absolute_time': 1746704779.6975365, 'flatten_demographic_parity_ratio': '0.79_0.74_0.67_0.78_0.89', 'flatten_balanced_accuracy': '0.61_0.58_0.54_0.55_0.53'}
+35
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 8, 'weights': np.str_('distance')}, 'features': {'type': np.str_('PCA'), 'n_components': 8}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.829128664129929), 'balanced_accuracy': np.float64(0.5964285714285713), 'by_group': {'female_div/dep/mar': np.float64(0.91), 'male_div/sep': np.float64(0.92), 'male_mar/wid': np.float64(0.94), 'male_single': np.float64(0.94)}, 'status': 'success', 'total_time': 0.2565157413482666, 'fit_time': np.float64(0.02133917808532715), 'score_time': np.float64(0.007611227035522461), 'absolute_time': 1746704780.9554403, 'flatten_demographic_parity_ratio': '0.76_0.84_0.92_0.78_0.84', 'flatten_balanced_accuracy': '0.64_0.64_0.55_0.57_0.58'}
+36
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 12, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.7821937518176669), 'balanced_accuracy': np.float64(0.554047619047619), 'by_group': {'female_div/dep/mar': np.float64(0.78), 'male_div/sep': np.float64(0.94), 'male_mar/wid': np.float64(0.98), 'male_single': np.float64(0.85)}, 'status': 'success', 'total_time': 0.8233730792999268, 'fit_time': np.float64(0.0072896480560302734), 'score_time': np.float64(0.07229018211364746), 'absolute_time': 1746704781.8350513, 'flatten_demographic_parity_ratio': '0.79_0.8_0.73_0.81_0.79', 'flatten_balanced_accuracy': '0.56_0.56_0.55_0.58_0.51'}
+37
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.5)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9291525423728814), 'balanced_accuracy': np.float64(0.5240476190476191), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.93), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.96)}, 'status': 'success', 'total_time': 5.928676605224609, 'fit_time': np.float64(1.1582927227020263), 'score_time': np.float64(0.006816291809082031), 'absolute_time': 1746704787.814961, 'flatten_demographic_parity_ratio': '0.95_0.9_1.0_0.9_0.9', 'flatten_balanced_accuracy': '0.54_0.53_0.5_0.51_0.53'}
+38
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.7203528798320157), 'balanced_accuracy': np.float64(0.5452380952380953), 'by_group': {'female_div/dep/mar': np.float64(0.84), 'male_div/sep': np.float64(0.82), 'male_mar/wid': np.float64(0.94), 'male_single': np.float64(0.77)}, 'status': 'success', 'total_time': 5.2319042682647705, 'fit_time': np.float64(1.0185989379882812), 'score_time': np.float64(0.007271194458007812), 'absolute_time': 1746704793.1039639, 'flatten_demographic_parity_ratio': '0.83_0.69_0.83_0.51_0.74', 'flatten_balanced_accuracy': '0.62_0.55_0.53_0.5_0.52'}
+39
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.01), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('PCA'), 'n_components': 6}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.75)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(1.0), 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 0.6072237491607666, 'fit_time': np.float64(0.09965682029724121), 'score_time': np.float64(0.0034271717071533204), 'absolute_time': 1746704793.7685015, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+40
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 8, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.719057010627437), 'balanced_accuracy': np.float64(0.6269047619047619), 'by_group': {'female_div/dep/mar': np.float64(0.9), 'male_div/sep': np.float64(0.91), 'male_mar/wid': np.float64(0.89), 'male_single': np.float64(0.8)}, 'status': 'success', 'total_time': 1.164649486541748, 'fit_time': np.float64(0.07620558738708497), 'score_time': np.float64(0.06895580291748046), 'absolute_time': 1746704794.9911947, 'flatten_demographic_parity_ratio': '0.61_0.65_0.81_0.73_0.79', 'flatten_balanced_accuracy': '0.63_0.66_0.61_0.62_0.6'}
+41
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.4846603396603396), 'balanced_accuracy': np.float64(0.6357142857142857), 'by_group': {'female_div/dep/mar': np.float64(0.88), 'male_div/sep': np.float64(0.48), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.78)}, 'status': 'success', 'total_time': 0.830787181854248, 'fit_time': np.float64(0.14441351890563964), 'score_time': np.float64(0.0031760692596435546), 'absolute_time': 1746704795.8812284, 'flatten_demographic_parity_ratio': '0.33_0.65_0.83_0.48_0.14', 'flatten_balanced_accuracy': '0.7_0.68_0.65_0.63_0.51'}
+42
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 5, 'max_features': 1, 'max_leaf_nodes': 3, 'min_samples_split': 3, 'n_estimators': np.int64(75)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.75)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(1.0), 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 0.8089118003845215, 'fit_time': np.float64(0.13028202056884766), 'score_time': np.float64(0.008297109603881836), 'absolute_time': 1746704796.7650306, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+43
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 15, 'weights': np.str_('distance')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_mitigation_rebalancing_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9908924103419515), 'balanced_accuracy': np.float64(0.5076190476190476), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 19.198620557785034, 'fit_time': np.float64(3.6518414497375487), 'score_time': np.float64(0.08649306297302246), 'absolute_time': 1746704817.0388365, 'flatten_demographic_parity_ratio': '0.96_1.0_0.99_1.0_1.0', 'flatten_balanced_accuracy': '0.54_0.5_0.5_0.5_0.5'}
+44
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('gini'), 'max_depth': 1, 'max_features': 4, 'max_leaf_nodes': 5, 'min_samples_split': 5, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('SelectKBest'), 'k': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.5)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 8}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.8409132337950471), 'balanced_accuracy': np.float64(0.5373809523809523), 'by_group': {'female_div/dep/mar': np.float64(0.94), 'male_div/sep': np.float64(0.87), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.9)}, 'status': 'success', 'total_time': 18.71312379837036, 'fit_time': np.float64(0.8305221557617187), 'score_time': np.float64(0.007217264175415039), 'absolute_time': 1746704835.81775, 'flatten_demographic_parity_ratio': '0.95_0.74_0.87_0.9_0.74', 'flatten_balanced_accuracy': '0.53_0.58_0.54_0.52_0.51'}
+45
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 5, 'max_features': 3, 'max_leaf_nodes': 2, 'min_samples_split': 3, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('PCA'), 'n_components': 7}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.5)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('normalization_rebalancing_mitigation_features_classification')}
+{'demographic_parity_ratio': np.float64(0.4609047619047619), 'balanced_accuracy': np.float64(0.5916666666666667), 'by_group': {'female_div/dep/mar': np.float64(0.9), 'male_div/sep': np.float64(0.46), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.76)}, 'status': 'success', 'total_time': 1.4396944046020508, 'fit_time': np.float64(0.25727505683898927), 'score_time': np.float64(0.008023452758789063), 'absolute_time': 1746704837.340263, 'flatten_demographic_parity_ratio': '0.64_0.48_0.68_0.51_0.0', 'flatten_balanced_accuracy': '0.63_0.6_0.61_0.58_0.54'}
+46
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(10), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.5666079159953087), 'balanced_accuracy': np.float64(0.52), 'by_group': {'female_div/dep/mar': np.float64(0.77), 'male_div/sep': np.float64(0.71), 'male_mar/wid': np.float64(0.69), 'male_single': np.float64(0.87)}, 'status': 'success', 'total_time': 5.280435085296631, 'fit_time': np.float64(1.0286319255828857), 'score_time': np.float64(0.00719304084777832), 'absolute_time': 1746704842.690814, 'flatten_demographic_parity_ratio': '0.83_0.46_0.0_0.8_0.74', 'flatten_balanced_accuracy': '0.62_0.47_0.47_0.52_0.52'}
+47
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 5, 'max_features': 4, 'max_leaf_nodes': 5, 'min_samples_split': 4, 'n_estimators': np.int64(50)}, 'features': {'type': np.str_('PCA'), 'n_components': 3}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.6894352119615277), 'balanced_accuracy': np.float64(0.6754761904761905), 'by_group': {'female_div/dep/mar': np.float64(0.83), 'male_div/sep': np.float64(0.81), 'male_mar/wid': np.float64(0.81), 'male_single': np.float64(0.93)}, 'status': 'success', 'total_time': 0.7305827140808105, 'fit_time': np.float64(0.11895318031311035), 'score_time': np.float64(0.006147050857543945), 'absolute_time': 1746704843.4915028, 'flatten_demographic_parity_ratio': '0.62_0.68_0.74_0.68_0.73', 'flatten_balanced_accuracy': '0.68_0.69_0.69_0.65_0.68'}
+48
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 19, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.8712555810779321), 'balanced_accuracy': np.float64(0.5585714285714285), 'by_group': {'female_div/dep/mar': np.float64(0.92), 'male_div/sep': np.float64(0.94), 'male_mar/wid': np.float64(0.96), 'male_single': np.float64(0.95)}, 'status': 'success', 'total_time': 0.22035908699035645, 'fit_time': np.float64(0.004401111602783203), 'score_time': np.float64(0.012331438064575196), 'absolute_time': 1746704843.7855682, 'flatten_demographic_parity_ratio': '0.81_0.89_0.95_0.87_0.84', 'flatten_balanced_accuracy': '0.54_0.57_0.51_0.6_0.57'}
+49
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(50), 'solver': np.str_('adam')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(2.0)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.811038556095221), 'balanced_accuracy': np.float64(0.5459523809523809), 'by_group': {'female_div/dep/mar': np.float64(0.93), 'male_div/sep': np.float64(0.86), 'male_mar/wid': np.float64(0.98), 'male_single': np.float64(0.84)}, 'status': 'success', 'total_time': 12.723035097122192, 'fit_time': np.float64(2.5148645877838134), 'score_time': np.float64(0.007483005523681641), 'absolute_time': 1746704856.5783048, 'flatten_demographic_parity_ratio': '0.89_0.74_0.89_0.8_0.74', 'flatten_balanced_accuracy': '0.56_0.58_0.51_0.56_0.52'}
+50
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(1.0), 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 0.2071835994720459, 'fit_time': np.float64(0.019747304916381835), 'score_time': np.float64(0.0032730579376220705), 'absolute_time': 1746704858.116705, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+51
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 15, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('SelectKBest'), 'k': 9}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9880437999408109), 'balanced_accuracy': np.float64(0.5035714285714286), 'by_group': {'female_div/dep/mar': np.float64(0.99), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 26.78517484664917, 'fit_time': np.float64(1.1365944862365722), 'score_time': np.float64(0.018501138687133788), 'absolute_time': 1746704884.9721606, 'flatten_demographic_parity_ratio': '1.0_1.0_0.97_1.0_0.97', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.52'}
+52
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('gini'), 'max_depth': 5, 'max_features': 4, 'max_leaf_nodes': 2, 'min_samples_split': 6, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(0.5)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_normalization_mitigation_features_classification')}
+{'demographic_parity_ratio': np.float64(0.5599191923112377), 'balanced_accuracy': np.float64(0.5583333333333333), 'by_group': {'female_div/dep/mar': np.float64(0.85), 'male_div/sep': np.float64(0.62), 'male_mar/wid': np.float64(0.99), 'male_single': np.float64(0.7)}, 'status': 'success', 'total_time': 34.63654541969299, 'fit_time': np.float64(6.8922483921051025), 'score_time': np.float64(0.01058201789855957), 'absolute_time': 1746704919.6799266, 'flatten_demographic_parity_ratio': '0.81_0.48_0.69_0.81_0.0', 'flatten_balanced_accuracy': '0.62_0.55_0.54_0.55_0.53'}
+53
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 12, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.7779874510871357), 'balanced_accuracy': np.float64(0.6176190476190476), 'by_group': {'female_div/dep/mar': np.float64(0.92), 'male_div/sep': np.float64(0.89), 'male_mar/wid': np.float64(0.92), 'male_single': np.float64(0.91)}, 'status': 'success', 'total_time': 0.7776131629943848, 'fit_time': np.float64(0.003717851638793945), 'score_time': np.float64(0.0705935001373291), 'absolute_time': 1746704920.5288339, 'flatten_demographic_parity_ratio': '0.63_0.93_0.82_0.76_0.74', 'flatten_balanced_accuracy': '0.63_0.67_0.6_0.6_0.6'}
+54
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(50), 'solver': np.str_('adam')}, 'features': {'type': np.str_('SelectKBest'), 'k': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 4}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.5716144219155552), 'balanced_accuracy': np.float64(0.5507142857142858), 'by_group': {'female_div/dep/mar': np.float64(0.78), 'male_div/sep': np.float64(0.6), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.65)}, 'status': 'success', 'total_time': 33.16210460662842, 'fit_time': np.float64(1.4096200466156006), 'score_time': np.float64(0.008426952362060546), 'absolute_time': 1746704953.7645333, 'flatten_demographic_parity_ratio': '0.64_0.48_0.67_0.51_0.56', 'flatten_balanced_accuracy': '0.61_0.55_0.54_0.51_0.55'}
+55
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 3, 'max_features': 3, 'max_leaf_nodes': 4, 'min_samples_split': 2, 'n_estimators': np.int64(50)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_normalization_mitigation_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9763636363636363), 'balanced_accuracy': np.float64(0.5059523809523809), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(0.98), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 0.5329337120056152, 'fit_time': np.float64(0.08074555397033692), 'score_time': np.float64(0.005872106552124024), 'absolute_time': 1746704954.3732452, 'flatten_demographic_parity_ratio': '0.98_1.0_1.0_0.9_1.0', 'flatten_balanced_accuracy': '0.52_0.5_0.5_0.51_0.5'}
+56
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 7, 'weights': np.str_('distance')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.7427227409524843), 'balanced_accuracy': np.float64(0.5104761904761904), 'by_group': {'female_div/dep/mar': np.float64(0.95), 'male_div/sep': np.float64(0.77), 'male_mar/wid': np.float64(0.98), 'male_single': np.float64(0.83)}, 'status': 'success', 'total_time': 25.57635188102722, 'fit_time': np.float64(4.968379259109497), 'score_time': np.float64(0.07521891593933105), 'absolute_time': 1746704980.023838, 'flatten_demographic_parity_ratio': '0.89_0.8_1.0_0.72_0.31', 'flatten_balanced_accuracy': '0.56_0.47_0.5_0.52_0.51'}
+57
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 1, 'max_leaf_nodes': 4, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.75)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9344954128440367), 'balanced_accuracy': np.float64(0.5197619047619048), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.94), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.98)}, 'status': 'success', 'total_time': 0.21182036399841309, 'fit_time': np.float64(0.01878490447998047), 'score_time': np.float64(0.004105806350708008), 'absolute_time': 1746704980.3113801, 'flatten_demographic_parity_ratio': '0.9_0.9_0.99_0.9_0.98', 'flatten_balanced_accuracy': '0.52_0.54_0.5_0.52_0.52'}
+58
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('gini'), 'max_depth': 1, 'max_features': 4, 'max_leaf_nodes': 5, 'min_samples_split': 2, 'n_estimators': np.int64(100)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.5)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9563302752293577), 'balanced_accuracy': np.float64(0.516904761904762), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.96), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.97)}, 'status': 'success', 'total_time': 5.140649080276489, 'fit_time': np.float64(0.9902361392974853), 'score_time': np.float64(0.011857366561889649), 'absolute_time': 1746704985.552882, 'flatten_demographic_parity_ratio': '1.0_0.9_0.98_0.9_1.0', 'flatten_balanced_accuracy': '0.5_0.56_0.5_0.52_0.5'}
+59
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(10), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 8}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_mitigation_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.8866959064327485), 'balanced_accuracy': np.float64(0.48904761904761906), 'by_group': {'female_div/dep/mar': np.float64(0.95), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(0.89), 'male_single': np.float64(0.98)}, 'status': 'success', 'total_time': 3.400015115737915, 'fit_time': np.float64(0.6550503730773926), 'score_time': np.float64(0.005394268035888672), 'absolute_time': 1746704989.0389142, 'flatten_demographic_parity_ratio': '0.49_1.0_1.0_1.0_0.95', 'flatten_balanced_accuracy': '0.45_0.5_0.5_0.5_0.5'}
+60
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 4, 'max_features': 3, 'max_leaf_nodes': 6, 'min_samples_split': 6, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('PCA'), 'n_components': 2}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.4653460362267701), 'balanced_accuracy': np.float64(0.5333333333333334), 'by_group': {'female_div/dep/mar': np.float64(0.81), 'male_div/sep': np.float64(0.51), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.61)}, 'status': 'success', 'total_time': 36.1845166683197, 'fit_time': np.float64(7.20869631767273), 'score_time': np.float64(0.007340669631958008), 'absolute_time': 1746705025.3073282, 'flatten_demographic_parity_ratio': '0.42_0.48_0.72_0.71_0.0', 'flatten_balanced_accuracy': '0.55_0.55_0.55_0.52_0.5'}
+61
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 8}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification')}
+{'demographic_parity_ratio': np.float64(0.7722102288352591), 'balanced_accuracy': np.float64(0.5566666666666666), 'by_group': {'female_div/dep/mar': np.float64(0.9), 'male_div/sep': np.float64(0.89), 'male_mar/wid': np.float64(0.92), 'male_single': np.float64(0.86)}, 'status': 'success', 'total_time': 17.784136295318604, 'fit_time': np.float64(1.074660301208496), 'score_time': np.float64(0.005487918853759766), 'absolute_time': 1746705044.3941617, 'flatten_demographic_parity_ratio': '0.84_0.78_0.9_0.6_0.74', 'flatten_balanced_accuracy': '0.56_0.6_0.5_0.61_0.51'}
+62
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('tanh'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('adam')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.6193422776403208), 'balanced_accuracy': np.float64(0.67), 'by_group': {'female_div/dep/mar': np.float64(0.87), 'male_div/sep': np.float64(0.69), 'male_mar/wid': np.float64(0.83), 'male_single': np.float64(0.89)}, 'status': 'success', 'total_time': 1.833362102508545, 'fit_time': np.float64(0.34525532722473146), 'score_time': np.float64(0.0033578872680664062), 'absolute_time': 1746705046.315987, 'flatten_demographic_parity_ratio': '0.18_0.74_0.79_0.76_0.63', 'flatten_balanced_accuracy': '0.66_0.68_0.69_0.66_0.65'}
+63
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.41751530837699635), 'balanced_accuracy': np.float64(0.6002380952380952), 'by_group': {'female_div/dep/mar': np.float64(0.68), 'male_div/sep': np.float64(0.47), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.8)}, 'status': 'success', 'total_time': 0.47662949562072754, 'fit_time': np.float64(0.06706151962280274), 'score_time': np.float64(0.004639720916748047), 'absolute_time': 1746705046.8795254, 'flatten_demographic_parity_ratio': '0.56_0.64_0.45_0.44_0.0', 'flatten_balanced_accuracy': '0.65_0.59_0.56_0.59_0.6'}
+64
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 2, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 4, 'n_estimators': np.int64(75)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.5)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.32230039525691695), 'balanced_accuracy': np.float64(0.6621428571428571), 'by_group': {'female_div/dep/mar': np.float64(0.6), 'male_div/sep': np.float64(0.32), 'male_mar/wid': np.float64(0.53), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 0.9491229057312012, 'fit_time': np.float64(0.1605377197265625), 'score_time': np.float64(0.007299232482910156), 'absolute_time': 1746705047.9398649, 'flatten_demographic_parity_ratio': '0.14_0.37_0.24_0.5_0.37', 'flatten_balanced_accuracy': '0.66_0.65_0.65_0.65_0.7'}
+65
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('mitigation_rebalancing_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.659255861365953), 'balanced_accuracy': np.float64(0.5173809523809523), 'by_group': {'female_div/dep/mar': np.float64(0.81), 'male_div/sep': np.float64(0.81), 'male_mar/wid': np.float64(0.91), 'male_single': np.float64(0.76)}, 'status': 'success', 'total_time': 5.12306547164917, 'fit_time': np.float64(0.9960608959197998), 'score_time': np.float64(0.007713174819946289), 'absolute_time': 1746705053.151904, 'flatten_demographic_parity_ratio': '0.56_0.6_0.7_0.7_0.74', 'flatten_balanced_accuracy': '0.45_0.55_0.54_0.52_0.54'}
+66
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 1, 'max_features': 4, 'max_leaf_nodes': 5, 'min_samples_split': 2, 'n_estimators': np.int64(50)}, 'features': {'type': np.str_('SelectKBest'), 'k': 4}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.5957583271078511), 'balanced_accuracy': np.float64(0.6719047619047618), 'by_group': {'female_div/dep/mar': np.float64(0.87), 'male_div/sep': np.float64(0.6), 'male_mar/wid': np.float64(0.81), 'male_single': np.float64(0.97)}, 'status': 'success', 'total_time': 0.7987213134765625, 'fit_time': np.float64(0.1225057601928711), 'score_time': np.float64(0.0054415702819824215), 'absolute_time': 1746705055.373881, 'flatten_demographic_parity_ratio': '0.5_0.65_0.46_0.76_0.61', 'flatten_balanced_accuracy': '0.65_0.69_0.7_0.64_0.69'}
+67
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 1, 'max_features': 4, 'max_leaf_nodes': 5, 'min_samples_split': 3, 'n_estimators': np.int64(100)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 4}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.5649686783937548), 'balanced_accuracy': np.float64(0.5288095238095238), 'by_group': {'female_div/dep/mar': np.float64(0.84), 'male_div/sep': np.float64(0.7), 'male_mar/wid': np.float64(0.9), 'male_single': np.float64(0.78)}, 'status': 'success', 'total_time': 5.820476531982422, 'fit_time': np.float64(1.126149845123291), 'score_time': np.float64(0.011883068084716796), 'absolute_time': 1746705061.2852657, 'flatten_demographic_parity_ratio': '0.45_0.49_0.83_0.9_0.15', 'flatten_balanced_accuracy': '0.56_0.5_0.55_0.52_0.52'}
+68
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('tanh'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 5}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.8021786234310533), 'balanced_accuracy': np.float64(0.6519047619047619), 'by_group': {'female_div/dep/mar': np.float64(0.92), 'male_div/sep': np.float64(0.84), 'male_mar/wid': np.float64(0.95), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 0.7462012767791748, 'fit_time': np.float64(0.12590570449829103), 'score_time': np.float64(0.003907632827758789), 'absolute_time': 1746705062.1271555, 'flatten_demographic_parity_ratio': '0.85_0.88_0.82_0.7_0.76', 'flatten_balanced_accuracy': '0.68_0.69_0.61_0.63_0.64'}
+/usr/local/lib/python3.12/site-packages/numpy/_core/_methods.py:194: RuntimeWarning: overflow encountered in multiply
+  x = um.multiply(x, x, out=x)
+/usr/local/lib/python3.12/site-packages/sklearn/preprocessing/_data.py:3475: RuntimeWarning: overflow encountered in power
+  out[pos] = (np.power(x[pos] + 1, lmbda) - 1) / lmbda
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 622, in objective
+    fair_scores, fair_scores_by_group = _compute_fair_metric(
+                                        ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/automl/hamlet/objective.py", line 381, in _compute_fair_metric
+    y_pred = np.array(scores["estimator"][fold].predict(x_original))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/imblearn/pipeline.py", line 658, in predict
+    Xt = transform.transform(Xt)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/utils/_set_output.py", line 319, in wrapped
+    data_to_wrap = f(self, X, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py", line 1101, in transform
+    Xs = self._call_func_on_transformers(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py", line 873, in _call_func_on_transformers
+    transformers = list(
+                   ^^^^^
+  File "/usr/local/lib/python3.12/site-packages/sklearn/compose/_column_transformer.py", line 469, in _iter
+    transformers = self.transformers_
+                   ^^^^^^^^^^^^^^^^^^
+AttributeError: 'ColumnTransformer' object has no attribute 'transformers_'. Did you mean: 'transformers'?
+
+69
+fail
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 12, 'weights': np.str_('distance')}, 'features': {'type': np.str_('SelectKBest'), 'k': 2}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': -inf, 'by_group': {'female_div/dep/mar': -inf, 'male_div/sep': -inf, 'male_mar/wid': -inf, 'male_single': -inf}, 'status': 'fail', 'total_time': 36.91027331352234, 'fit_time': np.float64(6.812184572219849), 'score_time': np.float64(0.006134176254272461), 'absolute_time': 1746705099.1334908}
+70
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_features_mitigation_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9544954128440366), 'balanced_accuracy': np.float64(0.5223809523809524), 'by_group': {'female_div/dep/mar': np.float64(0.97), 'male_div/sep': np.float64(0.96), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.96)}, 'status': 'success', 'total_time': 7.833036184310913, 'fit_time': np.float64(1.541395330429077), 'score_time': np.float64(0.005455303192138672), 'absolute_time': 1746705107.0626283, 'flatten_demographic_parity_ratio': '1.0_0.9_0.97_1.0_0.9', 'flatten_balanced_accuracy': '0.5_0.57_0.5_0.5_0.54'}
+71
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 10, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 8}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9944954128440366), 'balanced_accuracy': np.float64(0.5002380952380953), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 3.896827459335327, 'fit_time': np.float64(0.7321945190429687), 'score_time': np.float64(0.018580818176269533), 'absolute_time': 1746705111.0591536, 'flatten_demographic_parity_ratio': '1.0_1.0_0.97_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+72
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 2}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(2.0)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.False_}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9544954128440366), 'balanced_accuracy': np.float64(0.5119047619047619), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.96), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.96)}, 'status': 'success', 'total_time': 14.550957918167114, 'fit_time': np.float64(1.3056680679321289), 'score_time': np.float64(0.006335783004760742), 'absolute_time': 1746705125.7118905, 'flatten_demographic_parity_ratio': '1.0_1.0_0.97_0.9_0.9', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.52_0.54'}
+The result for {'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.01), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('PCA'), 'n_components': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')} was NaN
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 649, in objective
+    raise Exception(f"The result for {config} was NaN")
+Exception: The result for {'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.01), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('PCA'), 'n_components': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')} was NaN
+
+73
+fail
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.01), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('sgd')}, 'features': {'type': np.str_('PCA'), 'n_components': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': -inf, 'male_div/sep': -inf, 'male_mar/wid': -inf, 'male_single': -inf}, 'status': 'fail', 'total_time': 7.444129228591919, 'fit_time': np.float64(1.4572961330413818), 'score_time': np.float64(0.007409334182739258), 'absolute_time': 1746705133.2564967, 'flatten_demographic_parity_ratio': 'nan_nan_nan_nan_nan', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+74
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 3, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('features_mitigation_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.8784410146647496), 'balanced_accuracy': np.float64(0.505), 'by_group': {'female_div/dep/mar': np.float64(0.92), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(0.89), 'male_single': np.float64(0.95)}, 'status': 'success', 'total_time': 9.567009210586548, 'fit_time': np.float64(1.7529861450195312), 'score_time': np.float64(0.07364387512207031), 'absolute_time': 1746705142.9497225, 'flatten_demographic_parity_ratio': '0.95_0.46_0.99_0.98_1.0', 'flatten_balanced_accuracy': '0.53_0.49_0.51_0.49_0.5'}
+75
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 10, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9626726564665044), 'balanced_accuracy': np.float64(0.5116666666666666), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.99), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.96)}, 'status': 'success', 'total_time': 5.413919925689697, 'fit_time': np.float64(0.9342879772186279), 'score_time': np.float64(0.06276888847351074), 'absolute_time': 1746705150.378394, 'flatten_demographic_parity_ratio': '1.0_0.88_0.99_1.0_0.94', 'flatten_balanced_accuracy': '0.5_0.53_0.5_0.5_0.53'}
+76
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 12, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('SelectKBest'), 'k': 9}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification')}
+{'demographic_parity_ratio': np.float64(0.8583362693010518), 'balanced_accuracy': np.float64(0.5347619047619048), 'by_group': {'female_div/dep/mar': np.float64(0.93), 'male_div/sep': np.float64(0.89), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.88)}, 'status': 'success', 'total_time': 14.667085886001587, 'fit_time': np.float64(1.31223521232605), 'score_time': np.float64(0.018609094619750976), 'absolute_time': 1746705165.148068, 'flatten_demographic_parity_ratio': '0.81_0.9_0.95_0.89_0.74', 'flatten_balanced_accuracy': '0.63_0.5_0.5_0.51_0.53'}
+77
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(2.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9887533729087966), 'balanced_accuracy': np.float64(0.509047619047619), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(0.99), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 7.389662742614746, 'fit_time': np.float64(0.7442227363586426), 'score_time': np.float64(0.005515241622924804), 'absolute_time': 1746705172.6425219, 'flatten_demographic_parity_ratio': '0.95_1.0_0.99_1.0_1.0', 'flatten_balanced_accuracy': '0.54_0.5_0.51_0.5_0.5'}
+78
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 13, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 5}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.75)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification')}
+{'demographic_parity_ratio': np.float64(0.5359069478908188), 'balanced_accuracy': np.float64(0.6707142857142857), 'by_group': {'female_div/dep/mar': np.float64(0.85), 'male_div/sep': np.float64(0.54), 'male_mar/wid': np.float64(0.95), 'male_single': np.float64(0.93)}, 'status': 'success', 'total_time': 0.3541221618652344, 'fit_time': np.float64(0.030228900909423827), 'score_time': np.float64(0.012970781326293946), 'absolute_time': 1746705173.1025972, 'flatten_demographic_parity_ratio': '0.41_0.55_0.53_0.73_0.45', 'flatten_balanced_accuracy': '0.67_0.67_0.7_0.64_0.66'}
+79
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 5, 'min_samples_split': 6, 'n_estimators': np.int64(75)}, 'features': {'type': np.str_('SelectKBest'), 'k': 5}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.True_}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9944954128440366), 'balanced_accuracy': np.float64(0.5002380952380953), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 7.391069173812866, 'fit_time': np.float64(1.1850135326385498), 'score_time': np.float64(0.009947443008422851), 'absolute_time': 1746705180.5976799, 'flatten_demographic_parity_ratio': '1.0_1.0_0.97_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+80
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('PCA'), 'n_components': 5}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.5160745479242077), 'balanced_accuracy': np.float64(0.6042857142857143), 'by_group': {'female_div/dep/mar': np.float64(0.82), 'male_div/sep': np.float64(0.55), 'male_mar/wid': np.float64(0.99), 'male_single': np.float64(0.81)}, 'status': 'success', 'total_time': 0.8104941844940186, 'fit_time': np.float64(0.14040021896362304), 'score_time': np.float64(0.0034629344940185548), 'absolute_time': 1746705181.515864, 'flatten_demographic_parity_ratio': '0.33_0.72_0.55_0.81_0.17', 'flatten_balanced_accuracy': '0.63_0.64_0.61_0.61_0.53'}
+81
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('adam')}, 'features': {'type': np.str_('SelectKBest'), 'k': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.6904518195953532), 'balanced_accuracy': np.float64(0.5583333333333332), 'by_group': {'female_div/dep/mar': np.float64(0.92), 'male_div/sep': np.float64(0.84), 'male_mar/wid': np.float64(0.9), 'male_single': np.float64(0.81)}, 'status': 'success', 'total_time': 6.979611158370972, 'fit_time': np.float64(0.9221786975860595), 'score_time': np.float64(0.0062904834747314455), 'absolute_time': 1746705188.6031947, 'flatten_demographic_parity_ratio': '0.81_0.63_0.84_0.79_0.38', 'flatten_balanced_accuracy': '0.58_0.59_0.54_0.56_0.52'}
+82
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 1, 'max_features': 1, 'max_leaf_nodes': 5, 'min_samples_split': 2, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.False_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(1.0), 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 0.19662952423095703, 'fit_time': np.float64(0.016374969482421876), 'score_time': np.float64(0.0039365291595458984), 'absolute_time': 1746705190.5646396, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+83
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('gini'), 'max_depth': 3, 'max_features': 3, 'max_leaf_nodes': 5, 'min_samples_split': 4, 'n_estimators': np.int64(25)}, 'features': {'type': np.str_('PCA'), 'n_components': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.5)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.False_}, 'prototype': np.str_('mitigation_normalization_features_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9727272727272727), 'balanced_accuracy': np.float64(0.5180952380952382), 'by_group': {'female_div/dep/mar': np.float64(0.98), 'male_div/sep': np.float64(0.98), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.98)}, 'status': 'success', 'total_time': 5.039839744567871, 'fit_time': np.float64(0.9761114597320557), 'score_time': np.float64(0.008472442626953125), 'absolute_time': 1746705195.7123036, 'flatten_demographic_parity_ratio': '0.96_0.9_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.54_0.55_0.5_0.5_0.5'}
+84
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'features': {'type': np.str_('SelectKBest'), 'k': 6}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(1.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(2.0)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.7341256179233392), 'balanced_accuracy': np.float64(0.5457142857142857), 'by_group': {'female_div/dep/mar': np.float64(0.87), 'male_div/sep': np.float64(0.88), 'male_mar/wid': np.float64(0.92), 'male_single': np.float64(0.83)}, 'status': 'success', 'total_time': 6.094634056091309, 'fit_time': np.float64(1.0076398372650146), 'score_time': np.float64(0.006815004348754883), 'absolute_time': 1746705201.917566, 'flatten_demographic_parity_ratio': '0.84_0.6_0.86_0.63_0.74', 'flatten_balanced_accuracy': '0.56_0.58_0.55_0.52_0.52'}
+85
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 1, 'max_features': 3, 'max_leaf_nodes': 6, 'min_samples_split': 5, 'n_estimators': np.int64(50)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 4}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_normalization_features_classification')}
+{'demographic_parity_ratio': np.float64(0.12350915750915752), 'balanced_accuracy': np.float64(0.5878571428571429), 'by_group': {'female_div/dep/mar': np.float64(0.9), 'male_div/sep': np.float64(0.12), 'male_mar/wid': np.float64(0.93), 'male_single': np.float64(0.79)}, 'status': 'success', 'total_time': 0.8506922721862793, 'fit_time': np.float64(0.14421439170837402), 'score_time': np.float64(0.005306100845336914), 'absolute_time': 1746705202.8808563, 'flatten_demographic_parity_ratio': '0.13_0.12_0.24_0.13_0.0', 'flatten_balanced_accuracy': '0.63_0.6_0.54_0.59_0.57'}
+86
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('gini'), 'max_depth': 5, 'max_features': 3, 'max_leaf_nodes': 2, 'min_samples_split': 4, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_features_normalization_mitigation_classification')}
+{'demographic_parity_ratio': np.float64(0.45849191771817405), 'balanced_accuracy': np.float64(0.6490476190476191), 'by_group': {'female_div/dep/mar': np.float64(0.71), 'male_div/sep': np.float64(0.5), 'male_mar/wid': np.float64(0.79), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 0.35962510108947754, 'fit_time': np.float64(0.04986062049865723), 'score_time': np.float64(0.004295873641967774), 'absolute_time': 1746705203.353154, 'flatten_demographic_parity_ratio': '0.32_0.62_0.48_0.47_0.4', 'flatten_balanced_accuracy': '0.6_0.64_0.65_0.66_0.69'}
+87
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 2, 'max_features': 3, 'max_leaf_nodes': 3, 'min_samples_split': 4, 'n_estimators': np.int64(50)}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.7556397237539954), 'balanced_accuracy': np.float64(0.5278571428571428), 'by_group': {'female_div/dep/mar': np.float64(0.89), 'male_div/sep': np.float64(0.78), 'male_mar/wid': np.float64(0.99), 'male_single': np.float64(0.81)}, 'status': 'success', 'total_time': 5.343949794769287, 'fit_time': np.float64(1.0384942531585692), 'score_time': np.float64(0.008144569396972657), 'absolute_time': 1746705208.807623, 'flatten_demographic_parity_ratio': '0.89_0.48_0.9_0.77_0.74', 'flatten_balanced_accuracy': '0.53_0.55_0.49_0.55_0.52'}
+The result for {'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('tanh'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(50), 'solver': np.str_('sgd')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.False_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification')} was NaN
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 649, in objective
+    raise Exception(f"The result for {config} was NaN")
+Exception: The result for {'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('tanh'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(50), 'solver': np.str_('sgd')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.False_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification')} was NaN
+
+88
+fail
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('tanh'), 'alpha': np.float64(0.001), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(50), 'solver': np.str_('sgd')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.False_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': np.float64(0.4961904761904762), 'by_group': {'female_div/dep/mar': np.float64(0.97), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(0.94), 'male_single': np.float64(0.98)}, 'status': 'fail', 'total_time': 21.735764265060425, 'fit_time': np.float64(4.320560359954834), 'score_time': np.float64(0.0064524650573730465), 'absolute_time': 1746705230.657161, 'flatten_demographic_parity_ratio': '0.78_1.0_0.95_nan_1.0', 'flatten_balanced_accuracy': '0.48_0.5_0.5_0.5_0.5'}
+89
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('adaptive'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(50), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('rebalancing_features_mitigation_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.7113840025329113), 'balanced_accuracy': np.float64(0.6254761904761905), 'by_group': {'female_div/dep/mar': np.float64(0.88), 'male_div/sep': np.float64(0.76), 'male_mar/wid': np.float64(0.94), 'male_single': np.float64(0.98)}, 'status': 'success', 'total_time': 4.832603693008423, 'fit_time': np.float64(0.9382805347442627), 'score_time': np.float64(0.005098676681518555), 'absolute_time': 1746705235.6035678, 'flatten_demographic_parity_ratio': '0.8_0.97_0.73_0.57_0.48', 'flatten_balanced_accuracy': '0.59_0.64_0.61_0.63_0.66'}
+90
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 5, 'max_features': 2, 'max_leaf_nodes': 4, 'min_samples_split': 2, 'n_estimators': np.int64(10)}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.75)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('features_mitigation_normalization_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9800000000000001), 'balanced_accuracy': np.float64(0.4992857142857143), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(0.98), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 0.20869112014770508, 'fit_time': np.float64(0.019460773468017577), 'score_time': np.float64(0.0038081645965576173), 'absolute_time': 1746705237.7689717, 'flatten_demographic_parity_ratio': '0.9_1.0_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+91
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.0001), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(1), 'n_neurons': np.int64(5), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(1.0)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('MinMaxScaler')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.9484347962327873), 'balanced_accuracy': np.float64(0.5088095238095238), 'by_group': {'female_div/dep/mar': np.float64(0.97), 'male_div/sep': np.float64(0.97), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.96)}, 'status': 'success', 'total_time': 5.491217374801636, 'fit_time': np.float64(1.073052215576172), 'score_time': np.float64(0.0055659770965576175), 'absolute_time': 1746705243.374903, 'flatten_demographic_parity_ratio': '0.89_1.0_0.96_0.9_0.99', 'flatten_balanced_accuracy': '0.53_0.5_0.51_0.51_0.5'}
+92
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('euclidean'), 'n_neighbors': 17, 'weights': np.str_('distance')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('features_rebalancing_mitigation_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.6927400719205302), 'balanced_accuracy': np.float64(0.655952380952381), 'by_group': {'female_div/dep/mar': np.float64(0.81), 'male_div/sep': np.float64(0.72), 'male_mar/wid': np.float64(0.97), 'male_single': np.float64(0.88)}, 'status': 'success', 'total_time': 1.2014737129211426, 'fit_time': np.float64(0.08902316093444824), 'score_time': np.float64(0.07415080070495605), 'absolute_time': 1746705244.695098, 'flatten_demographic_parity_ratio': '0.36_0.69_0.84_0.68_0.89', 'flatten_balanced_accuracy': '0.64_0.67_0.7_0.67_0.59'}
+93
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('entropy'), 'max_depth': 3, 'max_features': 2, 'max_leaf_nodes': 6, 'min_samples_split': 2, 'n_estimators': np.int64(75)}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(0.5)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('normalization_mitigation_rebalancing_features_classification')}
+{'demographic_parity_ratio': np.float64(0.4918489782816159), 'balanced_accuracy': np.float64(0.488095238095238), 'by_group': {'female_div/dep/mar': np.float64(0.78), 'male_div/sep': np.float64(0.57), 'male_mar/wid': np.float64(0.88), 'male_single': np.float64(0.72)}, 'status': 'success', 'total_time': 6.302649736404419, 'fit_time': np.float64(1.2273336410522462), 'score_time': np.float64(0.009099912643432618), 'absolute_time': 1746705251.137936, 'flatten_demographic_parity_ratio': '0.4_0.51_0.4_0.32_0.83', 'flatten_balanced_accuracy': '0.47_0.54_0.49_0.42_0.53'}
+94
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 5, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.5)}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.6810822755745434), 'balanced_accuracy': np.float64(0.6204761904761905), 'by_group': {'female_div/dep/mar': np.float64(0.75), 'male_div/sep': np.float64(0.71), 'male_mar/wid': np.float64(0.99), 'male_single': np.float64(0.9)}, 'status': 'success', 'total_time': 0.57228684425354, 'fit_time': np.float64(0.03365516662597656), 'score_time': np.float64(0.033129549026489256), 'absolute_time': 1746705251.8278108, 'flatten_demographic_parity_ratio': '0.76_0.42_0.81_0.6_0.81', 'flatten_balanced_accuracy': '0.61_0.66_0.64_0.61_0.59'}
+95
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('relu'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(5), 'solver': np.str_('adam')}, 'features': {'type': np.str_('PCA'), 'n_components': 8}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 3}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.5818242386990538), 'balanced_accuracy': np.float64(0.5485714285714286), 'by_group': {'female_div/dep/mar': np.float64(0.83), 'male_div/sep': np.float64(0.66), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.68)}, 'status': 'success', 'total_time': 26.89025044441223, 'fit_time': np.float64(5.351231098175049), 'score_time': np.float64(0.006102085113525391), 'absolute_time': 1746705278.8380194, 'flatten_demographic_parity_ratio': '0.79_0.6_0.66_0.71_0.15', 'flatten_balanced_accuracy': '0.61_0.55_0.54_0.52_0.53'}
+96
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(0.01), 'learning_rate': np.str_('invscaling'), 'n_hidden_layers': np.int64(20), 'n_neurons': np.int64(50), 'solver': np.str_('sgd')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.True_}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(1.0), 'balanced_accuracy': np.float64(0.5), 'by_group': {'female_div/dep/mar': np.float64(1.0), 'male_div/sep': np.float64(1.0), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(1.0)}, 'status': 'success', 'total_time': 17.65576148033142, 'fit_time': np.float64(3.4479674816131594), 'score_time': np.float64(0.046417856216430665), 'absolute_time': 1746705296.614418, 'flatten_demographic_parity_ratio': '1.0_1.0_1.0_1.0_1.0', 'flatten_balanced_accuracy': '0.5_0.5_0.5_0.5_0.5'}
+97
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.False_, 'criterion': np.str_('gini'), 'max_depth': 4, 'max_features': 3, 'max_leaf_nodes': 6, 'min_samples_split': 4, 'n_estimators': np.int64(50)}, 'features': {'type': np.str_('PCA'), 'n_components': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 1}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.7186558904907528), 'balanced_accuracy': np.float64(0.5495238095238095), 'by_group': {'female_div/dep/mar': np.float64(0.88), 'male_div/sep': np.float64(0.76), 'male_mar/wid': np.float64(0.99), 'male_single': np.float64(0.75)}, 'status': 'success', 'total_time': 17.137596130371094, 'fit_time': np.float64(3.3940333843231203), 'score_time': np.float64(0.010796451568603515), 'absolute_time': 1746705313.8753786, 'flatten_demographic_parity_ratio': '0.64_0.51_0.84_0.85_0.74', 'flatten_balanced_accuracy': '0.59_0.54_0.54_0.56_0.51'}
+98
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 12, 'weights': np.str_('distance')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.False_, 'with_std': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_normalization_rebalancing_features_classification')}
+{'demographic_parity_ratio': np.float64(0.6753095223014358), 'balanced_accuracy': np.float64(0.5411904761904761), 'by_group': {'female_div/dep/mar': np.float64(0.78), 'male_div/sep': np.float64(0.81), 'male_mar/wid': np.float64(0.97), 'male_single': np.float64(0.77)}, 'status': 'success', 'total_time': 0.9893288612365723, 'fit_time': np.float64(0.033541297912597655), 'score_time': np.float64(0.07768974304199219), 'absolute_time': 1746705316.7892203, 'flatten_demographic_parity_ratio': '0.58_0.88_0.87_0.65_0.41', 'flatten_balanced_accuracy': '0.52_0.58_0.54_0.53_0.53'}
+99
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 4, 'max_features': 3, 'max_leaf_nodes': 2, 'min_samples_split': 4, 'n_estimators': np.int64(100)}, 'features': {'type': np.str_('PCA'), 'n_components': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(100), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.True_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'prototype': np.str_('rebalancing_mitigation_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.6676209083701439), 'balanced_accuracy': np.float64(0.5438095238095239), 'by_group': {'female_div/dep/mar': np.float64(0.84), 'male_div/sep': np.float64(0.79), 'male_mar/wid': np.float64(0.92), 'male_single': np.float64(0.76)}, 'status': 'success', 'total_time': 8.549868106842041, 'fit_time': np.float64(1.672300100326538), 'score_time': np.float64(0.011539411544799805), 'absolute_time': 1746705325.4635346, 'flatten_demographic_parity_ratio': '0.62_0.68_0.84_0.67_0.53', 'flatten_balanced_accuracy': '0.54_0.57_0.54_0.51_0.55'}
+100
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('manhattan'), 'n_neighbors': 6, 'weights': np.str_('uniform')}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.25)}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 5}, 'features': {'type': np.str_('FunctionTransformer')}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('features_mitigation_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.5158572093961311), 'balanced_accuracy': np.float64(0.6626190476190477), 'by_group': {'female_div/dep/mar': np.float64(0.76), 'male_div/sep': np.float64(0.53), 'male_mar/wid': np.float64(0.93), 'male_single': np.float64(0.96)}, 'status': 'success', 'total_time': 0.7544310092926025, 'fit_time': np.float64(0.07305312156677246), 'score_time': np.float64(0.031156349182128906), 'absolute_time': 1746705326.3468542, 'flatten_demographic_parity_ratio': '0.62_0.13_0.54_0.58_0.71', 'flatten_balanced_accuracy': '0.62_0.68_0.69_0.64_0.68'}
+101
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('gini'), 'max_depth': 4, 'max_features': 1, 'max_leaf_nodes': 2, 'min_samples_split': 6, 'n_estimators': np.int64(50)}, 'features': {'type': np.str_('SelectKBest'), 'k': 7}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.5), 'n_prototypes': np.int64(50), 'reconstruct_weight': np.float64(2.0)}, 'normalization': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('normalization_rebalancing_mitigation_features_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.969024186822352), 'balanced_accuracy': np.float64(0.5109523809523809), 'by_group': {'female_div/dep/mar': np.float64(0.99), 'male_div/sep': np.float64(0.98), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.97)}, 'status': 'success', 'total_time': 18.913955211639404, 'fit_time': np.float64(0.8947132587432861), 'score_time': np.float64(0.007705259323120117), 'absolute_time': 1746705345.394394, 'flatten_demographic_parity_ratio': '0.98_1.0_1.0_0.9_0.96', 'flatten_balanced_accuracy': '0.52_0.5_0.5_0.51_0.53'}
+102
+success
+{'classification': {'type': np.str_('RandomForestClassifier'), 'bootstrap': np.True_, 'criterion': np.str_('entropy'), 'max_depth': 5, 'max_features': 2, 'max_leaf_nodes': 5, 'min_samples_split': 6, 'n_estimators': np.int64(75)}, 'features': {'type': np.str_('SelectKBest'), 'k': 9}, 'mitigation': {'type': np.str_('CorrelationRemover'), 'alpha': np.float64(0.75)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.False_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 7}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification')}
+{'demographic_parity_ratio': np.float64(0.44466608536021435), 'balanced_accuracy': np.float64(0.6783333333333333), 'by_group': {'female_div/dep/mar': np.float64(0.79), 'male_div/sep': np.float64(0.54), 'male_mar/wid': np.float64(0.54), 'male_single': np.float64(0.99)}, 'status': 'success', 'total_time': 1.0314760208129883, 'fit_time': np.float64(0.16063528060913085), 'score_time': np.float64(0.008031606674194336), 'absolute_time': 1746705346.5544763, 'flatten_demographic_parity_ratio': '0.34_0.48_0.51_0.53_0.38', 'flatten_balanced_accuracy': '0.68_0.69_0.68_0.66_0.68'}
+The result for {'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 7, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')} was NaN
+
+Something went wrong
+Traceback (most recent call last):
+  File "/home/automl/hamlet/objective.py", line 649, in objective
+    raise Exception(f"The result for {config} was NaN")
+Exception: The result for {'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 7, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')} was NaN
+
+103
+fail
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 7, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('PCA'), 'n_components': 4}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(200), 'reconstruct_weight': np.float64(1.0)}, 'rebalancing': {'type': np.str_('NearMiss'), 'n_neighbors': 2}, 'normalization': {'type': np.str_('PowerTransformer')}, 'prototype': np.str_('mitigation_features_rebalancing_normalization_classification')}
+{'demographic_parity_ratio': -inf, 'balanced_accuracy': np.float64(0.49738095238095237), 'by_group': {'female_div/dep/mar': np.float64(0.46), 'male_div/sep': np.float64(0.0), 'male_mar/wid': np.float64(0.33), 'male_single': np.float64(0.36)}, 'status': 'fail', 'total_time': 4.497394323348999, 'fit_time': np.float64(0.856717872619629), 'score_time': np.float64(0.014056634902954102), 'absolute_time': 1746705351.1838489, 'flatten_demographic_parity_ratio': 'nan_0.0_0.0_nan_0.0', 'flatten_balanced_accuracy': '0.5_0.48_0.5_0.5_0.5'}
+104
+success
+{'classification': {'type': np.str_('MLPClassifier'), 'activation': np.str_('logistic'), 'alpha': np.float64(1e-05), 'learning_rate': np.str_('constant'), 'n_hidden_layers': np.int64(5), 'n_neurons': np.int64(25), 'solver': np.str_('lbfgs')}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(0.1), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(0.1)}, 'normalization': {'type': np.str_('RobustScaler'), 'with_centering': np.False_, 'with_scaling': np.True_}, 'rebalancing': {'type': np.str_('SMOTE'), 'k_neighbors': 6}, 'features': {'type': np.str_('FunctionTransformer')}, 'prototype': np.str_('mitigation_features_normalization_rebalancing_classification')}
+{'demographic_parity_ratio': np.float64(0.7383515598209295), 'balanced_accuracy': np.float64(0.5538095238095238), 'by_group': {'female_div/dep/mar': np.float64(0.85), 'male_div/sep': np.float64(0.79), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.75)}, 'status': 'success', 'total_time': 6.3696348667144775, 'fit_time': np.float64(1.2473968982696533), 'score_time': np.float64(0.006166934967041016), 'absolute_time': 1746705357.6810203, 'flatten_demographic_parity_ratio': '0.81_0.68_0.85_0.62_0.74', 'flatten_balanced_accuracy': '0.62_0.57_0.55_0.51_0.52'}
+105
+success
+{'classification': {'type': np.str_('KNeighborsClassifier'), 'metric': np.str_('minkowski'), 'n_neighbors': 8, 'weights': np.str_('uniform')}, 'features': {'type': np.str_('SelectKBest'), 'k': 2}, 'mitigation': {'type': np.str_('LFR_wrapper'), 'fairness_weight': np.float64(2.0), 'n_prototypes': np.int64(10), 'reconstruct_weight': np.float64(1.0)}, 'normalization': {'type': np.str_('StandardScaler'), 'with_mean': np.True_, 'with_std': np.True_}, 'prototype': np.str_('mitigation_rebalancing_features_normalization_classification'), 'rebalancing': {'type': np.str_('FunctionTransformer')}}
+{'demographic_parity_ratio': np.float64(0.8474358929721637), 'balanced_accuracy': np.float64(0.5392857142857143), 'by_group': {'female_div/dep/mar': np.float64(0.91), 'male_div/sep': np.float64(0.88), 'male_mar/wid': np.float64(1.0), 'male_single': np.float64(0.88)}, 'status': 'success', 'total_time': 17.07981562614441, 'fit_time': np.float64(0.7030039310455323), 'score_time': np.float64(0.01720004081726074), 'absolute_time': 1746705374.8916245, 'flatten_demographic_parity_ratio': '0.91_0.9_0.76_1.0_0.67', 'flatten_balanced_accuracy': '0.54_0.57_0.55_0.5_0.55'}
+AutoML: optimization done.
+AutoML: miner done.
+AutoML: export done.
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+Here is the standard output/error of the command:
+
+hamlet_1715659281
+AutoML execution ended

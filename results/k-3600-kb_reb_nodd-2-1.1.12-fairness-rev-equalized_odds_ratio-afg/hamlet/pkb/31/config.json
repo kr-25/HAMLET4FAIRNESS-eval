@@ -1,0 +1,1 @@
+{"iteration":1,"dataset":"credit-g","metric":"balanced_accuracy","fairnessMetric":"equalized_odds_ratio","sensitiveFeatures":["personal_status","sex"],"mode":"max","batchSize":999999,"timeBudget":3600,"seed":42}

@@ -1,0 +1,8 @@
+cc8825203134102224935 :=> mandatory([rebalancing], knn). % demographic_parity_ratio
+cc7872058418108943959 :=> mandatory([features,normalization], knn). % demographic_parity_ratio
+cc851903295553634046 :=> mandatory([mitigation,normalization], knn). % demographic_parity_ratio
+cc610802081933718530 :=> mandatory([normalization,features], nn). % demographic_parity_ratio
+cc6245097273306630383 :=> mandatory([normalization,mitigation], nn). % demographic_parity_ratio
+cc7798730209209439878 :=> mandatory([normalization,rebalancing], nn). % demographic_parity_ratio
+cc1361649492150022569 :=> mandatory([features], rf). % demographic_parity_ratio
+cc2612024093039360408 :=> mandatory([normalization,mitigation], rf). % demographic_parity_ratio
