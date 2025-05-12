@@ -1,0 +1,8 @@
+scikit-learn
+numpy
+pandas
+tqdm
+paretoset
+requests
+tabulate
+future
