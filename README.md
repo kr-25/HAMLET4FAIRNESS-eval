@@ -60,7 +60,7 @@ docker volume create my-HAMLET-volume
 Run the docker image to execute HAMLET4FAIRNESS on adult, compass and credit-g:
 
 ```
-docker run -it --volume /var/run/docker.sock:/var/run/docker.sock --volume my-HAMLET-volume:/results .. [metric]
+docker run -it --volume /var/run/docker.sock:/var/run/docker.sock --volume my-HAMLET-volume:/results ghcr.io/kr-25/hamlet4fairness-eval:1.0.0 [metric]
 ```
 You can choose the fair metric to optimize:
 - **[metric]**: either *demographic_parity_ratio* and *equalized_odds_ratio*
